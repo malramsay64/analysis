@@ -12,6 +12,7 @@ my_mean::my_mean(){
     mean = 0;
     M2 = 0;
     n = 0;
+    weight = 0;
 }
 
 double my_mean::add(double x){
@@ -25,6 +26,16 @@ double my_mean::add(double x){
 double my_mean::add(my_mean val){
     mean = (n*mean + val.n*val.mean)/(n+val.n);
     n += val.n;
+    return mean;
+}
+
+double my_mean::add(double x, double w){
+    n += 1;
+    double delta = x - mean;
+    double temp = w + weight;
+    mean += delta * w/temp;
+    M2 += weight*delta*(x-mean);
+    weight = temp;
     return mean;
 }
 

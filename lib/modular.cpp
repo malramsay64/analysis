@@ -311,13 +311,16 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         for (auto m1: collate_MSD){
             for (auto m2: collate_MSD){
                 if (m1.first > relax_time(ts) && m1.first < m2.first){
-                    diff_const.add((m2.second.get_mean() - m1.second.get_mean())/(4*(m2.first -m1.first)*STEP_SIZE ));
+                    if (m2.second.get_mean() - m1.second.get_mean() < 0){
+                        //cout << m2.second.get_mean() - m1.second.get_mean()<< " " << m2.first -m1.first << endl;
+                        //cout << m2.second.get_mean() << " " << m1.second.get_mean() << endl;
+                        //cout << m2.first << " " << m1.first << endl;
+                    }
+                    diff_const.add((m2.second.get_mean() - m1.second.get_mean())/(4*(m2.first -m1.first)*STEP_SIZE), m2.first-m1.first);
                 }
             }
         }
-        cout << "Diffusion-constant: " << setprecision(5) << scientific << \
-        print_relax_time(diff_const.get_mean()) << endl;
-        
+        cout << "Diffusion-constant: " << print_relax_time(diff_const.get_mean()) << endl;
         if (regio){
             // Regio relaxations
             regio_file.open("regio.csv");

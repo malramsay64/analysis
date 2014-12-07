@@ -7,17 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D44E440B1A341D4C0095271F /* frame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43F01A341D4C0095271F /* frame.cpp */; };
-		D44E440C1A341D4C0095271F /* functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43F21A341D4C0095271F /* functions.cpp */; };
-		D44E440D1A341D4C0095271F /* input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43F41A341D4C0095271F /* input.cpp */; };
-		D44E440F1A341D4C0095271F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43F81A341D4C0095271F /* main.cpp */; };
-		D44E44101A341D4C0095271F /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = D44E43FA1A341D4C0095271F /* Makefile */; };
-		D44E44111A341D4C0095271F /* mol_functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43FB1A341D4C0095271F /* mol_functions.cpp */; };
-		D44E44121A341D4C0095271F /* neighbours.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43FE1A341D4C0095271F /* neighbours.cpp */; };
-		D44E44131A341D4C0095271F /* output.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E44021A341D4C0095271F /* output.cpp */; };
-		D44E44141A341D4C0095271F /* parallel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E44041A341D4C0095271F /* parallel.cpp */; };
-		D44E44151A341D4C0095271F /* particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E44061A341D4C0095271F /* particle.cpp */; };
-		D44E44161A341D4C0095271F /* vect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E44091A341D4C0095271F /* vect.cpp */; };
+		D44E44171A341F410095271F /* frame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43F01A341D4C0095271F /* frame.cpp */; };
+		D44E44181A341F410095271F /* frame.h in Sources */ = {isa = PBXBuildFile; fileRef = D44E43F11A341D4C0095271F /* frame.h */; };
+		D44E44191A341F410095271F /* functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43F21A341D4C0095271F /* functions.cpp */; };
+		D44E441A1A341F410095271F /* functions.h in Sources */ = {isa = PBXBuildFile; fileRef = D44E43F31A341D4C0095271F /* functions.h */; };
+		D44E441B1A341F410095271F /* input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43F41A341D4C0095271F /* input.cpp */; };
+		D44E441C1A341F410095271F /* input.h in Sources */ = {isa = PBXBuildFile; fileRef = D44E43F51A341D4C0095271F /* input.h */; };
+		D44E441F1A341F410095271F /* mol_functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43FB1A341D4C0095271F /* mol_functions.cpp */; };
+		D44E44201A341F410095271F /* mol_functions.h in Sources */ = {isa = PBXBuildFile; fileRef = D44E43FC1A341D4C0095271F /* mol_functions.h */; };
+		D44E44211A341F410095271F /* neighbours.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43FE1A341D4C0095271F /* neighbours.cpp */; };
+		D44E44221A341F410095271F /* neighbours.h in Sources */ = {isa = PBXBuildFile; fileRef = D44E43FF1A341D4C0095271F /* neighbours.h */; };
+		D44E44231A341F410095271F /* output.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E44021A341D4C0095271F /* output.cpp */; };
+		D44E44241A341F410095271F /* output.h in Sources */ = {isa = PBXBuildFile; fileRef = D44E44031A341D4C0095271F /* output.h */; };
+		D44E44251A341F410095271F /* parallel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E44041A341D4C0095271F /* parallel.cpp */; };
+		D44E44261A341F410095271F /* parallel.h in Sources */ = {isa = PBXBuildFile; fileRef = D44E44051A341D4C0095271F /* parallel.h */; };
+		D44E44271A341F410095271F /* particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E44061A341D4C0095271F /* particle.cpp */; };
+		D44E44281A341F410095271F /* particle.h in Sources */ = {isa = PBXBuildFile; fileRef = D44E44071A341D4C0095271F /* particle.h */; };
+		D44E44291A341F410095271F /* vect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E44091A341D4C0095271F /* vect.cpp */; };
+		D44E442A1A341F410095271F /* vect.h in Sources */ = {isa = PBXBuildFile; fileRef = D44E440A1A341D4C0095271F /* vect.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -48,7 +55,7 @@
 		D44E43F31A341D4C0095271F /* functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = functions.h; path = ../lib/functions.h; sourceTree = "<group>"; };
 		D44E43F41A341D4C0095271F /* input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = input.cpp; path = ../lib/input.cpp; sourceTree = "<group>"; };
 		D44E43F51A341D4C0095271F /* input.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = input.h; path = ../lib/input.h; sourceTree = "<group>"; };
-		D44E43F81A341D4C0095271F /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../lib/main.cpp; sourceTree = "<group>"; };
+		D44E43F81A341D4C0095271F /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = lib/main.cpp; sourceTree = "<group>"; };
 		D44E43FA1A341D4C0095271F /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; name = Makefile; path = ../lib/Makefile; sourceTree = "<group>"; };
 		D44E43FB1A341D4C0095271F /* mol_functions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mol_functions.cpp; path = ../lib/mol_functions.cpp; sourceTree = "<group>"; };
 		D44E43FC1A341D4C0095271F /* mol_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mol_functions.h; path = ../lib/mol_functions.h; sourceTree = "<group>"; };
@@ -82,6 +89,7 @@
 				D44E43BE1A33DD9C0095271F /* test */,
 				D44E43831A33DCB70095271F /* analysis */,
 				D44E43821A33DCB70095271F /* Products */,
+				D44E43F81A341D4C0095271F /* main.cpp */,
 			);
 			sourceTree = "<group>";
 		};
@@ -102,7 +110,6 @@
 				D44E43F31A341D4C0095271F /* functions.h */,
 				D44E43F41A341D4C0095271F /* input.cpp */,
 				D44E43F51A341D4C0095271F /* input.h */,
-				D44E43F81A341D4C0095271F /* main.cpp */,
 				D44E43FA1A341D4C0095271F /* Makefile */,
 				D44E43FB1A341D4C0095271F /* mol_functions.cpp */,
 				D44E43FC1A341D4C0095271F /* mol_functions.h */,
@@ -198,17 +205,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D44E44151A341D4C0095271F /* particle.cpp in Sources */,
-				D44E44141A341D4C0095271F /* parallel.cpp in Sources */,
-				D44E44101A341D4C0095271F /* Makefile in Sources */,
-				D44E44131A341D4C0095271F /* output.cpp in Sources */,
-				D44E440B1A341D4C0095271F /* frame.cpp in Sources */,
-				D44E440C1A341D4C0095271F /* functions.cpp in Sources */,
-				D44E440F1A341D4C0095271F /* main.cpp in Sources */,
-				D44E44121A341D4C0095271F /* neighbours.cpp in Sources */,
-				D44E440D1A341D4C0095271F /* input.cpp in Sources */,
-				D44E44111A341D4C0095271F /* mol_functions.cpp in Sources */,
-				D44E44161A341D4C0095271F /* vect.cpp in Sources */,
+				D44E44171A341F410095271F /* frame.cpp in Sources */,
+				D44E44181A341F410095271F /* frame.h in Sources */,
+				D44E44191A341F410095271F /* functions.cpp in Sources */,
+				D44E441A1A341F410095271F /* functions.h in Sources */,
+				D44E441B1A341F410095271F /* input.cpp in Sources */,
+				D44E441C1A341F410095271F /* input.h in Sources */,
+				D44E441F1A341F410095271F /* mol_functions.cpp in Sources */,
+				D44E44201A341F410095271F /* mol_functions.h in Sources */,
+				D44E44211A341F410095271F /* neighbours.cpp in Sources */,
+				D44E44221A341F410095271F /* neighbours.h in Sources */,
+				D44E44231A341F410095271F /* output.cpp in Sources */,
+				D44E44241A341F410095271F /* output.h in Sources */,
+				D44E44251A341F410095271F /* parallel.cpp in Sources */,
+				D44E44261A341F410095271F /* parallel.h in Sources */,
+				D44E44271A341F410095271F /* particle.cpp in Sources */,
+				D44E44281A341F410095271F /* particle.h in Sources */,
+				D44E44291A341F410095271F /* vect.cpp in Sources */,
+				D44E442A1A341F410095271F /* vect.h in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,6 +307,7 @@
 		D44E43891A33DCB70095271F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				INSTALL_PATH = "~/bin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -300,6 +315,7 @@
 		D44E438A1A33DCB70095271F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				INSTALL_PATH = "~/bin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

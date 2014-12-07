@@ -7,7 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D44E43851A33DCB70095271F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43841A33DCB70095271F /* main.cpp */; };
+		D44E43B21A33DD2A0095271F /* frame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43931A33DD2A0095271F /* frame.cpp */; };
+		D44E43B31A33DD2A0095271F /* functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43951A33DD2A0095271F /* functions.cpp */; };
+		D44E43B41A33DD2A0095271F /* input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43971A33DD2A0095271F /* input.cpp */; };
+		D44E43B61A33DD2A0095271F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E439B1A33DD2A0095271F /* main.cpp */; };
+		D44E43B71A33DD2A0095271F /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = D44E439D1A33DD2A0095271F /* Makefile */; };
+		D44E43B81A33DD2A0095271F /* mol_functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E439F1A33DD2A0095271F /* mol_functions.cpp */; };
+		D44E43B91A33DD2A0095271F /* neighbours.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43A31A33DD2A0095271F /* neighbours.cpp */; };
+		D44E43BA1A33DD2A0095271F /* output.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43A71A33DD2A0095271F /* output.cpp */; };
+		D44E43BB1A33DD2A0095271F /* parallel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43A91A33DD2A0095271F /* parallel.cpp */; };
+		D44E43BC1A33DD2A0095271F /* particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43AB1A33DD2A0095271F /* particle.cpp */; };
+		D44E43BD1A33DD2A0095271F /* vect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43B01A33DD2A0095271F /* vect.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,7 +34,34 @@
 
 /* Begin PBXFileReference section */
 		D44E43811A33DCB70095271F /* analysis */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = analysis; sourceTree = BUILT_PRODUCTS_DIR; };
-		D44E43841A33DCB70095271F /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		D44E438E1A33DD2A0095271F /* createCells.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = createCells.py; path = ../lib/createCells.py; sourceTree = "<group>"; };
+		D44E438F1A33DD2A0095271F /* density.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = density.py; path = ../lib/density.py; sourceTree = "<group>"; };
+		D44E43911A33DD2A0095271F /* files.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = files.py; path = ../lib/files.py; sourceTree = "<group>"; };
+		D44E43931A33DD2A0095271F /* frame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = frame.cpp; path = ../../lib/frame.cpp; sourceTree = "<group>"; };
+		D44E43941A33DD2A0095271F /* frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = frame.h; path = ../../lib/frame.h; sourceTree = "<group>"; };
+		D44E43951A33DD2A0095271F /* functions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = functions.cpp; path = ../../lib/functions.cpp; sourceTree = "<group>"; };
+		D44E43961A33DD2A0095271F /* functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = functions.h; path = ../../lib/functions.h; sourceTree = "<group>"; };
+		D44E43971A33DD2A0095271F /* input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = input.cpp; path = ../../lib/input.cpp; sourceTree = "<group>"; };
+		D44E43981A33DD2A0095271F /* input.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = input.h; path = ../../lib/input.h; sourceTree = "<group>"; };
+		D44E439B1A33DD2A0095271F /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../../lib/main.cpp; sourceTree = "<group>"; };
+		D44E439D1A33DD2A0095271F /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; name = Makefile; path = ../../lib/Makefile; sourceTree = "<group>"; };
+		D44E439E1A33DD2A0095271F /* makeplot.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = makeplot.py; path = ../lib/makeplot.py; sourceTree = "<group>"; };
+		D44E439F1A33DD2A0095271F /* mol_functions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mol_functions.cpp; path = ../../lib/mol_functions.cpp; sourceTree = "<group>"; };
+		D44E43A01A33DD2A0095271F /* mol_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mol_functions.h; path = ../../lib/mol_functions.h; sourceTree = "<group>"; };
+		D44E43A11A33DD2A0095271F /* molecule.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = molecule.py; path = ../lib/molecule.py; sourceTree = "<group>"; };
+		D44E43A31A33DD2A0095271F /* neighbours.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = neighbours.cpp; path = ../../lib/neighbours.cpp; sourceTree = "<group>"; };
+		D44E43A41A33DD2A0095271F /* neighbours.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = neighbours.h; path = ../../lib/neighbours.h; sourceTree = "<group>"; };
+		D44E43A71A33DD2A0095271F /* output.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = output.cpp; path = ../../lib/output.cpp; sourceTree = "<group>"; };
+		D44E43A81A33DD2A0095271F /* output.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = output.h; path = ../../lib/output.h; sourceTree = "<group>"; };
+		D44E43A91A33DD2A0095271F /* parallel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = parallel.cpp; path = ../../lib/parallel.cpp; sourceTree = "<group>"; };
+		D44E43AA1A33DD2A0095271F /* parallel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = parallel.h; path = ../../lib/parallel.h; sourceTree = "<group>"; };
+		D44E43AB1A33DD2A0095271F /* particle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = particle.cpp; path = ../../lib/particle.cpp; sourceTree = "<group>"; };
+		D44E43AC1A33DD2A0095271F /* particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = particle.h; path = ../../lib/particle.h; sourceTree = "<group>"; };
+		D44E43AD1A33DD2A0095271F /* testInput.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = testInput.py; path = ../lib/testInput.py; sourceTree = "<group>"; };
+		D44E43AE1A33DD2A0095271F /* unitCell.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = unitCell.py; path = ../lib/unitCell.py; sourceTree = "<group>"; };
+		D44E43B01A33DD2A0095271F /* vect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = vect.cpp; path = ../../lib/vect.cpp; sourceTree = "<group>"; };
+		D44E43B11A33DD2A0095271F /* vect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = vect.h; path = ../../lib/vect.h; sourceTree = "<group>"; };
+		D44E43BF1A33DDCA0095271F /* out.lammpstrj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = out.lammpstrj; path = ../test/out.lammpstrj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +78,8 @@
 		D44E43781A33DCB70095271F = {
 			isa = PBXGroup;
 			children = (
+				D44E43C01A33DE540095271F /* Python */,
+				D44E43BE1A33DD9C0095271F /* test */,
 				D44E43831A33DCB70095271F /* analysis */,
 				D44E43821A33DCB70095271F /* Products */,
 			);
@@ -57,9 +96,50 @@
 		D44E43831A33DCB70095271F /* analysis */ = {
 			isa = PBXGroup;
 			children = (
-				D44E43841A33DCB70095271F /* main.cpp */,
+				D44E43931A33DD2A0095271F /* frame.cpp */,
+				D44E43941A33DD2A0095271F /* frame.h */,
+				D44E43951A33DD2A0095271F /* functions.cpp */,
+				D44E43961A33DD2A0095271F /* functions.h */,
+				D44E43971A33DD2A0095271F /* input.cpp */,
+				D44E43981A33DD2A0095271F /* input.h */,
+				D44E439B1A33DD2A0095271F /* main.cpp */,
+				D44E439D1A33DD2A0095271F /* Makefile */,
+				D44E439F1A33DD2A0095271F /* mol_functions.cpp */,
+				D44E43A01A33DD2A0095271F /* mol_functions.h */,
+				D44E43A31A33DD2A0095271F /* neighbours.cpp */,
+				D44E43A41A33DD2A0095271F /* neighbours.h */,
+				D44E43A71A33DD2A0095271F /* output.cpp */,
+				D44E43A81A33DD2A0095271F /* output.h */,
+				D44E43A91A33DD2A0095271F /* parallel.cpp */,
+				D44E43AA1A33DD2A0095271F /* parallel.h */,
+				D44E43AB1A33DD2A0095271F /* particle.cpp */,
+				D44E43AC1A33DD2A0095271F /* particle.h */,
+				D44E43B01A33DD2A0095271F /* vect.cpp */,
+				D44E43B11A33DD2A0095271F /* vect.h */,
 			);
 			path = analysis;
+			sourceTree = "<group>";
+		};
+		D44E43BE1A33DD9C0095271F /* test */ = {
+			isa = PBXGroup;
+			children = (
+				D44E43BF1A33DDCA0095271F /* out.lammpstrj */,
+			);
+			name = test;
+			sourceTree = "<group>";
+		};
+		D44E43C01A33DE540095271F /* Python */ = {
+			isa = PBXGroup;
+			children = (
+				D44E439E1A33DD2A0095271F /* makeplot.py */,
+				D44E43A11A33DD2A0095271F /* molecule.py */,
+				D44E43AD1A33DD2A0095271F /* testInput.py */,
+				D44E43AE1A33DD2A0095271F /* unitCell.py */,
+				D44E438E1A33DD2A0095271F /* createCells.py */,
+				D44E438F1A33DD2A0095271F /* density.py */,
+				D44E43911A33DD2A0095271F /* files.py */,
+			);
+			name = Python;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -118,7 +198,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D44E43851A33DCB70095271F /* main.cpp in Sources */,
+				D44E43BC1A33DD2A0095271F /* particle.cpp in Sources */,
+				D44E43BB1A33DD2A0095271F /* parallel.cpp in Sources */,
+				D44E43B71A33DD2A0095271F /* Makefile in Sources */,
+				D44E43BA1A33DD2A0095271F /* output.cpp in Sources */,
+				D44E43B21A33DD2A0095271F /* frame.cpp in Sources */,
+				D44E43B31A33DD2A0095271F /* functions.cpp in Sources */,
+				D44E43B61A33DD2A0095271F /* main.cpp in Sources */,
+				D44E43B91A33DD2A0095271F /* neighbours.cpp in Sources */,
+				D44E43B41A33DD2A0095271F /* input.cpp in Sources */,
+				D44E43B81A33DD2A0095271F /* mol_functions.cpp in Sources */,
+				D44E43BD1A33DD2A0095271F /* vect.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,7 +236,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_OPTIMIZATION_LEVEL = fast;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -187,6 +277,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = fast;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;

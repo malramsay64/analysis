@@ -1,0 +1,39 @@
+
+
+
+    # Snowman perfect packing
+    m = molecule.Snowman(0.637556, 1.637556)
+    positions = [(0.45, 0.5, 67), (1.06, 0.5, 247)]
+    create(5.05, 1.95, 37, m, positions, path, mols)
+    
+    # Snowman r = 0.6 d = 1 P2
+    m = molecule.Snowman(0.637556,1.0)
+    positions = [(0.42,0.500, 127), (0.97, 0.500, 307)]
+    create(4.45, 1.95, 47, m, positions, path, mols)
+   
+    # Snowman r = 0.6 d = 1 P2gg
+    m = molecule.Snowman(0.637556,1.0)
+    positions =[(0.05,0.275, 27), (0.55, 0.23, 151), (0.45, 0.77, 333), (0.95, 0.725, 205)]
+    create(4.40, 4.81, 90, m, positions, path, mols)
+
+   
+    # Snowman perfect packing
+    m = molecule.Snowman(0.7, 1.7)
+    positions = [(0.399, 0.559, 203.5), (1.00, 0.559, 23.5)]
+    create(4.74, 1.79, 37, m, positions, path, mols)
+
+    # Snowman r = 0.7 d = 1 P2
+    m = molecule.Snowman(0.7,1.0)
+    positions = [(0.42,0.500, 36), (0.981, 0.500, 217)]
+    create(4.53, 2.0, 47, m, positions, path, mols)
+
+    # Trimer r = 0.7 d = 1, theta = 180 P2
+    n = molecule.Trimer(0.7,1.0,180)
+    p = [(0.734, 0.250, 0), (1.177, 0.750, 0)]
+    create(3.43, 3.13, 40.5, n, p, path, mols)
+
+    # Trimer r = 0.7 d = 1, theta = 120 P2
+    o = molecule.Trimer(0.7,1.0,120)
+    q = [(0.755, 0.200, 118), (0.623, 0.800, 297)]
+    create(2.79, 3.95, 73.5, o, q, path, mols)
+

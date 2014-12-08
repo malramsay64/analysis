@@ -1,3 +1,11 @@
+//
+//  vect.cpp
+//  analysis
+//
+//  Created by Malcolm Ramsay on 7/12/2014.
+//  Copyright (c) 2014 Malcolm Ramsay. All rights reserved.
+//
+
 #include "vect.h"
 
 using namespace std;
@@ -132,4 +140,5 @@ double atan2(vect v){
 double map_angle(double x){
     return atan2(sin(x), cos(x))+PI;
 }
+
 

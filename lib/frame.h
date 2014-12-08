@@ -1,3 +1,11 @@
+//
+//  frame.h
+//  analysis
+//
+//  Created by Malcolm Ramsay on 7/12/2014.
+//  Copyright (c) 2014 Malcolm Ramsay. All rights reserved.
+//
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -5,10 +13,10 @@
 #include <string.h>
 #include <stdlib.h>
 #include <cmath>
+
 #include "particle.h"
-#include <assert.h>
+#include "molecule.h"
 #include <mutex>
-//#include "parallel.h"
 
 #ifndef FRAME_H
 #define FRAME_H
@@ -24,28 +32,16 @@ class Frame {
     double xdim[2];
     double ydim[2];
     double zdim[2];
-
-  public:
+    
+public:
     std::vector<particle> particles;
     std::vector<molecule> molecules;
     int timestep;
     int num_molecules;
     std::vector<std::mutex> m;
     
-
-    Frame(); 
-    //Frame(std::ifstream *);
-    //~Frame();
-
-    double par_rotational_relaxation(int l, Frame *init);
-    double rotational_relaxation(int, Frame * init);
-    double MSD(int i, Frame *init);
-    double MSD(Frame *init);
-    double diffusion_constant(Frame *init);
-    double average_moved(Frame *);
-    double par_average_moved(Frame *init);
-    double average_bonded_frac();
-    double average_rotation(Frame *);
+    Frame();
+    
     void set_timestep(int);
     int get_timestep();
     void set_atoms(int);
@@ -64,12 +60,11 @@ class Frame {
     int reset_neighbours();
     bool get_neighbours();
     bool get_coloured();
-
+    
     double num_contacts(std::vector<int> *);
     double num_neighbours(std::vector<int> *);
     double pairing(std::vector<int> *);
     
-
     void setx(double, double);
     void sety(double, double);
     void setz(double, double);
@@ -77,7 +72,7 @@ class Frame {
     double xlen();
     double ylen();
     double zlen();
-
+    
     double length();
     double xlength();
     double ylength();
@@ -91,4 +86,4 @@ class Frame {
     double zmax();
 };
 
-#endif
+#endif /* defined(FRAME_H) */

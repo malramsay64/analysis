@@ -1,3 +1,11 @@
+//
+//  neighbours.cpp
+//  analysis
+//
+//  Created by Malcolm Ramsay on 7/12/2014.
+//  Copyright (c) 2014 Malcolm Ramsay. All rights reserved.
+//
+
 #include "neighbours.h"
 
 using namespace std;
@@ -43,7 +51,7 @@ void *loop_neigh(Frame * frame, int begin, int end){
     }
     return 0;
 }
-        
+
 
 // This function looks for all nearest neighbours it updates the nearest neighbour list of both the particle that it found
 // and itself.
@@ -61,17 +69,17 @@ void find_neighbours(particle *a, Frame *frame){
         if (d < R_FACTOR*(a->radius + b->radius)){
             // If different molecules
             if (a->molid != b->molid){
-                lock(frame->m.at(a->m_i()),frame->m.at(b->m_i()));
+                //lock(frame->m.at(a->m_i()),frame->m.at(b->m_i()));
             }
             // In same molecule, only single lock needed
             else{
-                frame->m.at(a->m_i()).lock();
+                //frame->m.at(a->m_i()).lock();
             }
             
             // Add particles as neighbours
             a->append(b);
             b->append(a);
-                
+            
             // Add Molecules as neighbours
             if (a->molid != b->molid){
                 molecule *amol = &frame->molecules.at(a->m_i());
@@ -79,14 +87,14 @@ void find_neighbours(particle *a, Frame *frame){
                 
                 amol->add_neighbour(bmol);
                 bmol->add_neighbour(amol);
-                frame->m.at(a->m_i()).unlock();
-                frame->m.at(b->m_i()).unlock();
+                //frame->m.at(a->m_i()).unlock();
+                //frame->m.at(b->m_i()).unlock();
             }
             else {
-                frame->m.at(a->m_i()).unlock();
+                //frame->m.at(a->m_i()).unlock();
             }
         }
-	}
+    }
 }
 
 int short_range_order(Frame * frame){
@@ -186,143 +194,143 @@ int order_type(molecule * m1, molecule * m2, Frame * frame){
 }
 
 
-
 /*
-void randomise_orientation(Frame * frame){
-    ofstream file;
-    file.open("trj/out.lammpstrj", ios::out);
-    //print(frame, &file);
-    // Initialise atoms
-    int mol = 1;
-    int num_mols = frame->num_mol();
-    list<particle *> single;
-    dyn_queue<particle> large;
-    vector<particle *> small;
-    vector<particle>::iterator i;
-    // Set all particles to unallocated
-    frame->reset_traverse();
-    // Pick random first molecule
-    int r = rand() % num_mols;
-    particle *p = frame->molecules.at(r).atoms.front();
-    large = dyn_queue<particle>(p);
-    // While molecules unallocated
-    while (p){
-        // Take large particle from the front
-        p = large.pop(); 
-        cout << "Pop : " <<  p->id << endl;
-        small = vector<particle *>(0);
-        vector<particle *>::iterator it;
-        // Find all neighbours
-        for (it = p->my_neighbours.begin(); it != p->my_neighbours.end(); it++){
-            if ((*it)->type == 2) {
-                small.push_back(*it);
-            }
-        }
-        r = rand() % small.size();
-        p->molid = mol;
-        small.at(r)->molid = mol;
-        small.at(r)->traverse();
-        frame->add_link(mol-1, p->index(), false);
-        frame->add_link(mol-1, small.at(r)->index(), false);
-        mol++;
-        remove_neighbours(p,&single);
-        remove_neighbours(small.at(r),&single);
-        single.remove(small.at(r)); 
-            //single.remove(p); 
-        //print(frame, &file);
-        mol = check_single(frame, &single, &large, mol, &file);
-            //cout << "Done " << mol << " of " << num_mols << endl;
-    }
-    vector<particle>::iterator z;
-    for (z = frame->particles.begin(); z != frame->particles.end(); z++){
-        //cout << "ID: " << (*z).id << " MolID: " << (*z).molid << endl;
-    }
-    //cout << "Neighbours" << endl;
-    file.close();
-    frame->reset_neighbours();
-    par_neigh(frame);
-    //cout << "Exit" << endl;
-}
+ void randomise_orientation(Frame * frame){
+ ofstream file;
+ file.open("trj/out.lammpstrj", ios::out);
+ //print(frame, &file);
+ // Initialise atoms
+ int mol = 1;
+ int num_mols = frame->num_mol();
+ list<particle *> single;
+ dyn_queue<particle> large;
+ vector<particle *> small;
+ vector<particle>::iterator i;
+ // Set all particles to unallocated
+ frame->reset_traverse();
+ // Pick random first molecule
+ int r = rand() % num_mols;
+ particle *p = frame->molecules.at(r).atoms.front();
+ large = dyn_queue<particle>(p);
+ // While molecules unallocated
+ while (p){
+ // Take large particle from the front
+ p = large.pop();
+ cout << "Pop : " <<  p->id << endl;
+ small = vector<particle *>(0);
+ vector<particle *>::iterator it;
+ // Find all neighbours
+ for (it = p->my_neighbours.begin(); it != p->my_neighbours.end(); it++){
+ if ((*it)->type == 2) {
+ small.push_back(*it);
+ }
+ }
+ r = rand() % small.size();
+ p->molid = mol;
+ small.at(r)->molid = mol;
+ small.at(r)->traverse();
+ frame->add_link(mol-1, p->index(), false);
+ frame->add_link(mol-1, small.at(r)->index(), false);
+ mol++;
+ remove_neighbours(p,&single);
+ remove_neighbours(small.at(r),&single);
+ single.remove(small.at(r));
+ //single.remove(p);
+ //print(frame, &file);
+ mol = check_single(frame, &single, &large, mol, &file);
+ //cout << "Done " << mol << " of " << num_mols << endl;
+ }
+ vector<particle>::iterator z;
+ for (z = frame->particles.begin(); z != frame->particles.end(); z++){
+ //cout << "ID: " << (*z).id << " MolID: " << (*z).molid << endl;
+ }
+ //cout << "Neighbours" << endl;
+ file.close();
+ frame->reset_neighbours();
+ par_neigh(frame);
+ //cout << "Exit" << endl;
+ }
+ 
+ int check_single(Frame * frame, list<particle *> *single, dyn_queue<particle> *large, int mol, ofstream *file){
+ particle *p;
+ //cout << "Check " << single->size() << endl;
+ while (!single->empty()){
+ vector<particle *> neigh(0);
+ p = single->front();
+ single->pop_front();
+ if (p->molid == 0 && p->type == 2){
+ vector<particle *>::iterator it;
+ for (it = p->my_neighbours.begin(); it != p->my_neighbours.end(); it++){
+ if ((*it)->type == 1 && (*it)->molid == 0){
+ neigh.push_back(*it);
+ }
+ }
+ if (neigh.size()){
+ p->molid = mol;
+ neigh.front()->molid = mol;
+ p->traverse();
+ neigh.front()->traverse();
+ large->remove(neigh.front());
+ cout << "Allocate Single " <<  p->id << " " << neigh.front()->id << endl;
+ frame->add_link(mol-1, neigh.front()->index(), false);
+ frame->add_link(mol-1, p->index(), false);
+ mol++;
+ remove_neighbours(p,single);
+ remove_neighbours(neigh.front(),single);
+ 
+ }
+ }
+ if (p->molid == 0 && p->type == 1){
+ vector<particle *>::iterator it;
+ for (it = p->my_neighbours.begin(); it != p->my_neighbours.end(); it++){
+ if ((*it)->type == 2 && (*it)->molid == 0){
+ neigh.push_back(*it);
+ }
+ else if ((*it)->type == 1 && (*it)->molid == 0){
+ cout << "Push: " << (*it)->id << endl;
+ large->push(*it);
+ }
+ }
+ if (neigh.size()){
+ p->molid = mol;
+ neigh.front()->molid = mol;
+ cout << "Allocate large Single " <<  p->id << " " << neigh.front()->id << endl;
+ frame->add_link(mol-1, neigh.front()->index(), false);
+ frame->add_link(mol-1, p->index(), false);
+ mol++;
+ remove_neighbours(neigh.front(),single);
+ remove_neighbours(p,single);
+ 
+ }
+ }
+ print(frame, file);
+ }
+ return mol;
+ }
+ 
+ int remove_neighbours(particle *p, list<particle *> *single){
+ vector<particle *>::iterator it1,it2;
+ //cout << "Neighbours: " << p->numn() << endl;
+ for (it1 = p->my_neighbours.begin(); it1 != p->my_neighbours.end(); it1++){
+ for (it2 = (*it1)->my_neighbours.begin(); it2 != (*it1)->my_neighbours.end(); it2++){
+ if ((*it2)->id == p->id){
+ it2--;
+ (*it1)->my_neighbours.erase(it2+1);
+ }
+ }
+ if ((*it1)->molid == 0){
+ if ((*it1)->n_large() == 1 && (*it1)->type == 2){
+ cout << "Add Single" << (*it1)->id << endl;
+ single->push_back(*it1);
+ }
+ else if ((*it1)->n_small() == 1 && (*it1)->type == 1){
+ //cout << "Add Single" << (*it1)->id << endl;
+ //single->push_back(*it1);
+ }
+ }
+ }
+ p->my_neighbours.clear();
+ return 0;
+ }
+ */
 
-int check_single(Frame * frame, list<particle *> *single, dyn_queue<particle> *large, int mol, ofstream *file){
-    particle *p;
-    //cout << "Check " << single->size() << endl;
-    while (!single->empty()){
-        vector<particle *> neigh(0);
-        p = single->front();
-        single->pop_front();
-        if (p->molid == 0 && p->type == 2){
-            vector<particle *>::iterator it;
-            for (it = p->my_neighbours.begin(); it != p->my_neighbours.end(); it++){
-                if ((*it)->type == 1 && (*it)->molid == 0){
-                    neigh.push_back(*it);
-                }
-            }
-            if (neigh.size()){
-                p->molid = mol;
-                neigh.front()->molid = mol;
-                p->traverse();
-                neigh.front()->traverse();
-                large->remove(neigh.front());
-                cout << "Allocate Single " <<  p->id << " " << neigh.front()->id << endl;
-                frame->add_link(mol-1, neigh.front()->index(), false);
-                frame->add_link(mol-1, p->index(), false);
-                mol++;
-                remove_neighbours(p,single);
-                remove_neighbours(neigh.front(),single);
-            
-            }
-        }
-        if (p->molid == 0 && p->type == 1){
-            vector<particle *>::iterator it;
-            for (it = p->my_neighbours.begin(); it != p->my_neighbours.end(); it++){
-                if ((*it)->type == 2 && (*it)->molid == 0){
-                    neigh.push_back(*it);
-                }
-                else if ((*it)->type == 1 && (*it)->molid == 0){
-                    cout << "Push: " << (*it)->id << endl;
-                    large->push(*it);
-                }
-            }
-            if (neigh.size()){
-                p->molid = mol;
-                neigh.front()->molid = mol;
-                cout << "Allocate large Single " <<  p->id << " " << neigh.front()->id << endl;
-                frame->add_link(mol-1, neigh.front()->index(), false);
-                frame->add_link(mol-1, p->index(), false);
-                mol++;
-                remove_neighbours(neigh.front(),single);
-                remove_neighbours(p,single);
-            
-            }
-        }
-        print(frame, file);
-    }
-    return mol;
-}
-
-int remove_neighbours(particle *p, list<particle *> *single){ 
-    vector<particle *>::iterator it1,it2;
-    //cout << "Neighbours: " << p->numn() << endl;
-    for (it1 = p->my_neighbours.begin(); it1 != p->my_neighbours.end(); it1++){
-        for (it2 = (*it1)->my_neighbours.begin(); it2 != (*it1)->my_neighbours.end(); it2++){
-            if ((*it2)->id == p->id){
-                it2--;
-                (*it1)->my_neighbours.erase(it2+1);
-            }
-        }
-        if ((*it1)->molid == 0){
-            if ((*it1)->n_large() == 1 && (*it1)->type == 2){
-                cout << "Add Single" << (*it1)->id << endl;
-                single->push_back(*it1);
-            }
-            else if ((*it1)->n_small() == 1 && (*it1)->type == 1){
-                //cout << "Add Single" << (*it1)->id << endl;
-                //single->push_back(*it1);
-            }
-        }
-    }
-    p->my_neighbours.clear();
-    return 0;
-}
-*/

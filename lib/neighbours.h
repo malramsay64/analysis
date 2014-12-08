@@ -1,24 +1,34 @@
-#include "functions.h"
-#include "frame.h"
-//#include "parallel.h"
-#include "mol_functions.h"
+//
+//  neighbours.h
+//  analysis
+//
+//  Created by Malcolm Ramsay on 7/12/2014.
+//  Copyright (c) 2014 Malcolm Ramsay. All rights reserved.
+//
+
+#ifndef NEIGHBOURS_H
+#define NEIGHBOURS_H
+
 #include <cmath>
 #include <queue>
 #include <thread>
 #include <iostream>
-//#include "output.h"
 
-#ifndef NEIGHBOURS_H
-#define NEIGHBOURS_H 
+#include "functions.h"
+#include "frame.h"
+#include "mol_functions.h"
+#include "dyn_queue.h"
 
-static int NUM_THREADS = 4;
+static int NUM_THREADS = 1;
 
 int par_neigh(Frame *frame);
 void *loop_neigh(Frame * frame, int begin, int end);
 void find_neighbours(particle *a, Frame *frame);
 int short_range_order(Frame * frame);
 void randomise_orientation(Frame * frame);
-int remove_neighbours(particle *, std::list<particle*>*); 
+int remove_neighbours(particle *, std::list<particle*>*);
 int check_single(Frame *, std::list<particle *> *, dyn_queue<particle> *,int, std::ofstream *);
 int order_type(molecule * m1, molecule * m2, Frame * frame);
-#endif
+
+#endif /* endif(NEIGHBOURS_H) */
+

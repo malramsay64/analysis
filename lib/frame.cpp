@@ -1,5 +1,5 @@
 #include "frame.h"
-#include <sstream> 
+#include <sstream>
 
 using namespace std;
 
@@ -10,14 +10,6 @@ Frame::Frame(){
     coloured = false;
     neighbours = false;
 }
-
-/*
-Frame::~Frame(){
-    delete &molecules;
-    delete &particles;
-    delete &m;
-}
-*/
 
 double Frame::dist(vect v1, vect v2){
     return direction(v1,v2).length();
@@ -51,7 +43,7 @@ int Frame::num_mol(){
 }
 
 void Frame::add_particle(particle *p){
-   particles.push_back(particle(*p)); 
+    particles.push_back(particle(*p));
 }
 
 void Frame::add_link(int molpos, int ppos){
@@ -96,7 +88,7 @@ double Frame::num_neighbours(vector<int> *dist){
 
 double Frame::pairing(vector<int> *dist){
     std::vector<molecule>::iterator mols;
-    int n = 0; 
+    int n = 0;
     int total = 0;
     for ( mols = molecules.begin(); mols != molecules.end(); ++mols){
         for (unsigned int i = 0; i < (*mols).my_neighbours.size(); i++){
@@ -153,31 +145,25 @@ void Frame::setz(double min, double max){
     zdim[1] = max;
 }
 
-// Length
+// Reduced Length
 double Frame::xlen(){
-    return 2*PI;//xdim[1] - xdim[0];
+    return 2*PI;
 }
 double Frame::ylen(){
-    return 2*PI;//ydim[1] - ydim[0];
+    return 2*PI;
 }
 double Frame::zlen(){
     return zdim[1] - zdim[0];
 }
 
+
+// Length Factor
 double Frame::length(){
-    double l = (xlength()+ylength())/2; 
+    double l = (xlength()+ylength())/2;
     if (abs(l - xlength()) > EPS){
         cerr << "Box not square " << xlength() << " " << ylength() << endl;
     }
     return l;
-}
-
-void Frame::set_timestep(int t){
-    timestep = t;
-}
-
-int Frame::get_timestep(){
-    return timestep;
 }
 
 double Frame::xlength(){
@@ -190,6 +176,15 @@ double Frame::ylength(){
 
 double Frame::zlength(){
     return (zmax() - zmin())/zlen();
+}
+
+
+void Frame::set_timestep(int t){
+    timestep = t;
+}
+
+int Frame::get_timestep(){
+    return timestep;
 }
 
 // Min

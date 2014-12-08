@@ -1,3 +1,11 @@
+//
+//  functions.cpp
+//  analysis
+//
+//  Created by Malcolm Ramsay on 7/12/2014.
+//  Copyright (c) 2014 Malcolm Ramsay. All rights reserved.
+//
+
 #include <assert.h>
 #include "functions.h"
 
@@ -25,7 +33,7 @@ std::string split(std::string s, char delim){
 std::string basename(std::string s){
     size_t p;
     char delim = '/';
-    p = s.find_last_of(delim); 
+    p = s.find_last_of(delim);
     return s.substr(p+1);
 }
 
@@ -43,3 +51,4 @@ double legendre(int l, double x){
             return 0;
     }
 }
+

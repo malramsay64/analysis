@@ -1,29 +1,22 @@
-#include <pthread.h>
+//
+//  parallel.h
+//  analysis
+//
+//  Created by Malcolm Ramsay on 7/12/2014.
+//  Copyright (c) 2014 Malcolm Ramsay. All rights reserved.
+//
+
+#ifndef MY_PARALLEL
+#define MY_PARALLEL
+
 #include <thread>
+
 #include "vect.h"
 #include "particle.h"
 #include "frame.h"
 #include "mol_functions.h"
 #include "neighbours.h"
-
-#ifndef MY_PARALLEL
-#define MY_PARALLEL
-
-//#define NUM_THREADS 1
-
-class my_mean{
-    int n;
-    double m;
-    double stdev;
-  public:
-    my_mean();
-    double add(double);
-    double get_mean();
-    double get_stdev();
-    double combine(my_mean);
-    
-};
-
+#include "my_mean.h"
 
 template <class type> void * mean_single_thread(std::vector<type> *l1, int begin, int end, double (*f)(type *, Frame *), Frame *, my_mean *res);
 template <class type> void * mean_thread(std::vector<type> *l1, std::vector<type> *l2, int begin, int end, vect (*f)(type *, Frame *), double (*diff)(vect, vect, int), Frame *, int l, my_mean *res);
@@ -40,5 +33,9 @@ double par_diffusion_constant(Frame *init, Frame *curr);
 double bonded_frac(Frame *frame);
 double par_average_rotation(Frame *init, Frame *curr);
 int order_parameter(int reference, std::ofstream *file, Frame *frame);
+double par_local_order(Frame * frame);
+double par_global_order(Frame * frame);
+double par_circle_order(Frame * frame);
 
 #endif
+

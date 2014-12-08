@@ -1,35 +1,16 @@
+//
+//  parallel.cpp
+//  analysis
+//
+//  Created by Malcolm Ramsay on 7/12/2014.
+//  Copyright (c) 2014 Malcolm Ramsay. All rights reserved.
+//
+
 #include "parallel.h"
 
 
 using namespace std;
 
-my_mean::my_mean(){
-    m = 0;
-    stdev = 0;
-    n = 0;
-}
-
-double my_mean::add(double val){
-    double mprev = m;
-    n += 1;
-    m += (val - m)/(n);
-    stdev += (val- m) * (val - mprev);
-    return m;
-}
-
-double my_mean::get_mean(){
-    return m;
-}
-
-double my_mean::get_stdev(){
-    return stdev;
-}
-
-double my_mean::combine(my_mean val){
-    m = (n*m + val.n+val.m)/(n+val.n);
-    n += val.n;
-    return m;
-}
 
 template <class type> my_mean par_mean(vector<type> *list, double (*f)(type *, Frame *), Frame *frame){
     int size = ceil(list->size()/NUM_THREADS);
@@ -39,7 +20,7 @@ template <class type> my_mean par_mean(vector<type> *list, double (*f)(type *, F
     for (int i = 0; i < NUM_THREADS; i++){
         begin = i*size;
         end = (i+1)*size;
-        threads.push_back(thread(&mean_single_thread<type>, list, begin, end, f, frame, &means[i])); 
+        threads.push_back(thread(&mean_single_thread<type>, list, begin, end, f, frame, &means[i]));
     }
     my_mean mean;
     for (int j = 0; j < NUM_THREADS; j++){
@@ -65,12 +46,12 @@ template <class type> my_mean par_mean(vector<type> *list1, vector<type> *list2,
     int size = ceil(list1->size()/NUM_THREADS);
     vector<thread> threads;
     threads.reserve(NUM_THREADS);
-    int begin, end; 
+    int begin, end;
     vector<my_mean> means(NUM_THREADS);
     for (int i = 0; i < NUM_THREADS; i++){
         begin = i*size;
         end = (i+1)*size;
-        threads.push_back(thread(&mean_thread<type>, list1, list2, begin, end, f, diff, frame, l, &means[i])); 
+        threads.push_back(thread(&mean_thread<type>, list1, list2, begin, end, f, diff, frame, l, &means[i]));
     }
     my_mean mean;
     for (int j = 0; j < NUM_THREADS; j++){
@@ -86,9 +67,9 @@ template <class type> void * mean_thread(vector<type> *l1, vector<type> *l2, int
     double val;
     typename vector<type>::iterator i1, i2;
     for (i1 = l1->begin()+begin, i2 = l2->begin()+begin;\
-            i1 != l1->begin()+end && i1 != l1->end() &&\
-            i2 != l2->begin()+end && i1 != l2->end();\
-            i1++, i2++){
+         i1 != l1->begin()+end && i1 != l1->end() &&\
+         i2 != l2->begin()+end && i1 != l2->end();\
+         i1++, i2++){
         //cout << i << " " << args->begin << " " << args->end << endl;
         x1 = (*f)(&(*i1), frame);
         x2 = (*f)(&(*i2), frame);
@@ -144,6 +125,18 @@ double par_average_rotation(Frame *init, Frame *curr){
     return par_mean<molecule>(&init->molecules, &curr->molecules, &orientation, &v_angle, init, 0).get_mean();
 }
 
+double par_local_order(Frame *frame){
+    return par_mean<molecule>(&frame->molecules, &local_order, frame).get_mean();
+}
+
+double par_global_order(Frame * frame){
+    return par_mean<molecule>(&frame->molecules, &global_order, frame).get_mean();
+}
+
+double par_circle_order(Frame * frame){
+    return par_mean<particle>(&frame->particles, &circle_order, frame).get_mean();
+}
+
 int order_parameter(int reference, ofstream *file, Frame *frame){
     par_neigh(frame);
     vector<molecule>::iterator mol;
@@ -176,4 +169,7 @@ int order_parameter(int reference, ofstream *file, Frame *frame){
     }
     return 0;
 }
+
+
+
 

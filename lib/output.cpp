@@ -1,36 +1,43 @@
+//
+//  output.cpp
+//  analysis
+//
+//  Created by Malcolm Ramsay on 7/12/2014.
+//  Copyright (c) 2014 Malcolm Ramsay. All rights reserved.
+//
+
 #include "output.h"
 
 using namespace std;
 
 
-int MSD(int num_frames, vector<Frame *> frames){
+int print_prop(vector<Frame *> frames, double (*func)(Frame *, Frame *), string fname){
     ofstream file;
-    file.open("msd.csv", ios::out);
-    file << "Timestep,MSD(t)" << endl;
-    for (int i = 1; i < num_frames; i++){
-        file << frames.at(i)->timestep << "," \
-            << par_MSD(frames.front(),frames.at(i)) << endl;
+    file.open(fname.c_str(), ios::out);
+    file << "Timestep,function" << endl;
+    vector<Frame *>::iterator f;
+    for (f = frames.begin(); f != frames.end(); f++){
+        file << (*f)->timestep << "," \
+        << (*func)(frames.front(),(*f)) << endl;
     }
     file.close();
     return 0;
+
 }
 
-int diffusion(int num_frames, vector<Frame *> frames){
-    ofstream file;
-    file.open("diffusion.csv", ios::out);
-    file << "Timestep,D(t)" << endl;
-    for (int i = 1; i < num_frames; i++){
-        file << frames.at(i)->timestep << "," << par_diffusion_constant(frames.front(), frames.at(i)) << endl;
-    }
-    file.close();
-    return 0;
+int MSD(vector<Frame *> frames){
+    return print_prop(frames, &par_MSD, "msd.csv");
 }
 
-int rotation(int num_frames, vector <Frame *> frames){
+int diffusion(vector<Frame *> frames){
+    return print_prop(frames, &par_diffusion_constant, "diffusion.csv");
+}
+
+int rotation(vector <Frame *> frames){
     ofstream file;
     file.open("rotation.csv", ios::out);
     file << "Timestep,C1,C2,C3,C4" << endl;
-    double c1,c2,c3,c4;
+    double c1,c2,c3,c4, tend;
     int t1 = 0, t2 = 0, t3 = 0, t4 = 0;
     vector<Frame *>::iterator f;
     for (f = frames.begin()+1; f != frames.end() ; f++){
@@ -54,10 +61,11 @@ int rotation(int num_frames, vector <Frame *> frames){
             t4 = (*f)->timestep;
         }
     }
-    cout << "C1: " << t1 << endl;
-    cout << "C2: " << t2 << endl;
-    cout << "C3: " << t3 << endl;
-    cout << "C4: " << t4 << endl;
+    tend = frames.back()->timestep;
+    cout << "C1 Relaxation: " << t1/tend << endl;
+    cout << "C2 Relaxation: " << t2/tend << endl;
+    cout << "C3 Relaxation: " << t3/tend << endl;
+    cout << "C4 Relaxation: " << t4/tend << endl;
     file.close();
     return 0;
 }
@@ -68,28 +76,30 @@ int order_parameter(string o, int reference, Frame *frame){
     char fname[30];
     snprintf(fname,30, "%s/%010i.csv", o.c_str(), frame->timestep);
     file.open(fname, ios::out);
-    order_parameter(reference, &file, frame);    
+    order_parameter(reference, &file, frame);
     file.close();
     return 0;
 }
 
-void print(double (Frame::*f)(vector<int> *), Frame *frame, char *fname){
+void print(double (Frame::*f)(vector<int> *), Frame *frame, string str){
+    char fname[30];
+    snprintf(fname, 30, "stats/%s.csv", str.c_str());
     vector<int> dist(15,0);
     ofstream file;
     file.open(fname, ios::out);
-    file << "#Average " << (frame->*f)(&dist) << endl;
+    cout << str << ": " << (frame->*f)(&dist)/10 << endl;
     vector<int>::iterator i;
     for (i = dist.begin(); i != dist.end(); i++){
-        file << i - dist.begin() << " " << *i << endl; 
+        file << i - dist.begin() << " " << *i << endl;
     }
     file.close();
 }
 
 int stats(Frame *frame){
     par_neigh(frame);
-    print(&Frame::num_contacts, frame , (char *)"stats/num_contacts.dat");
-    print(&Frame::num_neighbours, frame, (char *)"stats/num_neighbours.dat");
-    print(&Frame::pairing, frame, (char *)"stats/pairing.dat");
+    print(&Frame::num_contacts, frame , "num_contacts");
+    print(&Frame::num_neighbours, frame, "num_neighbours");
+    print(&Frame::pairing, frame, "pairing");
     return 0;
 }
 
@@ -139,8 +149,8 @@ int print_angles(Frame * frame){
     }
     for (int i = 0; i < n_bins; i++){
         file << range/(n_bins) * (i) * 180/PI << ","\
-            << absolute.at(i)/(float) frame->num_mol() << ","\
-            << relative.at(i)/(((float) frame->num_mol())/2 * frame->num_mol()) << endl;  
+        << absolute.at(i)/(float) frame->num_mol() << ","\
+        << relative.at(i)/(((float) frame->num_mol())/2 * frame->num_mol()) << endl;
     }
     return 0;
 }
@@ -165,4 +175,5 @@ int print_gnuplot(Frame * frame){
     file.close();
     return 0;
 }
+
 

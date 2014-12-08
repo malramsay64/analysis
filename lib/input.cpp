@@ -1,3 +1,11 @@
+//
+//  input.cpp
+//  analysis
+//
+//  Created by Malcolm Ramsay on 7/12/2014.
+//  Copyright (c) 2014 Malcolm Ramsay. All rights reserved.
+//
+
 #include "input.h"
 #include <algorithm>
 #include <sstream>
@@ -11,20 +19,20 @@ int read_data(std::ifstream *myfile, Frame *frame){
     int mols = 0;
     string line;
     // TIMESTEP
-	if (!getline(*myfile, line)){
+    if (!getline(*myfile, line)){
         //cout << line << endl;
         throw 20;
-	}
+    }
     *myfile >> timestep;
     frame->set_timestep(timestep);
     // NUMBER OF ATOMS
-	getline(*myfile, line);
-	getline(*myfile, line);
-	*myfile >> a;
+    getline(*myfile, line);
+    getline(*myfile, line);
+    *myfile >> a;
     frame->set_atoms(a);
     // BOX BOUNDS
-	getline(*myfile, line);
-	getline(*myfile, line);
+    getline(*myfile, line);
+    getline(*myfile, line);
     
     
     // X
@@ -39,20 +47,20 @@ int read_data(std::ifstream *myfile, Frame *frame){
     stringstream sy(line);
     y[2] = 0;
     sy >> y[0] >> y[1] >> y[2];
-	frame->sety(y[0], y[1] - abs(y[2]));
-
-	// Z
+    frame->sety(y[0], y[1] - abs(y[2]));
+    
+    // Z
     getline(*myfile, line);
     stringstream sz(line);
     z[2] = 0;
     sz >> z[0] >> z[1] >> z[2];
-	frame->setz(z[0], z[1]-abs(z[2]));
-	
+    frame->setz(z[0], z[1]-abs(z[2]));
+    
     //ITEM: ATOMS
-	getline(*myfile, line);
+    getline(*myfile, line);
     particle *p;
     p = new particle();
-	for (int i=0; i < a; i++){
+    for (int i=0; i < a; i++){
         *myfile >> p->id >> p->molid >> p->type >> p->radius >> p->pos[XX] >> p->pos[YY] >> zp;
         getline(*myfile, line);
         // Shift axes of box to 0
@@ -92,4 +100,5 @@ int read_data(std::ifstream *myfile, Frame *frame){
     //cout << molecules.size()<< endl;
     return 0;
 }
+
 

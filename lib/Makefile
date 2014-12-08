@@ -12,6 +12,7 @@ endif
 
 simple=input.o particle.o vect.o frame.o functions.o main.o 
 MODULES= input.o functions.o output.o neighbours.o frame.o parallel.o particle.o vect.o mol_functions.o main.o 
+MODULES=$($(shell ls *.cpp):.cpp=.o)
 
 VPATH=.:$(BIN_PATH)
 

@@ -1,32 +1,19 @@
-#include "particle.h"
-#include "frame.h"
-#include <list>
+//
+//  mol_functions.h
+//  analysis
+//
+//  Created by Malcolm Ramsay on 7/12/2014.
+//  Copyright (c) 2014 Malcolm Ramsay. All rights reserved.
+//
 
 #ifndef MY_MOL_FUNCTIONS
 #define MY_MOL_FUNCTIONS
 
-template <class type> class dyn_queue{
-    std::list<type *> q;
-    std::list<int> depth;
-    int push(type *, int);
-  public:
-    dyn_queue();
-    dyn_queue(type *);
-    type * pop();
-    int remove(type *);
-    int get_depth();
-};    
-
-class angle_list{
-    std::vector<double> a;
-    std::vector<int> count;
-    std::vector<double> dist;
-  public:
-    angle_list();
-    int push(double);
-    int push(double, double);
-    int print();
-};
+#include "particle.h"
+#include "frame.h"
+#include "my_mean.h"
+#include "angle_list.h"
+#include "dyn_queue.h"
 
 int get_colour(particle *p, Frame *frame);
 int set_colour(Frame *frame);
@@ -37,5 +24,8 @@ double angle(molecule *, Frame *);
 int colourise(Frame *frame);
 angle_list like_me(Frame *frame);
 double local_order(molecule * m, Frame * frame);
+double global_order(molecule *m, Frame * frame);
+double circle_order(particle * p, Frame * frame);
 
-#endif
+#endif /* defined(MY_MOL_FUNCTIONS) */
+

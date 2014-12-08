@@ -1,3 +1,11 @@
+//
+//  input.h
+//  analysis
+//
+//  Created by Malcolm Ramsay on 7/12/2014.
+//  Copyright (c) 2014 Malcolm Ramsay. All rights reserved.
+//
+
 #include <iostream>
 #include <string>
 #include <string.h>
@@ -7,19 +15,15 @@
 
 #include "particle.h"
 #include "frame.h"
+#include "constants.h"
 
-#define FALSE 1
-#define TRUE 0
 
-#ifndef PI
-#define PI 3.14159265358979323846
-#endif
 
 #ifndef INPUT_H
 #define INPUT_H
 
 // Variables
 int read_data(std::ifstream *myfile, Frame *frame);
-int read_data(std::ifstream *myfile);
 
-#endif 
+#endif /* defined(INPUT_H) */
+

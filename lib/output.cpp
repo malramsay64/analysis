@@ -83,7 +83,7 @@ int order_parameter(string o, int reference, Frame *frame){
 
 void print(double (Frame::*f)(vector<int> *), Frame *frame, string str){
     char fname[30];
-    snprintf(fname, 30, "stats/%s.csv", str.c_str());
+    snprintf(fname, 30, "stats/%s.dat", str.c_str());
     vector<int> dist(15,0);
     ofstream file;
     file.open(fname, ios::out);

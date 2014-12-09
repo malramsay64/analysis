@@ -97,8 +97,8 @@ void print(double (Frame::*f)(vector<int> *), Frame *frame, string str){
 
 int stats(Frame *frame){
     par_neigh(frame);
-    print(&Frame::num_contacts, frame , "num_contacts");
-    print(&Frame::num_neighbours, frame, "num_neighbours");
+    print(&Frame::num_contacts, frame , "contacts");
+    print(&Frame::num_neighbours, frame, "neighbours");
     print(&Frame::pairing, frame, "pairing");
     return 0;
 }

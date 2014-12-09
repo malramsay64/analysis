@@ -161,7 +161,7 @@ int order_parameter(int reference, ofstream *file, Frame *frame){
             v = m->COM();
             d = frame->direction(v,com);
             theta = atan2(d) + PI - rot + PI/2;
-            orientation = angle(&(*m), frame) - angle(&(*mol),frame);
+            //orientation = angle(&(*m), frame) - angle(&(*mol),frame);
             if (d.length() < ORDER_LEN){
                 *file << theta << "," << d.length() << "," << 3 << ","  << endl;
             }

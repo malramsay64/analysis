@@ -139,7 +139,7 @@
 		D44E43BE1A33DD9C0095271F /* test */ = {
 			isa = PBXGroup;
 			children = (
-				D44E43BF1A33DDCA0095271F /* out.lammpstrj */,
+				D463476B1A37D5290052D848 /* out.lammpstrj */,
 			);
 			name = test;
 			sourceTree = "<group>";

@@ -36,13 +36,13 @@
 
 /* Begin PBXFileReference section */
 		D44E43811A33DCB70095271F /* analysis */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = analysis; sourceTree = BUILT_PRODUCTS_DIR; };
-		D44E438E1A33DD2A0095271F /* createCells.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = createCells.py; path = ../lib/createCells.py; sourceTree = "<group>"; };
-		D44E438F1A33DD2A0095271F /* density.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = density.py; path = ../lib/density.py; sourceTree = "<group>"; };
-		D44E43911A33DD2A0095271F /* files.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = files.py; path = ../lib/files.py; sourceTree = "<group>"; };
-		D44E439E1A33DD2A0095271F /* makeplot.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = makeplot.py; path = ../lib/makeplot.py; sourceTree = "<group>"; };
-		D44E43A11A33DD2A0095271F /* molecule.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = molecule.py; path = ../lib/molecule.py; sourceTree = "<group>"; };
-		D44E43AD1A33DD2A0095271F /* testInput.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = testInput.py; path = ../lib/testInput.py; sourceTree = "<group>"; };
-		D44E43AE1A33DD2A0095271F /* unitCell.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = unitCell.py; path = ../lib/unitCell.py; sourceTree = "<group>"; };
+		D44E438E1A33DD2A0095271F /* createCells.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = createCells.py; path = ../pylib/createCells.py; sourceTree = SOURCE_ROOT; };
+		D44E438F1A33DD2A0095271F /* density.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = density.py; path = ../pylib/density.py; sourceTree = SOURCE_ROOT; };
+		D44E43911A33DD2A0095271F /* files.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = files.py; path = ../pylib/files.py; sourceTree = SOURCE_ROOT; };
+		D44E439E1A33DD2A0095271F /* makeplot.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = makeplot.py; path = ../pylib/makeplot.py; sourceTree = SOURCE_ROOT; };
+		D44E43A11A33DD2A0095271F /* molecule.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = molecule.py; path = ../pylib/molecule.py; sourceTree = SOURCE_ROOT; };
+		D44E43AD1A33DD2A0095271F /* testInput.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = testInput.py; path = ../pylib/testInput.py; sourceTree = SOURCE_ROOT; };
+		D44E43AE1A33DD2A0095271F /* unitCell.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = unitCell.py; path = ../pylib/unitCell.py; sourceTree = SOURCE_ROOT; };
 		D44E43BF1A33DDCA0095271F /* out.lammpstrj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = out.lammpstrj; path = ../test/out.lammpstrj; sourceTree = "<group>"; };
 		D44E43F01A341D4C0095271F /* frame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = frame.cpp; path = ../lib/frame.cpp; sourceTree = "<group>"; };
 		D44E43F11A341D4C0095271F /* frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = frame.h; path = ../lib/frame.h; sourceTree = "<group>"; };

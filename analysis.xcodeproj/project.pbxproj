@@ -43,7 +43,6 @@
 		D44E43A11A33DD2A0095271F /* molecule.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = molecule.py; path = ../lib/molecule.py; sourceTree = "<group>"; };
 		D44E43AD1A33DD2A0095271F /* testInput.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = testInput.py; path = ../lib/testInput.py; sourceTree = "<group>"; };
 		D44E43AE1A33DD2A0095271F /* unitCell.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = unitCell.py; path = ../lib/unitCell.py; sourceTree = "<group>"; };
-		D44E43BF1A33DDCA0095271F /* out.lammpstrj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = out.lammpstrj; path = ../test/out.lammpstrj; sourceTree = "<group>"; };
 		D44E43F01A341D4C0095271F /* frame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = frame.cpp; path = ../lib/frame.cpp; sourceTree = "<group>"; };
 		D44E43F11A341D4C0095271F /* frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = frame.h; path = ../lib/frame.h; sourceTree = "<group>"; };
 		D44E43F21A341D4C0095271F /* functions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = functions.cpp; path = ../lib/functions.cpp; sourceTree = "<group>"; };
@@ -63,6 +62,7 @@
 		D44E44071A341D4C0095271F /* particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = particle.h; path = ../lib/particle.h; sourceTree = "<group>"; };
 		D44E44091A341D4C0095271F /* vect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = vect.cpp; path = ../lib/vect.cpp; sourceTree = "<group>"; };
 		D44E440A1A341D4C0095271F /* vect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = vect.h; path = ../lib/vect.h; sourceTree = "<group>"; };
+		D463476B1A37D5290052D848 /* out.lammpstrj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = out.lammpstrj; path = work/out.lammpstrj; sourceTree = "<group>"; };
 		D4E6D7A31A3598C500A9D7F6 /* angle_list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = angle_list.h; path = lib/angle_list.h; sourceTree = SOURCE_ROOT; };
 		D4E6D7A41A3598C500A9D7F6 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = constants.h; path = lib/constants.h; sourceTree = SOURCE_ROOT; };
 		D4E6D7A51A3598C500A9D7F6 /* dyn_queue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dyn_queue.cpp; path = lib/dyn_queue.cpp; sourceTree = SOURCE_ROOT; };
@@ -139,7 +139,7 @@
 		D44E43BE1A33DD9C0095271F /* test */ = {
 			isa = PBXGroup;
 			children = (
-				D44E43BF1A33DDCA0095271F /* out.lammpstrj */,
+				D463476B1A37D5290052D848 /* out.lammpstrj */,
 			);
 			name = test;
 			sourceTree = "<group>";

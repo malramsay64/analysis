@@ -1,0 +1,1 @@
+#!/usr/bin/pythonimport densityimport sysif __name__ == "__main__":    if len(sys.argv) > 3:        inFilename, outFilename  = sys.argv[1:3]        props = sys.argv[3:]        f = density.thermo(inFilename)        f.output(outFilename, *props)        

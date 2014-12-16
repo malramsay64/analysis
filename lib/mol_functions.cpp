@@ -60,16 +60,19 @@ angle_list like_me(Frame *frame){
     angle_list angles;
     vect com1, com2, d;
     for (mol = frame->molecules.begin(); mol != frame->molecules.end(); mol++){
-        dyn_queue<molecule> queue(&(*mol));
+        dyn_queue<molecule> queue;
         molecule * m;
+        queue.push(&(*mol), 0);
         queue.pop();
         m = queue.pop();
         com1 = (*mol).COM();
-        while (queue.get_depth() < 3 && m){
+        int c = 0;
+        while (queue.get_depth() < 4 && m){
             if (m->get_colour() == (*mol).get_colour()){
                 com2 = m->COM();
                 d = direction(com1,com2);
                 angles.push(atan2(d), (d*frame->size()).length());
+                c++;
             }
             m = queue.pop();
         }

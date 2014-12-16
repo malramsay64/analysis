@@ -13,59 +13,58 @@
 #include <iostream>
 #include <cmath>
 
+
+#include "my_mean.h"
 #include "constants.h"
 
 static double deltaA = 5*PI/180;
 static double deltaD = 0.15;
 
 class angle_list{
-    std::vector<double> a;
-    std::vector<int> count;
-    std::vector<double> dist;
+    std::vector<my_mean> a;
+    std::vector<my_mean> dist;
 public:
     
     angle_list(){
-        a = std::vector<double>(0,0);
+       a = std::vector<my_mean>(0);
     };
     
     int push(double d){
         for (int i = 0; i < a.size(); i++){
-            if (abs(d-a.at(i)) < deltaA){
-                a.at(i) += (d-a.at(i))/count.at(i);
-                count.at(i)++;
+            if (abs(d-a.at(i).get_mean()) < deltaA){
+                a.at(i).add(d-a.at(i).get_mean());
                 return i+1;
             }
         }
-        a.push_back(d);
-        count.push_back(1);
+        a.push_back(my_mean());
+        a.back().add(d);
         return a.size();
     }
     
     int push(double angle, double d){
         for (int i = 0; i < a.size(); i++){
-            if (abs(angle-a.at(i)) < deltaA && abs(d-dist.at(i)) < deltaD){
-                a.at(i) += (angle-a.at(i))/count.at(i);
-                dist.at(i) += (d-dist.at(i))/count.at(i);
-                count.at(i)++;
+            if (fmod(angle-a.at(i).get_mean(), PI) < deltaA && abs(d-dist.at(i).get_mean()) < deltaD){
+                a.at(i).add(fmod(fabs(angle), PI));
                 return i+1;
             }
         }
-        a.push_back(angle);
-        dist.push_back(d);
-        count.push_back(1);
+        a.push_back(my_mean());
+        dist.push_back(my_mean());
+        a.back().add(fabs(angle));
+        dist.back().add(d);
         return a.size();
  
     }
     
-    int print(){
+    int print(std::ofstream * file){
         if (dist.size() == a.size()){
             for (int i = 0; i < a.size(); i++){
-                std::cout << (a.at(i)+PI)*180/PI << " " << dist.at(i) << std::endl;
+                *file << (a.at(i).get_mean())*180/PI << " " << dist.at(i).get_mean() << " " << a.at(i).get_count() << std::endl;
             }
         }
         else {
             for (int i = 0; i < a.size(); i++){
-                std::cout << (a.at(i)+PI)*180/PI << std::endl;
+                *file << (a.at(i).get_mean())*180/PI << std::endl;
             }
         }
         return 0;

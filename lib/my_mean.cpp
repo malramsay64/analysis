@@ -35,3 +35,7 @@ double my_mean::combine(my_mean val){
     n += val.n;
     return m;
 }
+
+int my_mean::get_count(){
+    return n;
+}

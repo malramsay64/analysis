@@ -19,6 +19,7 @@ public:
     double get_mean();
     double get_stdev();
     double combine(my_mean);
+    int get_count();
     
 };
 

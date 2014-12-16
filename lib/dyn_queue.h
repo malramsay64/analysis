@@ -11,17 +11,24 @@
 
 #include <list>
 #include <vector>
+#include <set>
 
 template <class type> class dyn_queue{
     std::list<type *> q;
     std::list<int> depth;
-    int push(type *, int);
+    std::set<type *> traversed;
 public:
+    int push(type *, int);
     dyn_queue(type *);
+    dyn_queue();
     type * pop();
     int remove(type *);
     int get_depth();
 };
+
+template <class type>
+dyn_queue<type>::dyn_queue(){
+}
 
 template <class type>
 dyn_queue<type>::dyn_queue(type * t){
@@ -30,8 +37,8 @@ dyn_queue<type>::dyn_queue(type * t){
 
 template <class type>
 int dyn_queue<type>::push(type * t, int d){
-    if (!t->get_traversed()){
-        t->traverse();
+    if (!traversed.count(t)){
+        traversed.insert(t);
         q.push_back(t);
         depth.push_back(d);
     }

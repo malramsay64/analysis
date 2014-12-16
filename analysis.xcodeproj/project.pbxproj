@@ -36,13 +36,6 @@
 
 /* Begin PBXFileReference section */
 		D44E43811A33DCB70095271F /* analysis */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = analysis; sourceTree = BUILT_PRODUCTS_DIR; };
-		D44E438E1A33DD2A0095271F /* createCells.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = createCells.py; path = pylib/createCells.py; sourceTree = SOURCE_ROOT; };
-		D44E438F1A33DD2A0095271F /* density.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = density.py; path = pylib/density.py; sourceTree = SOURCE_ROOT; };
-		D44E43911A33DD2A0095271F /* files.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = files.py; path = pylib/files.py; sourceTree = SOURCE_ROOT; };
-		D44E439E1A33DD2A0095271F /* makeplot.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = makeplot.py; path = pylib/makeplot.py; sourceTree = SOURCE_ROOT; };
-		D44E43A11A33DD2A0095271F /* molecule.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = molecule.py; path = pylib/molecule.py; sourceTree = SOURCE_ROOT; };
-		D44E43AD1A33DD2A0095271F /* testInput.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = testInput.py; path = pylib/testInput.py; sourceTree = SOURCE_ROOT; };
-		D44E43AE1A33DD2A0095271F /* unitCell.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = unitCell.py; path = pylib/unitCell.py; sourceTree = SOURCE_ROOT; };
 		D44E43F01A341D4C0095271F /* frame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = frame.cpp; path = lib/frame.cpp; sourceTree = SOURCE_ROOT; };
 		D44E43F11A341D4C0095271F /* frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = frame.h; path = lib/frame.h; sourceTree = SOURCE_ROOT; };
 		D44E43F21A341D4C0095271F /* functions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = functions.cpp; path = lib/functions.cpp; sourceTree = SOURCE_ROOT; };
@@ -87,7 +80,6 @@
 		D44E43781A33DCB70095271F = {
 			isa = PBXGroup;
 			children = (
-				D44E43C01A33DE540095271F /* Python */,
 				D44E43BE1A33DD9C0095271F /* test */,
 				D44E43831A33DCB70095271F /* analysis */,
 				D44E43821A33DCB70095271F /* Products */,
@@ -142,20 +134,6 @@
 				D463476B1A37D5290052D848 /* out.lammpstrj */,
 			);
 			name = test;
-			sourceTree = "<group>";
-		};
-		D44E43C01A33DE540095271F /* Python */ = {
-			isa = PBXGroup;
-			children = (
-				D44E439E1A33DD2A0095271F /* makeplot.py */,
-				D44E43A11A33DD2A0095271F /* molecule.py */,
-				D44E43AD1A33DD2A0095271F /* testInput.py */,
-				D44E43AE1A33DD2A0095271F /* unitCell.py */,
-				D44E438E1A33DD2A0095271F /* createCells.py */,
-				D44E438F1A33DD2A0095271F /* density.py */,
-				D44E43911A33DD2A0095271F /* files.py */,
-			);
-			name = Python;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -66,12 +66,12 @@ public:
     int print(std::ostream * file){
         if (dist.size() == a.size()){
             for (int i = 0; i < a.size(); i++){
-                *file << (a.at(i).get_mean())*180/PI << " " << dist.at(i).get_mean() << " " << a.at(i).get_count() << std::endl;
+                *file << (a.at(i).get_mean()) << " " << dist.at(i).get_mean() << " " << a.at(i).get_count() << std::endl;
             }
         }
         else {
             for (int i = 0; i < a.size(); i++){
-                *file << (a.at(i).get_mean())*180/PI << std::endl;
+                *file << (a.at(i).get_mean()) << std::endl;
             }
         }
         return 0;

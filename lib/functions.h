@@ -28,5 +28,6 @@ std::string basename(std::string s);
 double dot_product(double *v1, double *v2, int len);
 double legendre(int l, double x);
 double dist(double, double);
+double my_mod(double, double);
 
 #endif /* defined(FUNCTIONS_H) */

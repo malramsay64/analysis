@@ -52,3 +52,11 @@ double legendre(int l, double x){
     }
 }
 
+double my_mod(double a, double b){
+    double ret = fmod(a, b);
+    if (ret < 0){
+        ret += b;
+    }
+    return ret;
+}
+

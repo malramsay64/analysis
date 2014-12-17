@@ -54,7 +54,6 @@ int graph_colour(particle *p, Frame *frame){
     return frame->molecules.at(p->m_i()).graph_colour();
 }
 
-
 angle_list like_me(Frame *frame){
     vector<molecule>::iterator mol;
     angle_list angles;

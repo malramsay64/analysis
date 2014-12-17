@@ -42,21 +42,28 @@ public:
     }
     
     int push(double angle, double d){
+        //std::cout << angle << " " << d << std::endl;
+        angle = my_mod(angle - PI/2,PI);
+        //std::cout << "Angle " << angle << std::endl;
+        double delta;
         for (int i = 0; i < a.size(); i++){
-            if (fmod(angle-a.at(i).get_mean(), PI) < deltaA && abs(d-dist.at(i).get_mean()) < deltaD){
-                a.at(i).add(fmod(fabs(angle), PI));
+            delta = acos(cos(2*(angle-a.at(i).get_mean())))/2;
+            if (delta < deltaA && abs(d-dist.at(i).get_mean()) < deltaD){
+                a.at(i).add(a.at(i).get_mean()+delta);
                 return i+1;
             }
         }
-        a.push_back(my_mean());
-        dist.push_back(my_mean());
-        a.back().add(fabs(angle));
-        dist.back().add(d);
+        if (d > 0){
+            a.push_back(my_mean());
+            dist.push_back(my_mean());
+            a.back().add(angle);
+            dist.back().add(d);
+        }
         return a.size();
  
     }
     
-    int print(std::ofstream * file){
+    int print(std::ostream * file){
         if (dist.size() == a.size()){
             for (int i = 0; i < a.size(); i++){
                 *file << (a.at(i).get_mean())*180/PI << " " << dist.at(i).get_mean() << " " << a.at(i).get_count() << std::endl;

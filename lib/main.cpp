@@ -4,6 +4,7 @@
 #include "input.h"
 #include <iomanip>
 #include "parallel.h"
+#include "unit_cell.h"
 #include <string>
 
 #define BOX 0
@@ -120,7 +121,7 @@ int main(int argc, char *argv[]){
      order_parameter(order, reference, current_frame);
      
      */
-    
+    unit_cell(current_frame);
     
     // Free memory
     vector<Frame *>::iterator i;

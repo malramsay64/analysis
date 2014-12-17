@@ -21,7 +21,7 @@ molecule::molecule (){
 }
 
 void molecule::add_neighbour(molecule *m){
-    unsigned int pos;
+    int pos;
     pos = find(my_neighbours.begin(), my_neighbours.end(), m) - my_neighbours.begin();
     // Molecule already added
     if (pos != my_neighbours.size()){

@@ -160,7 +160,7 @@ double Frame::zlen(){
 // Length Factor
 double Frame::length(){
     double l = (xlength()+ylength())/2;
-    if (abs(l - xlength()) > EPS){
+    if (fabs(l - xlength()) > EPS){
         cerr << "Box not square " << xlength() << " " << ylength() << endl;
     }
     return l;
@@ -207,5 +207,36 @@ double Frame::ymax(){
 }
 double Frame::zmax(){
     return zdim[1];
+}
+
+// Crystal Coordinates
+int Frame::set_crys(double a, double b, double theta){
+    this->a = a;
+    this->b = b;
+    this->theta = theta;
+    return 0;
+}
+
+double Frame::get_a(){
+    return a;
+}
+
+double Frame::get_b(){
+    return b;
+}
+
+double Frame::get_theta(){
+    return theta;
+}
+
+double Frame::get_height(){
+    return b*sin(theta);
+}
+
+vect Frame::cartesian(vect v){
+    v /= 2*PI;
+    v.x = v.x*a + v.y*b*cos(theta);
+    v.y = v.y*b*sin(theta);
+    return v;
 }
 

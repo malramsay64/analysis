@@ -91,9 +91,9 @@ int main(int argc, char *argv[]){
     
     angle_list angles;
     angles = like_me(current_frame);
-    ofstream cell;
-    cell.open("cell.dat");
-    angles.print(&cell);
+    //ofstream cell;
+    //cell.open("cell.dat");
+    //angles.print(&cell);
     
     fprintf(stderr, "Frames Read: %i\n", num_frames);
     

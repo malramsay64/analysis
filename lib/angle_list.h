@@ -29,18 +29,8 @@ public:
        a = std::vector<my_mean>(0);
     };
     
-    int push(double d){
-        double delta;
-        for (int i = 0; i < a.size(); i++){
-            delta = acos(cos(d-a.at(i).get_mean()));
-            if (delta < deltaA){
-                a.at(i).add(a.at(i).get_mean()+delta);
-                return i+1;
-            }
-        }
-        a.push_back(my_mean());
-        a.back().add(d);
-        return a.size();
+    int push(double angle){
+        return push(angle, 0);
     }
     
     int push(double angle, double d){
@@ -55,10 +45,13 @@ public:
             if (fabs(dA) < deltaA && fabs(dD) < deltaD){
                 a.at(i).add(a.at(i).get_mean()+dA);
                 dist.at(i).add(dist.at(i).get_mean()+dD);
-                return i+1;
+                                return i+1;
             }
         }
         if (d > 0){
+            if (fabs(angle) < deltaA){
+                std::cout << "Zero Angle"<< std::endl;
+            }
             a.push_back(my_mean());
             dist.push_back(my_mean());
             a.back().add(angle);
@@ -69,15 +62,9 @@ public:
     }
     
     int print(std::ostream * file){
-        if (dist.size() == a.size()){
-            for (int i = 0; i < a.size(); i++){
-                *file << (a.at(i).get_mean()) << " " << dist.at(i).get_mean() << " " << a.at(i).get_count() << std::endl;
-            }
-        }
-        else {
-            for (int i = 0; i < a.size(); i++){
-                *file << (a.at(i).get_mean()) << std::endl;
-            }
+        std::cout << a.size() << std::endl;
+        for (int i = 0; i < a.size(); i++){
+            *file << (a.at(i).get_mean()) + PI/2 << " " << dist.at(i).get_mean() << " " << a.at(i).get_count() << std::endl;
         }
         return 0;
     }

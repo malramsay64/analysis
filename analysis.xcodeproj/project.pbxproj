@@ -6,6 +6,21 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		D4F9F7011A42D73D00CF2521 /* testing */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = D4F9F7021A42D73D00CF2521 /* Build configuration list for PBXAggregateTarget "testing" */;
+			buildPhases = (
+				D4F9F7071A42DC5F00CF2521 /* ShellScript */,
+			);
+			dependencies = (
+				D4F9F7061A42D75400CF2521 /* PBXTargetDependency */,
+			);
+			name = testing;
+			productName = testing;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		D4E6D7991A35987500A9D7F6 /* frame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43F01A341D4C0095271F /* frame.cpp */; };
 		D4E6D79A1A35987900A9D7F6 /* functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43F21A341D4C0095271F /* functions.cpp */; };
@@ -24,6 +39,16 @@
 		D4F9F6FC1A4241BF00CF2521 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4F9F6FB1A4241BF00CF2521 /* main.cpp */; };
 		D4F9F7001A42455E00CF2521 /* functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43F21A341D4C0095271F /* functions.cpp */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D4F9F7051A42D75400CF2521 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D44E43791A33DCB70095271F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D44E43801A33DCB70095271F;
+			remoteInfo = analysis;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		D44E437F1A33DCB70095271F /* CopyFiles */ = {
@@ -223,6 +248,9 @@
 					D4F9F6F81A4241BF00CF2521 = {
 						CreatedOnToolsVersion = 6.1.1;
 					};
+					D4F9F7011A42D73D00CF2521 = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
 				};
 			};
 			buildConfigurationList = D44E437C1A33DCB70095271F /* Build configuration list for PBXProject "analysis" */;
@@ -239,9 +267,26 @@
 			targets = (
 				D44E43801A33DCB70095271F /* analysis */,
 				D4F9F6F81A4241BF00CF2521 /* test */,
+				D4F9F7011A42D73D00CF2521 /* testing */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D4F9F7071A42DC5F00CF2521 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "make -C ~/make/test";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D44E437D1A33DCB70095271F /* Sources */ = {
@@ -275,6 +320,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D4F9F7061A42D75400CF2521 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D44E43801A33DCB70095271F /* analysis */;
+			targetProxy = D4F9F7051A42D75400CF2521 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		D44E43861A33DCB70095271F /* Debug */ = {
@@ -387,6 +440,20 @@
 			};
 			name = Release;
 		};
+		D4F9F7031A42D73D00CF2521 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D4F9F7041A42D73D00CF2521 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -413,6 +480,14 @@
 			buildConfigurations = (
 				D4F9F6FE1A4241BF00CF2521 /* Debug */,
 				D4F9F6FF1A4241BF00CF2521 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		D4F9F7021A42D73D00CF2521 /* Build configuration list for PBXAggregateTarget "testing" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D4F9F7031A42D73D00CF2521 /* Debug */,
+				D4F9F7041A42D73D00CF2521 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};

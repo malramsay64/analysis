@@ -78,6 +78,10 @@ angle_list like_me(Frame *frame){
             m = queue.pop();
         }
     }
+    ofstream cell;
+    cell.open("cell.dat");
+    angles.print(&cell);
+    cell.close();
     return angles;
 }
 

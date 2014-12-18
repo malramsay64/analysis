@@ -168,23 +168,23 @@ int order_type(molecule * m1, molecule * m2, Frame * frame){
     
     double deltaD = 0.15;
     double deltaT = 5*PI/180;
-    if (abs( Dbh - (Rb + Rh) ) < deltaD){
-        if (abs( Dhh - (Rh + Rh) ) < deltaD){
-            if (abs( theta - PI )  < deltaT){
+    if (fabs( Dbh - (Rb + Rh) ) < deltaD){
+        if (fabs( Dhh - (Rh + Rh) ) < deltaD){
+            if (fabs( theta - PI )  < deltaT){
                 // Anti Parallel 1
                 return 3;
             }
-            else if (abs( Dbb - (Rb + Rb)) < deltaD){
+            else if (fabs( Dbb - (Rb + Rb)) < deltaD){
                 // Chiral
                 return 5;
             }
         }
-        else if (abs( Dbb - (Rb + Rb)) < deltaD){
-            if (abs( theta - 0 ) < deltaT){
+        else if (fabs( Dbb - (Rb + Rb)) < deltaD){
+            if (fabs( theta - 0 ) < deltaT){
                 // Parallel
                 return 2;
             }
-            else if (abs( theta - PI ) < deltaT){
+            else if (fabs( theta - PI ) < deltaT){
                 // Anti Parallel 2
                 return 4;
             }

@@ -15,9 +15,10 @@ using namespace std;
 int read_data(std::ifstream *myfile, Frame *frame){
     double x[3], y[3], z[3];
     double zp;
-    int a, timestep;
+    int num_atoms, timestep;
     int mols = 0;
     string line;
+    double a,b,theta;
     // TIMESTEP
     if (!getline(*myfile, line)){
         //cout << line << endl;
@@ -28,33 +29,38 @@ int read_data(std::ifstream *myfile, Frame *frame){
     // NUMBER OF ATOMS
     getline(*myfile, line);
     getline(*myfile, line);
-    *myfile >> a;
-    frame->set_atoms(a);
+    *myfile >> num_atoms;
+    frame->set_atoms(num_atoms);
     // BOX BOUNDS
     getline(*myfile, line);
     getline(*myfile, line);
-    
     
     // X
     getline(*myfile, line);
     stringstream sx(line);
     x[2] = 0;
     sx >> x[0] >> x[1] >> x[2];
-    frame->setx(x[0], x[1]-abs(x[2]));
+    a = x[1]-fabs(x[2]) - x[0];
+    frame->setx(x[0], x[1]-fabs(x[2]));
     
     // Y
     getline(*myfile, line);
     stringstream sy(line);
     y[2] = 0;
     sy >> y[0] >> y[1] >> y[2];
-    frame->sety(y[0], y[1] - abs(y[2]));
+    b = y[1]-fabs(y[2]) - y[0];
+    frame->sety(y[0], y[1] - fabs(y[2]));
     
     // Z
     getline(*myfile, line);
     stringstream sz(line);
     z[2] = 0;
     sz >> z[0] >> z[1] >> z[2];
-    frame->setz(z[0], z[1]-abs(z[2]));
+    frame->setz(z[0], z[1]-fabs(z[2]));
+    
+    // Crystal parameters
+    theta = atan(b/x[2]);
+    b = b/sin(theta);
     
     //ITEM: ATOMS
     getline(*myfile, line);

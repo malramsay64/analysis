@@ -55,6 +55,7 @@ int graph_colour(particle *p, Frame *frame){
 }
 
 angle_list like_me(Frame *frame){
+    colourise(frame);
     vector<molecule>::iterator mol;
     angle_list angles;
     vect com1, com2, d;
@@ -66,11 +67,12 @@ angle_list like_me(Frame *frame){
         m = queue.pop();
         com1 = (*mol).COM();
         int c = 0;
-        while (queue.get_depth() < 4 && m){
+        while (queue.get_depth() < 5 && m){
             if (m->get_colour() == (*mol).get_colour()){
+                //cout << "Colours " << m->get_colour() << " " << m->get_colour() << endl;
                 com2 = m->COM();
-                d = direction(com1,com2);
-                angles.push(atan2(d), (d*frame->size()).length());
+                d = frame->direction(com1,com2);
+                angles.push(atan2(d), d.length());
                 c++;
             }
             m = queue.pop();
@@ -87,6 +89,7 @@ int colourise(Frame * frame){
     angle_list a;
     vector<molecule>::iterator m;
     for (m = frame->molecules.begin(); m != frame->molecules.end(); m++){
+        //cout << "Angle " << angle(&(*m),frame) << endl;
         (*m).set_colour(a.push(angle(&(*m),frame)));
     }
     frame->set_coloured();

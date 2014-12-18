@@ -30,9 +30,11 @@ public:
     };
     
     int push(double d){
+        double delta;
         for (int i = 0; i < a.size(); i++){
-            if (abs(d-a.at(i).get_mean()) < deltaA){
-                a.at(i).add(d-a.at(i).get_mean());
+            delta = acos(cos(d-a.at(i).get_mean()));
+            if (delta < deltaA){
+                a.at(i).add(a.at(i).get_mean()+delta);
                 return i+1;
             }
         }
@@ -43,13 +45,16 @@ public:
     
     int push(double angle, double d){
         //std::cout << angle << " " << d << std::endl;
-        angle = my_mod(angle - PI/2,PI);
+        angle = angle;
         //std::cout << "Angle " << angle << std::endl;
-        double delta;
+        double dA;
+        double dD;
         for (int i = 0; i < a.size(); i++){
-            delta = acos(cos(2*(angle-a.at(i).get_mean())))/2;
-            if (delta < deltaA && abs(d-dist.at(i).get_mean()) < deltaD){
-                a.at(i).add(a.at(i).get_mean()+delta);
+            dA = asin(sin(angle-a.at(i).get_mean()));
+            dD = my_mod(d - dist.at(i).get_mean(), dist.at(i).get_mean());
+            if (fabs(dA) < deltaA && fabs(dD) < deltaD){
+                a.at(i).add(a.at(i).get_mean()+dA);
+                dist.at(i).add(dist.at(i).get_mean()+dD);
                 return i+1;
             }
         }

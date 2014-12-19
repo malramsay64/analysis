@@ -121,7 +121,7 @@ int short_range_order(Frame * frame){
         for (int j = 0; j < (*m1).num_neighbours(); j++){
             // Multiple interactions between particles
             if ((*m1).nint[j] > 1){
-                colour = 0;
+                //colour = 0;
                 molecule *m2 = (*m1).my_neighbours[j];
                 // Theta
                 colour = order_type(&(*m1), m2, frame);

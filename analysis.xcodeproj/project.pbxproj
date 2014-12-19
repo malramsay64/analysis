@@ -170,8 +170,8 @@
 		D44E43781A33DCB70095271F = {
 			isa = PBXGroup;
 			children = (
-				D44E43BE1A33DD9C0095271F /* work */,
 				D44E43831A33DCB70095271F /* analysis */,
+				D44E43BE1A33DD9C0095271F /* work */,
 				D4F9F6FA1A4241BF00CF2521 /* test */,
 				D44E43821A33DCB70095271F /* Products */,
 			);

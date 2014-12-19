@@ -16,22 +16,6 @@ angle_list::angle_list(){
 
 int angle_list::push(double angle){
     return push(angle,0);
-    double dA;
-    vector<my_mean>::iterator i;
-    for (i = a.begin(); i != a.end(); i++){
-        dA = atan2(sin(angle - (*i).get_mean()), cos(angle-(*i).get_mean()));
-        if (dA < 0.05){
-            (*i).add((*i).get_mean()+dA);
-            cout << "Colour " << (int) (i - a.begin() + 1)  << " Angle " << angle << endl;
-            return (int) (i - a.begin() + 1);
-        }
-    }
-    a.push_back(my_mean());
-    a.back().add(angle);
-    dist.push_back(my_mean());
-    dist.back().add(0);
-    cout << "Colour " << (int) (i - a.begin() + 1)  << " Angle " << angle << endl;
-    return (int) a.size();
 }
 
 int angle_list::push(double angle, double d){

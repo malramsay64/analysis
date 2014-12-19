@@ -15,6 +15,7 @@ angle_list::angle_list(){
 };
 
 int angle_list::push(double angle){
+    return push(angle,0);
     double dA;
     vector<my_mean>::iterator i;
     for (i = a.begin(); i != a.end(); i++){
@@ -44,9 +45,6 @@ int angle_list::push(double angle, double d){
             dist.at(i).add(dist.at(i).get_mean()+dD);
             return i+1;
         }
-    }
-    if (asin(sin((angle-PI/2))) < deltaA){
-        //std::cout << "PI/2"<< std::endl;
     }
     a.push_back(my_mean());
     dist.push_back(my_mean());

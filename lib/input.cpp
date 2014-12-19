@@ -21,7 +21,6 @@ int read_data(std::ifstream *myfile, Frame *frame){
     double a,b,theta;
     // TIMESTEP
     if (!getline(*myfile, line)){
-        //cout << line << endl;
         throw 20;
     }
     *myfile >> timestep;
@@ -61,21 +60,22 @@ int read_data(std::ifstream *myfile, Frame *frame){
     // Crystal parameters
     theta = atan(b/x[2]);
     b = b/sin(theta);
+    frame->set_crys(a, b, theta);
     
     //ITEM: ATOMS
     getline(*myfile, line);
     particle *p;
     p = new particle();
-    for (int i=0; i < a; i++){
+    for (int i=0; i < frame->num_atoms(); i++){
         *myfile >> p->id >> p->molid >> p->type >> p->radius >> p->pos[XX] >> p->pos[YY] >> zp;
         getline(*myfile, line);
         // Shift axes of box to 0
         p->set_xpos(p->xpos() - frame->xmin());
         p->set_ypos(p->ypos() - frame->ymin());
         
-        // Scale box length to 2*PI
-        p->set_xpos(p->xpos()/(frame->xlength()));
-        p->set_ypos(p->ypos()/(frame->ylength()));
+        // Convert to fractional coordinates
+        p->set_pos(frame->fractional(p->pos_vect()));
+        
         // Radius read in as diameter
         p->radius = p->radius/2;
         frame->add_particle(p);
@@ -85,25 +85,22 @@ int read_data(std::ifstream *myfile, Frame *frame){
         }
     }
     delete p;
-    //cout << mols << endl;
     frame->set_num_mol(mols);
     sort(frame->particles.begin(), frame->particles.end());
     vector<molecule>::iterator j;
     for (j = frame->molecules.begin(); j != frame->molecules.end(); ++j){
-        (*j).id = (j-frame->molecules.begin()) + 1;
+        (*j).id = (int) (j-frame->molecules.begin()) + 1;
     }
     
     vector<particle>::iterator i;
     for (i = frame->particles.begin(); i != frame->particles.end(); ++i){
         frame->add_link(i->molid-1, i->id-1);
-        //cout << i->molid << endl;
     }
     
+    // Put all particles from molecule on same frame based on COM
     for (j = frame->molecules.begin(); j != frame->molecules.end(); ++j){
         (*j).same_period();
-        // Put all particles on same frame based on COM
     }
-    //cout << molecules.size()<< endl;
     return 0;
 }
 

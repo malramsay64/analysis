@@ -15,6 +15,7 @@
 
 
 #include "my_mean.h"
+#include "functions.h"
 #include "constants.h"
 
 static double deltaA = 5*PI/180;
@@ -25,49 +26,11 @@ class angle_list{
     std::vector<my_mean> dist;
 public:
     
-    angle_list(){
-       a = std::vector<my_mean>(0);
-    };
+    angle_list();
     
-    int push(double angle){
-        return push(angle, 0);
-    }
-    
-    int push(double angle, double d){
-        //std::cout << angle << " " << d << std::endl;
-        angle = angle;
-        //std::cout << "Angle " << angle << std::endl;
-        double dA;
-        double dD;
-        for (int i = 0; i < a.size(); i++){
-            dA = asin(sin(angle-a.at(i).get_mean()));
-            dD = my_mod(d - dist.at(i).get_mean(), dist.at(i).get_mean());
-            if (fabs(dA) < deltaA && fabs(dD) < deltaD){
-                a.at(i).add(a.at(i).get_mean()+dA);
-                dist.at(i).add(dist.at(i).get_mean()+dD);
-                                return i+1;
-            }
-        }
-        if (d > 0){
-            if (fabs(angle) < deltaA){
-                std::cout << "Zero Angle"<< std::endl;
-            }
-            a.push_back(my_mean());
-            dist.push_back(my_mean());
-            a.back().add(angle);
-            dist.back().add(d);
-        }
-        return a.size();
- 
-    }
-    
-    int print(std::ostream * file){
-        std::cout << a.size() << std::endl;
-        for (int i = 0; i < a.size(); i++){
-            *file << (a.at(i).get_mean()) + PI/2 << " " << dist.at(i).get_mean() << " " << a.at(i).get_count() << std::endl;
-        }
-        return 0;
-    }
+    int push(double angle);
+    int push(double angle, double d);
+    int print(std::ostream * file);
 };
 
 

@@ -27,5 +27,6 @@
 #define FALSE 1
 #define TRUE 0
 
+static int NUM_THREADS = 1;
 
 #endif /* defined(CONSTANTS_H) */

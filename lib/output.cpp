@@ -169,7 +169,7 @@ int print_gnuplot(Frame * frame){
             file << endl;
             molid = (*p).molid;
         }
-        file << (*p).pos_vect()*frame->size() << " " << (*p).radius << " " << get_colour(&(*p), frame) << endl;
+        file << frame->cartesian((*p).pos_vect()) << " " << (*p).radius << " " << get_colour(&(*p), frame) << endl;
         //file << (*p).pos_vect()*frame->size() << " " << (*p).radius << " " << (*p).type << endl;
     }
     file.close();

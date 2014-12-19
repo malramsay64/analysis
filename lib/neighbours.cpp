@@ -18,20 +18,19 @@ int par_neigh(Frame *frame){
         return 0;
     }
     
-    int size = frame->num_atoms()/NUM_THREADS + 1;
-    int remain = frame->num_atoms() - size*(NUM_THREADS-1);
+    int per_thread = ceil(frame->num_atoms()/NUM_THREADS);
     vector<thread> threads;
     threads.reserve(NUM_THREADS);
     
     // Divide into threads
     int begin, end;
     for (int i = 0; i < NUM_THREADS; i++){
-        begin = i*size;
+        begin = i*per_thread;
         if (i == NUM_THREADS-1){
-            end = i*size+remain;
+            end = frame->num_atoms();
         }
         else{
-            end = (i+1)*size;
+            end = (i+1)*per_thread;
         }
         threads.push_back(thread(&loop_neigh, frame, begin, end));
     }
@@ -46,7 +45,7 @@ int par_neigh(Frame *frame){
 
 void *loop_neigh(Frame * frame, int begin, int end){
     // Loop through all particles in thread
-    for (int i = begin; i < end; i++){
+    for (int i = begin; i < end && i < frame->num_atoms(); i++){
         find_neighbours(&frame->particles.at(i), frame);
     }
     return 0;

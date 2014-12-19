@@ -15,21 +15,17 @@ crys = $(word 4, $(subst -,$(space),$(1)) )
 
 all: cell
 
-cell: program
-	./program -i out.lammpstrj
+cell:
+	./analysis -i out.lammpstrj
 	$(gnuplot) unit_cell.plot
-	$(gnuplot) -e "filename='trj_contact/0000000000'" ../gnuplot/frame.plot
-
-program:
-	$(MAKE) -C ../../
-	cp ../../bin/mac/analysis .
+	$(gnuplot) -e "filename='trj_contact/0000000000'" ~/make/gnuplot/frame.plot
 
 single:
-	tail -2 ../crystals/$(mol).svg | head -1 | python ../pylib/createCells.py . 0 $(call rad, $(mol)) $(call dist, $(mol)) $(call crys, $(mol)) > crys.dat
+	tail -2 ../crystals/$(mol).svg | head -1 | python ~/make/pylib/createCells.py . 0 $(call rad, $(mol)) $(call dist, $(mol)) $(call crys, $(mol)) > crys.dat
 	$(gnuplot) ../crys.plot
 
 grid:
-	tail -2 ../crystals/$(mol).svg | head -1 | python ../pylib/createCells.py . $N $(call rad, $(mol)) $(call dist, $(mol)) $(call crys, $(mol)) > crys.dat
+	tail -2 ../crystals/$(mol).svg | head -1 | python ~/make/pylib/createCells.py . $N $(call rad, $(mol)) $(call dist, $(mol)) $(call crys, $(mol)) > crys.dat
 	$(gnuplot) ../crys.plot
 
 test:

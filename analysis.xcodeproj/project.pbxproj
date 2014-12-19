@@ -24,6 +24,7 @@
 /* Begin PBXBuildFile section */
 		D454B44A1A43D1EE005ACB79 /* angle_list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D454B4491A43D1EE005ACB79 /* angle_list.cpp */; };
 		D454B44B1A43D1EE005ACB79 /* angle_list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D454B4491A43D1EE005ACB79 /* angle_list.cpp */; };
+		D458CADB1A44128A001EFFC5 /* analysis in CopyFiles */ = {isa = PBXBuildFile; fileRef = D44E43811A33DCB70095271F /* analysis */; };
 		D4E6D7991A35987500A9D7F6 /* frame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43F01A341D4C0095271F /* frame.cpp */; };
 		D4E6D79A1A35987900A9D7F6 /* functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43F21A341D4C0095271F /* functions.cpp */; };
 		D4E6D79B1A35987D00A9D7F6 /* input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43F41A341D4C0095271F /* input.cpp */; };
@@ -75,9 +76,10 @@
 		D44E437F1A33DCB70095271F /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 12;
-			dstPath = "";
+			dstPath = "~/make/analysis/work";
 			dstSubfolderSpec = 0;
 			files = (
+				D458CADB1A44128A001EFFC5 /* analysis in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,6 +116,9 @@
 		D44E44091A341D4C0095271F /* vect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = vect.cpp; path = lib/vect.cpp; sourceTree = SOURCE_ROOT; };
 		D44E440A1A341D4C0095271F /* vect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = vect.h; path = lib/vect.h; sourceTree = SOURCE_ROOT; };
 		D454B4491A43D1EE005ACB79 /* angle_list.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = angle_list.cpp; path = lib/angle_list.cpp; sourceTree = SOURCE_ROOT; };
+		D458CADD1A441360001EFFC5 /* 0000000000-angles.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "0000000000-angles.csv"; sourceTree = "<group>"; };
+		D458CADE1A441360001EFFC5 /* 0000000000.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 0000000000.dat; sourceTree = "<group>"; };
+		D458CADF1A441360001EFFC5 /* 0000000000.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0000000000.png; sourceTree = "<group>"; };
 		D463476B1A37D5290052D848 /* out.lammpstrj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = out.lammpstrj; path = work/out.lammpstrj; sourceTree = SOURCE_ROOT; };
 		D4E6D7A31A3598C500A9D7F6 /* angle_list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = angle_list.h; path = lib/angle_list.h; sourceTree = SOURCE_ROOT; };
 		D4E6D7A41A3598C500A9D7F6 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = constants.h; path = lib/constants.h; sourceTree = SOURCE_ROOT; };
@@ -221,6 +226,7 @@
 		D44E43BE1A33DD9C0095271F /* work */ = {
 			isa = PBXGroup;
 			children = (
+				D458CADC1A441360001EFFC5 /* trj_contact */,
 				D463476B1A37D5290052D848 /* out.lammpstrj */,
 				D4F9F72E1A43A22D00CF2521 /* run_test.sh */,
 				D4F9F72F1A43A25E00CF2521 /* 0000000000.png */,
@@ -239,6 +245,17 @@
 				D4F9F73C1A43A25E00CF2521 /* unit_cell.png */,
 			);
 			name = work;
+			sourceTree = "<group>";
+		};
+		D458CADC1A441360001EFFC5 /* trj_contact */ = {
+			isa = PBXGroup;
+			children = (
+				D458CADD1A441360001EFFC5 /* 0000000000-angles.csv */,
+				D458CADE1A441360001EFFC5 /* 0000000000.dat */,
+				D458CADF1A441360001EFFC5 /* 0000000000.png */,
+			);
+			name = trj_contact;
+			path = work/trj_contact;
 			sourceTree = "<group>";
 		};
 		D4F9F6FA1A4241BF00CF2521 /* test */ = {

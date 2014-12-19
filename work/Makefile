@@ -21,8 +21,8 @@ cell: program
 	$(gnuplot) -e "filename='trj_contact/0000000000'" ../gnuplot/frame.plot
 
 program:
-    $(MAKE) -C ../../
-    cp ../../bin/mac/analysis .
+	$(MAKE) -C ../../
+	cp ../../bin/mac/analysis .
 
 single:
 	tail -2 ../crystals/$(mol).svg | head -1 | python ../pylib/createCells.py . 0 $(call rad, $(mol)) $(call dist, $(mol)) $(call crys, $(mol)) > crys.dat

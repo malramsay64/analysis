@@ -74,6 +74,7 @@ public:
     double get_theta();
     double get_height();
     vect cartesian(vect v);
+    vect fractional(vect v);
     
     void setx(double, double);
     void sety(double, double);

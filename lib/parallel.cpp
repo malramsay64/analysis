@@ -13,7 +13,7 @@ using namespace std;
 
 
 template <class type> my_mean par_mean(vector<type> *list, double (*f)(type *, Frame *), Frame *frame){
-    int size = ceil(list->size()/NUM_THREADS);
+    int size = (int) (list->size()/NUM_THREADS);
     vector<thread> threads;
     int begin, end;
     vector<my_mean>means(NUM_THREADS);
@@ -70,10 +70,9 @@ template <class type> void * mean_thread(vector<type> *l1, vector<type> *l2, int
          i1 != l1->begin()+end && i1 != l1->end() &&\
          i2 != l2->begin()+end && i1 != l2->end();\
          i1++, i2++){
-        //cout << i << " " << args->begin << " " << args->end << endl;
+        
         x1 = (*f)(&(*i1), frame);
         x2 = (*f)(&(*i2), frame);
-        //std::cout << x1.x << " " << x1.y << " " <<x1.length() << " " << x2.length() << std::endl;
         val = (diff)(x1,x2,l);
         res->add(val);
     }
@@ -144,7 +143,7 @@ int order_parameter(int reference, ofstream *file, Frame *frame){
         vect com = mol->COM();
         vect v,d;
         double rot = angle(&(*mol), frame);
-        double theta, orientation;
+        double theta;
         // For each particle
         vector<particle>::iterator atom;
         for (atom = frame->particles.begin(); atom != frame->particles.end(); atom++) {

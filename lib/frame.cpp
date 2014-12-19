@@ -16,7 +16,7 @@ double Frame::dist(vect v1, vect v2){
 }
 
 vect Frame::direction(vect v1, vect v2){
-    return ::direction(v1,v2) * size();
+    return cartesian(::direction(v1,v2));
 }
 
 vect Frame::size(){
@@ -39,7 +39,7 @@ void Frame::set_num_mol(int n){
 }
 
 int Frame::num_mol(){
-    return molecules.size();
+    return (int) molecules.size();
 }
 
 void Frame::add_particle(particle *p){
@@ -91,7 +91,7 @@ double Frame::pairing(vector<int> *dist){
     int n = 0;
     int total = 0;
     for ( mols = molecules.begin(); mols != molecules.end(); ++mols){
-        for (unsigned int i = 0; i < (*mols).my_neighbours.size(); i++){
+        for (int i = 0; i < (*mols).my_neighbours.size(); i++){
             (*dist)[(*mols).nint[i]]++;
             total += (*mols).nint[i];
             n++;
@@ -238,5 +238,13 @@ vect Frame::cartesian(vect v){
     v.x = v.x*a + v.y*b*cos(theta);
     v.y = v.y*b*sin(theta);
     return v;
+}
+
+vect Frame::fractional(vect v){
+    v.x = v.x*(1/a) + v.y*(-cos(theta)/(a*sin(theta)));
+    v.y = v.y/(b*sin(theta));
+    v /= 2*PI;
+    return v;
+    
 }
 

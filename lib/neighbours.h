@@ -18,8 +18,7 @@
 #include "frame.h"
 #include "mol_functions.h"
 #include "dyn_queue.h"
-
-static int NUM_THREADS = 1;
+#include "constants.h"
 
 int par_neigh(Frame *frame);
 void *loop_neigh(Frame * frame, int begin, int end);

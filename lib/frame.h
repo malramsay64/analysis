@@ -32,6 +32,9 @@ class Frame {
     double xdim[2];
     double ydim[2];
     double zdim[2];
+    double a;
+    double b;
+    double theta;
     
 public:
     std::vector<particle> particles;
@@ -64,6 +67,14 @@ public:
     double num_contacts(std::vector<int> *);
     double num_neighbours(std::vector<int> *);
     double pairing(std::vector<int> *);
+    
+    int set_crys(double, double, double);
+    double get_a();
+    double get_b();
+    double get_theta();
+    double get_height();
+    vect cartesian(vect v);
+    vect fractional(vect v);
     
     void setx(double, double);
     void sety(double, double);

@@ -32,7 +32,7 @@ int particle::m_i(){
 }
 
 int particle::numn(){
-    return my_neighbours.size();
+    return (int) my_neighbours.size();
 }
 
 int particle::n_large(){

@@ -15,6 +15,7 @@
 
 
 #include "my_mean.h"
+#include "functions.h"
 #include "constants.h"
 
 static double deltaA = 5*PI/180;
@@ -25,9 +26,7 @@ class angle_list{
     std::vector<my_mean> dist;
 public:
     
-    angle_list(){
-       a = std::vector<my_mean>(0);
-    };
+    angle_list();
     
     int push(double d){
         for (int i = 0; i < a.size(); i++){

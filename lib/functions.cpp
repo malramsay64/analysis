@@ -26,7 +26,7 @@ double dist(double x1, double x2){
 
 std::string split(std::string s, char delim){
     int p;
-    p = s.find_last_of(delim);
+    p = (int) s.find_last_of(delim);
     return s.substr(0,p);
 }
 
@@ -50,5 +50,13 @@ double legendre(int l, double x){
         default:
             return 0;
     }
+}
+
+double my_mod(double a, double b){
+    double ret = fmod(a, b);
+    if (ret < 0){
+        ret += b;
+    }
+    return ret;
 }
 

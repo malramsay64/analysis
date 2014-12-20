@@ -4,12 +4,11 @@
 #include "input.h"
 #include <iomanip>
 #include "parallel.h"
+#include "unit_cell.h"
 #include <string>
 
 #define BOX 0
 #define MOL 1
-
-//static int NUM_THREADS = 8;
 
 using namespace std;
 
@@ -36,7 +35,7 @@ int main(int argc, char *argv[]){
     ifstream myfile;
     myfile.open(in_fname.c_str());
     Frame *init_frame, *current_frame;
-    vector<Frame *> frames;
+    vector<Frame *> frames(0,0);
     // Read first frame
     frames.push_back(new Frame);
     read_data(&myfile, frames.at(num_frames));
@@ -57,6 +56,7 @@ int main(int argc, char *argv[]){
             frames.pop_back();
         }
     }
+    
     string order;
     order = "order";
     // Order parameter last 2 frames
@@ -65,7 +65,6 @@ int main(int argc, char *argv[]){
         order_parameter("order", reference, *f);
     }
     
-    //current_frame = frames.at(frames.size()-2);
     current_frame = frames.back();
     
     short_range_order(frames.back());
@@ -73,8 +72,6 @@ int main(int argc, char *argv[]){
     diffusion(frames);
     rotation(frames);
     cout << "Diffusion Constant: " << fixed << setprecision(4)  << par_diffusion_constant(init_frame, current_frame)*1000 << endl;
-    //cout << "Average rotational change: " << fixed << setprecision(4) << par_average_rotation(init_frame, current_frame) << endl;
-    //cout << "Average dist moved: " << fixed << setprecision(4)  << par_average_moved(init_frame, current_frame) << endl;
     cout << "Average bond fraction: " << fixed << setprecision(4) << bonded_frac(current_frame) << endl;
     cout << "Local Order: " << setprecision(4) << fixed << par_local_order(current_frame) << endl;
     cout << "Global Order: " << setprecision(4) << fixed << par_global_order(current_frame) << endl;
@@ -90,9 +87,9 @@ int main(int argc, char *argv[]){
     
     angle_list angles;
     angles = like_me(current_frame);
-    ofstream cell;
-    cell.open("cell.dat");
-    angles.print(&cell);
+    //ofstream cell;
+    //cell.open("cell.dat");
+    //angles.print(&cell);
     
     fprintf(stderr, "Frames Read: %i\n", num_frames);
     
@@ -120,7 +117,7 @@ int main(int argc, char *argv[]){
      order_parameter(order, reference, current_frame);
      
      */
-    
+    //unit_cell(current_frame);
     
     // Free memory
     vector<Frame *>::iterator i;

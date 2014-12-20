@@ -22,7 +22,7 @@ molecule::molecule (){
 
 void molecule::add_neighbour(molecule *m){
     int pos;
-    pos = find(my_neighbours.begin(), my_neighbours.end(), m) - my_neighbours.begin();
+    pos = (int) (find(my_neighbours.begin(), my_neighbours.end(), m) - my_neighbours.begin());
     // Molecule already added
     if (pos != my_neighbours.size()){
         nint[pos]++;
@@ -64,11 +64,11 @@ vect molecule::atom_pos(int i){
 }
 
 int molecule::nump(){
-    return atoms.size();
+    return (int) atoms.size();
 }
 
 int molecule::uniqc(){
-    return my_neighbours.size();
+    return (int) my_neighbours.size();
 }
 
 int molecule::num_contacts(){
@@ -81,7 +81,7 @@ int molecule::num_neighbours(){
 
 int molecule::pairing(molecule *b){
     int pos;
-    pos = std::find(my_neighbours.begin(), my_neighbours.end(), b) - my_neighbours.begin();
+    pos = (int) (std::find(my_neighbours.begin(), my_neighbours.end(), b) - my_neighbours.begin());
     return nint[pos];
 }
 

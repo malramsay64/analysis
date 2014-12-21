@@ -58,14 +58,14 @@ int read_data(std::ifstream *myfile, Frame *frame){
     frame->setz(z[0], z[1]-fabs(z[2]));
     
     // Crystal parameters
-    cout << b << " " << x[2] << endl;
+    //cout << b << " " << x[2] << endl;
     theta = atan(b/fabs(x[2]));
     if (x[2] < 0){
         theta = PI-theta;
     }
-    cout << theta << endl;
+    //cout << theta << endl;
     b = b/sin(theta);
-    cout << b << endl;
+    //cout << b << endl;
     frame->set_crys(a, b, theta);
     
     //ITEM: ATOMS

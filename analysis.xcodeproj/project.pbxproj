@@ -109,7 +109,6 @@
 		D458CADD1A441360001EFFC5 /* 0000000000-angles.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "0000000000-angles.csv"; path = "work/trj_contact/0000000000-angles.csv"; sourceTree = SOURCE_ROOT; };
 		D458CADE1A441360001EFFC5 /* 0000000000.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = 0000000000.dat; path = work/trj_contact/0000000000.dat; sourceTree = SOURCE_ROOT; };
 		D458CADF1A441360001EFFC5 /* 0000000000.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 0000000000.png; path = work/trj_contact/0000000000.png; sourceTree = SOURCE_ROOT; };
-		D463476B1A37D5290052D848 /* out.lammpstrj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = out.lammpstrj; path = work/out.lammpstrj; sourceTree = SOURCE_ROOT; };
 		D4AB718D1A477C6300ED8A6B /* front.lammpstrj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = front.lammpstrj; path = work/front.lammpstrj; sourceTree = "<group>"; };
 		D4E6D7A31A3598C500A9D7F6 /* angle_list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = angle_list.h; path = lib/angle_list.h; sourceTree = SOURCE_ROOT; };
 		D4E6D7A41A3598C500A9D7F6 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = constants.h; path = lib/constants.h; sourceTree = SOURCE_ROOT; };
@@ -217,7 +216,6 @@
 			isa = PBXGroup;
 			children = (
 				D458CADC1A441360001EFFC5 /* trj_contact */,
-				D463476B1A37D5290052D848 /* out.lammpstrj */,
 				D4AB718D1A477C6300ED8A6B /* front.lammpstrj */,
 				D41B70C61A46C6F000AA73F3 /* short.lammpstrj */,
 				D4F9F72E1A43A22D00CF2521 /* run_test.sh */,

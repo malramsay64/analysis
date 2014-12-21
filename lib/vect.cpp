@@ -92,6 +92,17 @@ vect vect::operator- (double i){
 vect vect::operator/= (double i){
     return vect(x/i,y/i);
 }
+vect vect::operator*= (double i){
+    return vect(x/i,y/i);
+}
+
+vect vect::operator/= (vect &i){
+    return vect(x/i.x, y/i.y);
+}
+
+vect vect::operator*= (vect &i){
+    return vect(x*i.x, y*i.y);
+}
 
 vect vect::operator* (double i){
     return vect(x*i, y*i);

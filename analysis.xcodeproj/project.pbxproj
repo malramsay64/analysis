@@ -84,6 +84,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D41B70C61A46C6F000AA73F3 /* short.lammpstrj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = short.lammpstrj; path = work/short.lammpstrj; sourceTree = "<group>"; };
 		D44E43811A33DCB70095271F /* analysis */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = analysis; sourceTree = BUILT_PRODUCTS_DIR; };
 		D44E43F01A341D4C0095271F /* frame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = frame.cpp; path = lib/frame.cpp; sourceTree = SOURCE_ROOT; };
 		D44E43F11A341D4C0095271F /* frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = frame.h; path = lib/frame.h; sourceTree = SOURCE_ROOT; };
@@ -216,6 +217,7 @@
 			children = (
 				D458CADC1A441360001EFFC5 /* trj_contact */,
 				D463476B1A37D5290052D848 /* out.lammpstrj */,
+				D41B70C61A46C6F000AA73F3 /* short.lammpstrj */,
 				D4F9F72E1A43A22D00CF2521 /* run_test.sh */,
 				D4F9F7301A43A25E00CF2521 /* cell.dat */,
 				D4F9F7311A43A25E00CF2521 /* crys.dat */,
@@ -620,6 +622,7 @@
 				D4F75BF31A465064003ACC41 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D4F9F6FD1A4241BF00CF2521 /* Build configuration list for PBXNativeTarget "test" */ = {
 			isa = XCConfigurationList;

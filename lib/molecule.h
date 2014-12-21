@@ -41,6 +41,7 @@ public:
     void traverse();
     void reset_traverse();
     int same_period();
+    
 } ;
 
 

@@ -124,6 +124,5 @@ int main(int argc, char *argv[]){
     for (i = frames.begin(); i != frames.end(); i++){
         delete *i;
     }
-    cout << "Hello World" << endl;
     return 0;
 }

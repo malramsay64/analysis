@@ -116,9 +116,6 @@ int molecule::graph_colour(){
         }
     }
     colour = j;
-    //colour = (int) floor(log2(15-sum)+1);
-    //cout << colour << endl;
-    //colour = 0;
     return colour;
 }
 

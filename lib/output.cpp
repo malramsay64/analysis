@@ -162,15 +162,11 @@ int print_gnuplot(Frame * frame){
     char fname[30];
     snprintf(fname,30, "trj_contact/%010i.dat", frame->timestep);
     file.open(fname);
-    vector<particle>::iterator p;
-    int molid = 1;
-    for (p = frame->particles.begin(); p != frame->particles.end(); p++){
-        if (molid != (*p).molid){
-            file << endl;
-            molid = (*p).molid;
-        }
-        file << frame->cartesian((*p).pos_vect()) << " " << (*p).radius << " " << get_colour(&(*p), frame) << endl;
-        //file << (*p).pos_vect()*frame->size() << " " << (*p).radius << " " << (*p).type << endl;
+    //ostream * file = &cout;
+    vector<molecule>::iterator p;
+    for (p = frame->molecules.begin(); p != frame->molecules.end(); p++){
+        print_mol(file, &*p, frame);
+        file << endl;
     }
     file.close();
     return 0;

@@ -29,6 +29,9 @@ public:
     vect operator+= (int);
     vect operator-();
     vect operator/= (double i);
+    vect operator*= (double i);
+    vect operator/= (vect &i);
+    vect operator*= (vect &i);
     vect operator+ (double i);
     vect operator+ (const vect &v);
     vect operator- (const vect &v);

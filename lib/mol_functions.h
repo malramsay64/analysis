@@ -26,6 +26,8 @@ angle_list like_me(Frame *frame);
 double local_order(molecule * m, Frame * frame);
 double global_order(molecule *m, Frame * frame);
 double circle_order(particle * p, Frame * frame);
+std::ostream& print_mol(std::ostream &, molecule *,Frame *);
+
 
 #endif /* defined(MY_MOL_FUNCTIONS) */
 

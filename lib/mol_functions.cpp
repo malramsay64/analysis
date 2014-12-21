@@ -154,13 +154,13 @@ std::ostream& print_mol(std::ostream &os, molecule *mol, Frame *frame){
     com = mol->COM();
     com = frame->cartesian(com);
     std::vector<particle *>::iterator i;
-    /*
+    
     for (i = mol->atoms.begin(); i != mol->atoms.end(); i++){
         d = frame->cartesian(direction(mol->COM(), (*i)->pos_vect()));
         os << com + d << " " << (*i)->radius << " " << mol->get_colour() << " " << mol->id << std::endl;
     }
-    */
-    os << frame->cartesian(mol->COM()) << " " << 1 << " "  << mol->get_colour() << " " << mol->id << endl;
+    
+    //os << frame->cartesian(mol->COM()) << " " << 1 << " "  << mol->get_colour() << " " << mol->id << endl;
     //cout << frame->cartesian(mol->COM()) << " " << 1 << " "  << mol->get_colour() << " " << mol->id << endl;
     return os;
 }

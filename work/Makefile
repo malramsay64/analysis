@@ -16,7 +16,7 @@ crys = $(word 4, $(subst -,$(space),$(1)) )
 all: cell
 
 cell:
-	./analysis -i out.lammpstrj
+	./analysis -i front.lammpstrj
 	$(gnuplot) unit_cell.plot
 	$(gnuplot) -e "filename='trj_contact/0000000000'" ~/make/gnuplot/frame.plot
 

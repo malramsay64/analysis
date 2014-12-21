@@ -106,10 +106,11 @@
 		D44E44091A341D4C0095271F /* vect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = vect.cpp; path = lib/vect.cpp; sourceTree = SOURCE_ROOT; };
 		D44E440A1A341D4C0095271F /* vect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = vect.h; path = lib/vect.h; sourceTree = SOURCE_ROOT; };
 		D454B4491A43D1EE005ACB79 /* angle_list.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = angle_list.cpp; path = lib/angle_list.cpp; sourceTree = SOURCE_ROOT; };
-		D458CADD1A441360001EFFC5 /* 0000000000-angles.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "0000000000-angles.csv"; sourceTree = "<group>"; };
-		D458CADE1A441360001EFFC5 /* 0000000000.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 0000000000.dat; sourceTree = "<group>"; };
-		D458CADF1A441360001EFFC5 /* 0000000000.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0000000000.png; sourceTree = "<group>"; };
+		D458CADD1A441360001EFFC5 /* 0000000000-angles.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "0000000000-angles.csv"; path = "work/trj_contact/0000000000-angles.csv"; sourceTree = SOURCE_ROOT; };
+		D458CADE1A441360001EFFC5 /* 0000000000.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = 0000000000.dat; path = work/trj_contact/0000000000.dat; sourceTree = SOURCE_ROOT; };
+		D458CADF1A441360001EFFC5 /* 0000000000.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 0000000000.png; path = work/trj_contact/0000000000.png; sourceTree = SOURCE_ROOT; };
 		D463476B1A37D5290052D848 /* out.lammpstrj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = out.lammpstrj; path = work/out.lammpstrj; sourceTree = SOURCE_ROOT; };
+		D4AB718D1A477C6300ED8A6B /* front.lammpstrj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = front.lammpstrj; path = work/front.lammpstrj; sourceTree = "<group>"; };
 		D4E6D7A31A3598C500A9D7F6 /* angle_list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = angle_list.h; path = lib/angle_list.h; sourceTree = SOURCE_ROOT; };
 		D4E6D7A41A3598C500A9D7F6 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = constants.h; path = lib/constants.h; sourceTree = SOURCE_ROOT; };
 		D4E6D7A51A3598C500A9D7F6 /* dyn_queue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dyn_queue.cpp; path = lib/dyn_queue.cpp; sourceTree = SOURCE_ROOT; };
@@ -217,6 +218,7 @@
 			children = (
 				D458CADC1A441360001EFFC5 /* trj_contact */,
 				D463476B1A37D5290052D848 /* out.lammpstrj */,
+				D4AB718D1A477C6300ED8A6B /* front.lammpstrj */,
 				D41B70C61A46C6F000AA73F3 /* short.lammpstrj */,
 				D4F9F72E1A43A22D00CF2521 /* run_test.sh */,
 				D4F9F7301A43A25E00CF2521 /* cell.dat */,
@@ -265,7 +267,7 @@
 			buildPhases = (
 			);
 			buildToolPath = /usr/bin/make;
-			buildWorkingDirectory = /Volumes/Data/Documents/uni/make/analysis/work;
+			buildWorkingDirectory = "~/make/analysis/work";
 			dependencies = (
 				D454B4471A43AAF5005ACB79 /* PBXTargetDependency */,
 			);
@@ -275,11 +277,12 @@
 		};
 		D4F75BF01A465064003ACC41 /* present */ = {
 			isa = PBXLegacyTarget;
-			buildArgumentsString = "$(ACTION)";
+			buildArgumentsString = "";
 			buildConfigurationList = D4F75BF11A465064003ACC41 /* Build configuration list for PBXLegacyTarget "present" */;
 			buildPhases = (
 			);
 			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = "~/make/analysis/work";
 			dependencies = (
 			);
 			name = present;

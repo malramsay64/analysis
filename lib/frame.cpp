@@ -167,11 +167,11 @@ double Frame::length(){
 }
 
 double Frame::xlength(){
-    return (xmax() - xmin())/xlen();
+    return a/xlen(); //(xmax() - xmin())/xlen();
 }
 
 double Frame::ylength(){
-    return (ymax() - ymin())/ylen();
+    return b/xlen(); //(ymax() - ymin())/ylen();
 }
 
 double Frame::zlength(){
@@ -234,16 +234,16 @@ double Frame::get_height(){
 }
 
 vect Frame::cartesian(vect v){
-    v = v*size();
+    v = v/(2*PI);
     v.x = v.x*a + v.y*b*cos(theta);
     v.y = v.y*b*sin(theta);
     return v;
 }
 
 vect Frame::fractional(vect v){
-    v = v/size();
     v.x = v.x*(1/a) + v.y*(-cos(theta)/(a*sin(theta)));
     v.y = v.y/(b*sin(theta));
+    v = v*2*PI;
     return v;
     
 }

@@ -120,6 +120,7 @@ int main(int argc, char *argv[]){
     //unit_cell(current_frame);
     
     // Free memory
+    cout << current_frame->size() << endl;
     vector<Frame *>::iterator i;
     for (i = frames.begin(); i != frames.end(); i++){
         delete *i;

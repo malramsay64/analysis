@@ -6,21 +6,6 @@
 	objectVersion = 46;
 	objects = {
 
-/* Begin PBXAggregateTarget section */
-		D4F9F7271A43A18200CF2521 /* testing */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = D4F9F7281A43A18200CF2521 /* Build configuration list for PBXAggregateTarget "testing" */;
-			buildPhases = (
-				D4F9F72D1A43A19200CF2521 /* ShellScript */,
-			);
-			dependencies = (
-				D4F9F72C1A43A18B00CF2521 /* PBXTargetDependency */,
-			);
-			name = testing;
-			productName = testing;
-		};
-/* End PBXAggregateTarget section */
-
 /* Begin PBXBuildFile section */
 		D454B44A1A43D1EE005ACB79 /* angle_list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D454B4491A43D1EE005ACB79 /* angle_list.cpp */; };
 		D454B44B1A43D1EE005ACB79 /* angle_list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D454B4491A43D1EE005ACB79 /* angle_list.cpp */; };
@@ -38,6 +23,7 @@
 		D4E6D7B01A3598C600A9D7F6 /* dyn_queue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4E6D7A51A3598C500A9D7F6 /* dyn_queue.cpp */; };
 		D4E6D7B21A3598C600A9D7F6 /* molecule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4E6D7AA1A3598C600A9D7F6 /* molecule.cpp */; };
 		D4E6D7B31A3598C600A9D7F6 /* my_mean.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4E6D7AC1A3598C600A9D7F6 /* my_mean.cpp */; };
+		D4F75BEF1A46233B003ACC41 /* analysis in CopyFiles */ = {isa = PBXBuildFile; fileRef = D44E43811A33DCB70095271F /* analysis */; };
 		D4F9F6F41A42337A00CF2521 /* unit_cell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4F9F6F21A42337A00CF2521 /* unit_cell.cpp */; };
 		D4F9F6FC1A4241BF00CF2521 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4F9F6FB1A4241BF00CF2521 /* main.cpp */; };
 		D4F9F71A1A439F8C00CF2521 /* dyn_queue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4E6D7A51A3598C500A9D7F6 /* dyn_queue.cpp */; };
@@ -63,23 +49,26 @@
 			remoteGlobalIDString = D44E43801A33DCB70095271F;
 			remoteInfo = analysis;
 		};
-		D4F9F72B1A43A18B00CF2521 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D44E43791A33DCB70095271F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D44E43801A33DCB70095271F;
-			remoteInfo = analysis;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		D44E437F1A33DCB70095271F /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 12;
-			dstPath = "~/make/analysis/work";
+			dstPath = "~/make/mac/bin";
 			dstSubfolderSpec = 0;
 			files = (
 				D458CADB1A44128A001EFFC5 /* analysis in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4F75BEE1A46231D003ACC41 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "~/make/analysis/work";
+			dstSubfolderSpec = 0;
+			files = (
+				D4F75BEF1A46233B003ACC41 /* analysis in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,7 +122,6 @@
 		D4F9F6F91A4241BF00CF2521 /* test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4F9F6FB1A4241BF00CF2521 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		D4F9F72E1A43A22D00CF2521 /* run_test.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = run_test.sh; path = work/run_test.sh; sourceTree = "<group>"; };
-		D4F9F72F1A43A25E00CF2521 /* 0000000000.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 0000000000.png; path = work/0000000000.png; sourceTree = "<group>"; };
 		D4F9F7301A43A25E00CF2521 /* cell.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = cell.dat; path = work/cell.dat; sourceTree = "<group>"; };
 		D4F9F7311A43A25E00CF2521 /* crys.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = crys.dat; path = work/crys.dat; sourceTree = "<group>"; };
 		D4F9F7321A43A25E00CF2521 /* crys.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = crys.png; path = work/crys.png; sourceTree = "<group>"; };
@@ -229,7 +217,6 @@
 				D458CADC1A441360001EFFC5 /* trj_contact */,
 				D463476B1A37D5290052D848 /* out.lammpstrj */,
 				D4F9F72E1A43A22D00CF2521 /* run_test.sh */,
-				D4F9F72F1A43A25E00CF2521 /* 0000000000.png */,
 				D4F9F7301A43A25E00CF2521 /* cell.dat */,
 				D4F9F7311A43A25E00CF2521 /* crys.dat */,
 				D4F9F7321A43A25E00CF2521 /* crys.png */,
@@ -269,10 +256,10 @@
 /* End PBXGroup section */
 
 /* Begin PBXLegacyTarget section */
-		D454B4421A43AAEC005ACB79 /* Build with Make */ = {
+		D454B4421A43AAEC005ACB79 /* testing */ = {
 			isa = PBXLegacyTarget;
 			buildArgumentsString = "$(ACTION)";
-			buildConfigurationList = D454B4451A43AAEC005ACB79 /* Build configuration list for PBXLegacyTarget "Build with Make" */;
+			buildConfigurationList = D454B4451A43AAEC005ACB79 /* Build configuration list for PBXLegacyTarget "testing" */;
 			buildPhases = (
 			);
 			buildToolPath = /usr/bin/make;
@@ -280,9 +267,22 @@
 			dependencies = (
 				D454B4471A43AAF5005ACB79 /* PBXTargetDependency */,
 			);
-			name = "Build with Make";
+			name = testing;
 			passBuildSettingsInEnvironment = 1;
 			productName = "Build with Make";
+		};
+		D4F75BF01A465064003ACC41 /* present */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = D4F75BF11A465064003ACC41 /* Build configuration list for PBXLegacyTarget "present" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			dependencies = (
+			);
+			name = present;
+			passBuildSettingsInEnvironment = 1;
+			productName = present;
 		};
 /* End PBXLegacyTarget section */
 
@@ -294,6 +294,7 @@
 				D44E437D1A33DCB70095271F /* Sources */,
 				D44E437E1A33DCB70095271F /* Frameworks */,
 				D44E437F1A33DCB70095271F /* CopyFiles */,
+				D4F75BEE1A46231D003ACC41 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -336,10 +337,10 @@
 					D454B4421A43AAEC005ACB79 = {
 						CreatedOnToolsVersion = 6.1.1;
 					};
-					D4F9F6F81A4241BF00CF2521 = {
+					D4F75BF01A465064003ACC41 = {
 						CreatedOnToolsVersion = 6.1.1;
 					};
-					D4F9F7271A43A18200CF2521 = {
+					D4F9F6F81A4241BF00CF2521 = {
 						CreatedOnToolsVersion = 6.1.1;
 					};
 				};
@@ -358,30 +359,11 @@
 			targets = (
 				D44E43801A33DCB70095271F /* analysis */,
 				D4F9F6F81A4241BF00CF2521 /* test */,
-				D4F9F7271A43A18200CF2521 /* testing */,
-				D454B4421A43AAEC005ACB79 /* Build with Make */,
+				D454B4421A43AAEC005ACB79 /* testing */,
+				D4F75BF01A465064003ACC41 /* present */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		D4F9F72D1A43A19200CF2521 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/work/unit_cell.plot",
-				"$(SRCROOT)/work/cell.dat",
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/unit_cell.png",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/bash;
-			shellScript = /Volumes/Data/Documents/uni/make/analysis/work/run_test.sh;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D44E437D1A33DCB70095271F /* Sources */ = {
@@ -435,11 +417,6 @@
 			isa = PBXTargetDependency;
 			target = D44E43801A33DCB70095271F /* analysis */;
 			targetProxy = D454B4461A43AAF5005ACB79 /* PBXContainerItemProxy */;
-		};
-		D4F9F72C1A43A18B00CF2521 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D44E43801A33DCB70095271F /* analysis */;
-			targetProxy = D4F9F72B1A43A18B00CF2521 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -522,7 +499,7 @@
 		D44E43891A33DCB70095271F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INSTALL_PATH = "~/bin";
+				INSTALL_PATH = "~/make/bin/mac/";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -530,7 +507,7 @@
 		D44E438A1A33DCB70095271F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INSTALL_PATH = "~/bin";
+				INSTALL_PATH = "~/make/bin/mac/";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -560,6 +537,31 @@
 			};
 			name = Release;
 		};
+		D4F75BF21A465064003ACC41 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUGGING_SYMBOLS = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D4F75BF31A465064003ACC41 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		D4F9F6FE1A4241BF00CF2521 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -577,20 +579,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INSTALL_PATH = "~/bin";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		D4F9F7291A43A18200CF2521 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		D4F9F72A1A43A18200CF2521 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -616,7 +604,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D454B4451A43AAEC005ACB79 /* Build configuration list for PBXLegacyTarget "Build with Make" */ = {
+		D454B4451A43AAEC005ACB79 /* Build configuration list for PBXLegacyTarget "testing" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D454B4431A43AAEC005ACB79 /* Debug */,
@@ -625,20 +613,19 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		D4F75BF11A465064003ACC41 /* Build configuration list for PBXLegacyTarget "present" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D4F75BF21A465064003ACC41 /* Debug */,
+				D4F75BF31A465064003ACC41 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		D4F9F6FD1A4241BF00CF2521 /* Build configuration list for PBXNativeTarget "test" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D4F9F6FE1A4241BF00CF2521 /* Debug */,
 				D4F9F6FF1A4241BF00CF2521 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		D4F9F7281A43A18200CF2521 /* Build configuration list for PBXAggregateTarget "testing" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D4F9F7291A43A18200CF2521 /* Debug */,
-				D4F9F72A1A43A18200CF2521 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

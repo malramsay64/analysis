@@ -69,7 +69,7 @@ angle_list like_me(Frame *frame){
         int c = 0;
         while (queue.get_depth() < 5 && m){
             if (m->get_colour() == (*mol).get_colour()){
-                cout << "Colours " << m->get_colour() << " " << m->get_colour() << endl;
+                //cout << "Colours " << m->get_colour() << " " << m->get_colour() << endl;
                 com2 = m->COM();
                 d = frame->direction(com1,com2);
                 angles.push(atan2(d), d.length());
@@ -93,7 +93,7 @@ int colourise(Frame * frame){
     angle_list a;
     vector<molecule>::iterator m;
     for (m = frame->molecules.begin(); m != frame->molecules.end(); m++){
-        cout << "Angle " << angle(&(*m),frame) << endl;
+        //cout << "Angle " << angle(&(*m),frame) << endl;
         (*m).set_colour(a.push(angle(&(*m),frame)));
     }
     frame->set_coloured();

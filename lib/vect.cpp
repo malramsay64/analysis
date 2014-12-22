@@ -152,4 +152,13 @@ double map_angle(double x){
     return atan2(sin(x), cos(x))+PI;
 }
 
+vect wrap(vect v, double x, double y){
+    v = v/vect(x,y);
+    v = v*2*PI;
+    v = atan2(sin(v),cos(v));
+    v = v/(2*PI);
+    v = v*vect(x,y);
+    return v;
+}
+
 

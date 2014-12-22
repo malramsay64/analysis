@@ -151,8 +151,9 @@ double circle_order(particle * p, Frame * frame){
 
 std::ostream& print_mol(std::ostream &os, molecule *mol, Frame *frame){
     vect d, com;
-    com = mol->COM();
-    com = frame->cartesian(com);
+    
+    com = frame->cartesian(mol->COM());
+    com = wrap(com, frame->get_a(), frame->get_height());
     std::vector<particle *>::iterator i;
     
     for (i = mol->atoms.begin(); i != mol->atoms.end(); i++){

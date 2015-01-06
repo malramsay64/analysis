@@ -164,6 +164,13 @@ int print_gnuplot(Frame * frame){
     file.open(fname);
     //ostream * file = &cout;
     vector<molecule>::iterator p;
+    file << frame->get_a() << " " << frame->get_height() << endl << endl;
+    /*
+    file << "0, 0" << endl << frame->get_a() << ", 0" << endl << endl;
+    file << "0, 0" << endl << "0," << frame->get_height() << endl << endl;
+    file << frame->get_a() << ", 0" << endl << frame->get_a() << "," << frame->get_height() << endl << endl;
+    file << "0, " << frame->get_height() << endl << frame->get_a() << ", " <<frame->get_height() << endl << endl;
+    */
     for (p = frame->molecules.begin(); p != frame->molecules.end(); p++){
         print_mol(file, &*p, frame);
         file << endl;

@@ -1,0 +1,15 @@
+
+# Binary files
+*/analysis
+
+# Xcode Project files
+analysis.xcodeproj/*
+
+# Output files
+*.csv
+*.png
+*.pdf
+*.dat
+
+# Large files
+work/out.lammpstrj

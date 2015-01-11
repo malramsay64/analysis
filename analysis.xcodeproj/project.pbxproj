@@ -106,9 +106,6 @@
 		D44E44091A341D4C0095271F /* vect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = vect.cpp; path = lib/vect.cpp; sourceTree = SOURCE_ROOT; };
 		D44E440A1A341D4C0095271F /* vect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = vect.h; path = lib/vect.h; sourceTree = SOURCE_ROOT; };
 		D454B4491A43D1EE005ACB79 /* angle_list.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = angle_list.cpp; path = lib/angle_list.cpp; sourceTree = SOURCE_ROOT; };
-		D458CADD1A441360001EFFC5 /* 0000000000-angles.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "0000000000-angles.csv"; path = "work/trj_contact/0000000000-angles.csv"; sourceTree = SOURCE_ROOT; };
-		D458CADE1A441360001EFFC5 /* 0000000000.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = 0000000000.dat; path = work/trj_contact/0000000000.dat; sourceTree = SOURCE_ROOT; };
-		D458CADF1A441360001EFFC5 /* 0000000000.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 0000000000.png; path = work/trj_contact/0000000000.png; sourceTree = SOURCE_ROOT; };
 		D4AB718D1A477C6300ED8A6B /* front.lammpstrj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = front.lammpstrj; path = work/front.lammpstrj; sourceTree = "<group>"; };
 		D4E6D7A31A3598C500A9D7F6 /* angle_list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = angle_list.h; path = lib/angle_list.h; sourceTree = SOURCE_ROOT; };
 		D4E6D7A41A3598C500A9D7F6 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = constants.h; path = lib/constants.h; sourceTree = SOURCE_ROOT; };
@@ -123,19 +120,9 @@
 		D4F9F6F91A4241BF00CF2521 /* test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4F9F6FB1A4241BF00CF2521 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		D4F9F72E1A43A22D00CF2521 /* run_test.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = run_test.sh; path = work/run_test.sh; sourceTree = "<group>"; };
-		D4F9F7301A43A25E00CF2521 /* cell.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = cell.dat; path = work/cell.dat; sourceTree = "<group>"; };
-		D4F9F7311A43A25E00CF2521 /* crys.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = crys.dat; path = work/crys.dat; sourceTree = "<group>"; };
-		D4F9F7321A43A25E00CF2521 /* crys.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = crys.png; path = work/crys.png; sourceTree = "<group>"; };
-		D4F9F7331A43A25E00CF2521 /* diffusion.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = diffusion.csv; path = work/diffusion.csv; sourceTree = "<group>"; };
 		D4F9F7341A43A25E00CF2521 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; name = Makefile; path = work/Makefile; sourceTree = "<group>"; };
-		D4F9F7351A43A25E00CF2521 /* msd.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = msd.csv; path = work/msd.csv; sourceTree = "<group>"; };
-		D4F9F7361A43A25E00CF2521 /* rotation.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = rotation.csv; path = work/rotation.csv; sourceTree = "<group>"; };
-		D4F9F7371A43A25E00CF2521 /* short_order_dist.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = short_order_dist.csv; path = work/short_order_dist.csv; sourceTree = "<group>"; };
-		D4F9F7381A43A25E00CF2521 /* short_order.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = short_order.csv; path = work/short_order.csv; sourceTree = "<group>"; };
 		D4F9F7391A43A25E00CF2521 /* test.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = test.py; path = work/test.py; sourceTree = "<group>"; };
-		D4F9F73A1A43A25E00CF2521 /* unit_cell.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = unit_cell.dat; path = work/unit_cell.dat; sourceTree = "<group>"; };
 		D4F9F73B1A43A25E00CF2521 /* unit_cell.plot */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = unit_cell.plot; path = work/unit_cell.plot; sourceTree = "<group>"; };
-		D4F9F73C1A43A25E00CF2521 /* unit_cell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = unit_cell.png; path = work/unit_cell.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,19 +206,9 @@
 				D4AB718D1A477C6300ED8A6B /* front.lammpstrj */,
 				D41B70C61A46C6F000AA73F3 /* short.lammpstrj */,
 				D4F9F72E1A43A22D00CF2521 /* run_test.sh */,
-				D4F9F7301A43A25E00CF2521 /* cell.dat */,
-				D4F9F7311A43A25E00CF2521 /* crys.dat */,
-				D4F9F7321A43A25E00CF2521 /* crys.png */,
-				D4F9F7331A43A25E00CF2521 /* diffusion.csv */,
 				D4F9F7341A43A25E00CF2521 /* Makefile */,
-				D4F9F7351A43A25E00CF2521 /* msd.csv */,
-				D4F9F7361A43A25E00CF2521 /* rotation.csv */,
-				D4F9F7371A43A25E00CF2521 /* short_order_dist.csv */,
-				D4F9F7381A43A25E00CF2521 /* short_order.csv */,
 				D4F9F7391A43A25E00CF2521 /* test.py */,
-				D4F9F73A1A43A25E00CF2521 /* unit_cell.dat */,
 				D4F9F73B1A43A25E00CF2521 /* unit_cell.plot */,
-				D4F9F73C1A43A25E00CF2521 /* unit_cell.png */,
 			);
 			name = work;
 			sourceTree = "<group>";
@@ -239,9 +216,6 @@
 		D458CADC1A441360001EFFC5 /* trj_contact */ = {
 			isa = PBXGroup;
 			children = (
-				D458CADD1A441360001EFFC5 /* 0000000000-angles.csv */,
-				D458CADE1A441360001EFFC5 /* 0000000000.dat */,
-				D458CADF1A441360001EFFC5 /* 0000000000.png */,
 			);
 			name = trj_contact;
 			path = work/trj_contact;

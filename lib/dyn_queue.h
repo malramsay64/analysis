@@ -22,6 +22,7 @@ public:
     dyn_queue(type *);
     dyn_queue();
     type * pop();
+    type * pop_all();
     int remove(type *);
     int get_depth();
 };
@@ -56,6 +57,21 @@ type * dyn_queue<type>::pop(){
                 push(*i, depth.front()+1);
                 
             }
+        }
+        depth.pop_front();
+        return t;
+    }
+    return 0;
+}
+
+template <class type>
+type * dyn_queue<type>::pop_all(){
+    if (q.size()){
+        type * t = q.front();
+        q.pop_front();
+        typename std::vector<type *>::iterator i;
+        for (i = t->my_neighbours.begin(); i != t->my_neighbours.end(); i++){
+                push(*i, depth.front()+1);
         }
         depth.pop_front();
         return t;

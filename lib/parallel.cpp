@@ -144,9 +144,10 @@ int order_parameter(int reference, ofstream *file, Frame *frame){
         vect v,d;
         double rot = angle(&(*mol), frame);
         double theta;
+        dyn_queue<particle> queue = dyn_queue<particle>(mol->atoms.front());
+        particle *atom;
         // For each particle
-        vector<particle>::iterator atom;
-        for (atom = frame->particles.begin(); atom != frame->particles.end(); atom++) {
+        while (atom && queue.get_depth() < 6){
             v = atom->pos_vect();
             d = frame->direction(v,com);
             theta = atan2(d) + PI - rot + PI/2;
@@ -155,8 +156,9 @@ int order_parameter(int reference, ofstream *file, Frame *frame){
             }
         }
         // Center of Mass
-        vector<molecule>::iterator m;
-        for (m = frame->molecules.begin(); m != frame->molecules.end(); m++){
+        dyn_queue<molecule> queue_mol = dyn_queue<molecule>(&(*mol));
+        molecule *m;
+        while (m && queue.get_depth() < 6){
             v = m->COM();
             d = frame->direction(v,com);
             theta = atan2(d) + PI - rot + PI/2;

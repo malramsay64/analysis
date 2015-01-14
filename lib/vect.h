@@ -27,7 +27,7 @@ public:
     vect operator+= (double);
     vect operator+= (vect);
     vect operator+= (int);
-    vect operator-();
+    vect operator- ();
     vect operator/= (double i);
     vect operator*= (double i);
     vect operator/= (vect &i);
@@ -41,6 +41,8 @@ public:
     vect operator* (double i);
     vect operator* (const vect v);
     vect operator/ (const vect v);
+    bool operator== (const vect v);
+    bool operator!= (const vect v);
     friend std::ostream& operator<<(std::ostream &os, const vect &v){
         os << v.x << " " << v.y;
         return os;

@@ -93,34 +93,7 @@ int main(int argc, char *argv[]){
     
     fprintf(stderr, "Frames Read: %i\n", num_frames);
     
-    /*
-     ofstream file;
-     file.open("trj_contact/out.lammpstrj", ios::out);
-     dyn_queue q = dyn_queue(&current_frame->particles.front());
-     particle *p = q.pop();
-     while (p){
-     set_colour(p, current_frame);
-     //cout << p->id << " " << noboolalpha << p->get_traversed() << " " << get_colour(p, current_frame) << endl;
-     print(current_frame, &file);
-     p = q.pop();
-     }
-     file.close();
-     */
-    //print_gnuplot(current_frame);
-    /*
-     cout << "Randomise" << endl;
-     randomise_orientation(current_frame);
-     cout << "order" << endl;
-     short_range_order(current_frame);
-     
-     order="random";
-     order_parameter(order, reference, current_frame);
-     
-     */
-    //unit_cell(current_frame);
     
-    // Free memory
-    //cout << current_frame->size() << endl;
     vector<Frame *>::iterator i;
     for (i = frames.begin(); i != frames.end(); i++){
         delete *i;

@@ -18,6 +18,7 @@ molecule::molecule (){
     colour = 0;
     traversed = false;
     type = 0;
+    com = vect();
 }
 
 void molecule::add_neighbour(molecule *m){
@@ -44,6 +45,16 @@ double molecule::mass(){
 }
 
 vect molecule::COM(){
+    if (com != vect()){
+        return com;
+    }
+    else{
+        com = calc_COM();
+        return com;
+    }
+}
+
+vect molecule::calc_COM(){
     double total = 0;
     vect theta, xi, zeta, out;
     for ( int i = 0; i < nump(); ++i){

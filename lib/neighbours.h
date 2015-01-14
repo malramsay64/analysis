@@ -28,6 +28,8 @@ void randomise_orientation(Frame * frame);
 int remove_neighbours(particle *, std::list<particle*>*);
 int check_single(Frame *, std::list<particle *> *, dyn_queue<particle> *,int, std::ofstream *);
 int order_type(molecule * m1, molecule * m2, Frame * frame);
+int add_mol_neighbours(molecule * m1, molecule *m2);
+
 
 #endif /* endif(NEIGHBOURS_H) */
 

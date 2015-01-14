@@ -11,6 +11,7 @@
 #include "functions.h"
 #include "frame.h"
 #include "angle_list.h"
+#include <assert.h>
 
 using namespace std;
 
@@ -44,6 +45,9 @@ int main(int argc, const char * argv[]) {
     a.push(PI, 1);
     ostream * file = &cout;
     a.print(file);
+    
+    // Testing vect functions
+    
     
     return 0;
 }

@@ -15,6 +15,7 @@
 class molecule {
     int colour;
     bool traversed;
+    vect com;
 public:
     int type;
     int id;
@@ -30,6 +31,7 @@ public:
     int nump();
     double mass();
     vect COM();
+    vect calc_COM();
     vect atom_pos(int);
     int num_contacts();
     int num_neighbours();

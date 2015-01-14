@@ -51,10 +51,15 @@ void *loop_neigh(Frame * frame, int begin, int end){
     return 0;
 }
 
+void find_neighbours(molecule *a, Frame *frame){
+    vector<particle *>::iterator p;
+    for (p = a->atoms.begin(); p != a->atoms.end(); p++){
+        find_neighbours(*p, frame);
+    }
+}
 
 // This function looks for all nearest neighbours it updates the nearest neighbour list of both the particle that it found
 // and itself.
-// We are concerned about the position of both large and small particles, but add them to different lists for identification
 void find_neighbours(particle *a, Frame *frame){
     double d;
     // starts looking at the atom after itself up to the end
@@ -95,6 +100,27 @@ void find_neighbours(particle *a, Frame *frame){
         }
     }
 }
+
+bool check_mol_neighbours(molecule *m1, molecule * m2, Frame * frame){
+    vector<particle *>::iterator p1, p2;
+    double d;
+    for (p1 = m1->atoms.begin(); p1 != m1->atoms.end(); p1++){
+        for (p2 = m2->atoms.begin(); p2 != m2->atoms.end(); p2++){
+            d = frame->dist((*p1)->pos_vect(), (*p2)->pos_vect());
+            if (d < R_FACTOR*((*p1)->radius + (*p2)->radius)){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+int add_mol_neighbours(molecule * m1, molecule *m2){
+    m1->add_neighbour(m2);
+    m2->add_neighbour(m1);
+    return 0;
+}
+
 
 int short_range_order(Frame * frame){
     ofstream file;

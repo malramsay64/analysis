@@ -129,6 +129,13 @@ vect vect::operator/ ( double i){
     return vect(x/i, y/i);
 }
 
+bool vect::operator== (const vect v){
+    return x==v.x && y==v.y;
+}
+bool vect::operator!= (const vect v){
+    return !(x==v.x && y==v.y);
+}
+
 vect operator* (double i, vect v){
     return vect(v.x*i, v.y*i);
 }

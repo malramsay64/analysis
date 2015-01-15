@@ -25,7 +25,6 @@ public:
     std::vector<int> nint;
     
     molecule();
-    //~molecule();
     void add_neighbour(molecule *);
     int uniqc();
     int nump();
@@ -43,7 +42,6 @@ public:
     void traverse();
     void reset_traverse();
     int same_period();
-    
 } ;
 
 

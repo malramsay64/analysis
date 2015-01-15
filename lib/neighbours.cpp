@@ -121,6 +121,12 @@ int add_mol_neighbours(molecule * m1, molecule *m2){
     return 0;
 }
 
+int add_part_neighbours(particle *p1, particle *p2){
+    p1->append(p2);
+    p2->append(p1);
+    return 0;
+}
+
 
 int short_range_order(Frame * frame){
     ofstream file;

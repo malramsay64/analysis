@@ -11,8 +11,8 @@
 using namespace std;
 
 static float R_FACTOR = pow(2,1./6);
-static float molecule_size = 5;
-static float order_size = 15;
+static float neighbour_size = 15;
+//static float order_size = 15;
 static int n_angle_bins = 360;
 static double angle_range = 2*PI;
 static int com_colour = 3;
@@ -23,9 +23,12 @@ static int short_order_types = 6;
  */
 
 ofstream short_order_hist;
-
 ofstream MSD_file;
 ofstream rotations_file;
+
+// Neighbour List
+vector<vector<molecule *> *> neigh_list;
+vector<molecule *> *neighbours;
 
 map<int, my_mean> collate_MSD, collate_c1, collate_c2, collate_c3, collate_c4;
 
@@ -118,6 +121,9 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
     /*
      * Parallelise TODO
      */
+    // Neighbour List
+    neighbours = new vector<molecule *>;
+
     for (mol = frame->molecules.begin(); mol != frame->molecules.end(); mol++){
         /*
          * Properties of mol
@@ -153,22 +159,87 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
         /*
          * Find Neighbours
          */
-        for (mol2 = mol+1; mol2 != frame->molecules.end(); mol2++){
-            vector<particle *>::iterator p1, p2;
-            /*
-             * Properties of mol2
-             */
-            com2 = (*mol2).COM();
-            orient2 = orientation(&(*mol2), frame);
-            // Global Order
-            mean_global_order.add(pow(dot_product(orient1, orient2),2));
-            // Relative Angles
-            angle_bin = ((int) (angle(&(*mol), frame) - angle(&(*mol2), frame) / (angle_range/(n_angle_bins))) + n_angle_bins) % n_angle_bins;
-            relative_angles.at(angle_bin)++;
+        if (key_frames.size() == 0){
+            for (mol2 = mol+1; mol2 != frame->molecules.end(); mol2++){
+                vector<particle *>::iterator p1, p2;
+                /*
+                 * Properties of mol2
+                 */
+                com2 = (*mol2).COM();
+                orient2 = orientation(&(*mol2), frame);
+                // Global Order
+                mean_global_order.add(pow(dot_product(orient1, orient2),2));
+                // Relative Angles
+                angle_bin = ((int) (angle(&(*mol), frame) - angle(&(*mol2), frame) / (angle_range/(n_angle_bins))) + n_angle_bins) % n_angle_bins;
+                relative_angles.at(angle_bin)++;
 
-            double d_com = frame->dist(com1, com2);
-            double d_atom;
-            if (d_com < molecule_size){
+                double d_com = frame->dist(com1, com2);
+                double d_atom;
+                if (d_com < neighbour_size){
+                    neighbours->push_back(&*mol2);
+                    if (print){
+                        // print order atomic
+                        for (auto & x: (*mol2).atoms){
+                            vect d = frame->direction(x->pos_vect(), com1);
+                            double phi = atan2(d) + 5*PI/2 - atan2(orient1);
+                            order_parameter_file << phi << "," << d.length() << "," << x->type << endl;
+                        }
+                        // Print order COM
+                        vect d = frame->direction(com1, com2);
+                        double phi = atan2(d) + 5*PI/2 - atan2(orient1);
+                        order_parameter_file << phi << "," << d.length() << "," << com_colour << endl;
+                    }
+                    for (auto &p2: (*mol2).atoms){
+                        for (auto &p1: (*mol).atoms){
+                            d_atom = frame->dist(p1->pos_vect(), p2->pos_vect());
+                            d_atom /= p1->radius + p2->radius;
+                            if (d_atom < R_FACTOR){
+                                // Average Neighbour Bond fraction
+                                neigh_frac.add(d_atom);
+                            
+                                // Find Neighbours
+                                add_mol_neighbours(&*mol, &*mol2);
+                                add_part_neighbours(p1,p2);
+                            
+                                // Local Order
+                                mean_local_order.add(pow(dot_product(orient1, orient2),2));
+                            }
+                        }
+                    }
+                }
+            }
+            neigh_list.push_back(neighbours);
+        }
+        else {
+            for (auto &mol2: *neigh_list.at((*mol).id-1)){
+                vector<particle *>::iterator p1, p2;
+                /*
+                 * Properties of mol2
+                 */
+                com2 = (*mol2).COM();
+                orient2 = orientation(&(*mol2), frame);
+                // Global Order
+                mean_global_order.add(pow(dot_product(orient1, orient2),2));
+                // Relative Angles
+                angle_bin = ((int) (angle(&(*mol), frame) - angle(&(*mol2), frame) / (angle_range/(n_angle_bins))) + n_angle_bins) % n_angle_bins;
+                relative_angles.at(angle_bin)++;
+
+                //double d_com = frame->dist(com1, com2);
+                double d_atom;
+                
+                if (print){
+                    // print order atomic
+                    for (auto & x: (*mol2).atoms){
+                        vect d = frame->direction(x->pos_vect(), com1);
+                        double phi = atan2(d) + 5*PI/2 - atan2(orient1);
+                        order_parameter_file << phi << "," << d.length() << "," << x->type << endl;
+                    }
+                    // Print order COM
+                    vect d = frame->direction(com1, com2);
+                    double phi = atan2(d) + 5*PI/2 - atan2(orient1);
+                    order_parameter_file << phi << "," << d.length() << "," << com_colour << endl;
+                }
+
                 for (auto &p2: (*mol2).atoms){
                     for (auto &p1: (*mol).atoms){
                         d_atom = frame->dist(p1->pos_vect(), p2->pos_vect());
@@ -185,36 +256,9 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
                             mean_local_order.add(pow(dot_product(orient1, orient2),2));
                         }
                     }
-                    if (print){
-                        // Print order atomic for each atom of mol2
-                        vect d = frame->direction(p2->pos_vect(),com1);
-                        double phi = atan2(d) + 5*PI/2 - atan2(orient1);
-                        order_parameter_file << phi << "," << d.length() << "," << p2->type << endl;
-                    }
-                }
-                if (print){
-                    // Print order COM for each mol2
-                    vect d = frame->direction(com1, com2);
-                    double phi = atan2(d) + 5*PI/2 - atan2(orient1);
-                    order_parameter_file << phi << "," << d.length() << "," << com_colour << endl;
-                }
-            }
-            else if (d_com < order_size){
-                if (print){
-                    // print order atomic
-                    for (auto & x: (*mol2).atoms){
-                        vect d = frame->direction(x->pos_vect(), com1);
-                        double phi = atan2(d) + 5*PI/2 - atan2(orient1);
-                        order_parameter_file << phi << "," << d.length() << "," << x->type << endl;
-                    }
-                    // Print order COM
-                    vect d = frame->direction(com1, com2);
-                    double phi = atan2(d) + 5*PI/2 - atan2(orient1);
-                    order_parameter_file << phi << "," << d.length() << "," << com_colour << endl;
                 }
             }
         }
-
         /*
          * Every frame
          */
@@ -274,7 +318,7 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
             
             // Hist num contact
             n = (*mol).num_contacts();
-            if (n > num_contact_dist.size()){
+            if (n+1 > num_contact_dist.size()){
                 num_contact_dist.resize(n+1, 0);
             }
             ++num_contact_dist.at(n);
@@ -283,7 +327,7 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
             
             // Hist num neighbours
             n = (*mol).num_neighbours();
-            if (n > num_neigh_dist.size()){
+            if (n+1 > num_neigh_dist.size()){
                 num_neigh_dist.resize(n+1, 0);
             }
             ++num_neigh_dist.at(n);

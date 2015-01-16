@@ -33,7 +33,7 @@ double average_bonded_frac(particle *p, Frame * frame){
 
 vect orientation(molecule *m, Frame *frame){
     vect com = m->COM();
-    vect v = frame->direction(com, m->atoms.front()->pos_vect());
+    vect v = frame->direction(com, m->atom_pos(0));
     if (m->nump() == 2 || (v.length() < EPS)){
         v = frame->direction(com, m->atoms.at(1)->pos_vect());
         v.orthogonalise();

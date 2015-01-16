@@ -27,8 +27,8 @@ ofstream MSD_file;
 ofstream rotations_file;
 
 // Neighbour List
-vector<vector<molecule *> *> neigh_list;
-vector<molecule *> *neighbours;
+vector<vector<int>> neigh_list;
+//vector<molecule *> *neighbours;
 
 map<int, my_mean> collate_MSD, collate_c1, collate_c2, collate_c3, collate_c4;
 
@@ -92,6 +92,9 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
         // Rotations file
         rotations_file.open("rotation.csv");
         rotations_file << "Steps, C1, C2, C3, C4" << endl;
+        
+        // Neighbour List
+        neigh_list.resize(frame->num_mol(), vector<int>());
 
     }
     
@@ -121,9 +124,6 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
     /*
      * Parallelise TODO
      */
-    // Neighbour List
-    neighbours = new vector<molecule *>;
-
     for (mol = frame->molecules.begin(); mol != frame->molecules.end(); mol++){
         /*
          * Properties of mol
@@ -176,7 +176,8 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
                 double d_com = frame->dist(com1, com2);
                 double d_atom;
                 if (d_com < neighbour_size){
-                    neighbours->push_back(&*mol2);
+                    neigh_list.at((*mol).id-1).push_back((*mol2).id);
+                    //neigh_list.at((*mol2).id-1).push_back(&(*mol));
                     if (print){
                         // print order atomic
                         for (auto & x: (*mol2).atoms){
@@ -198,7 +199,7 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
                                 neigh_frac.add(d_atom);
                             
                                 // Find Neighbours
-                                add_mol_neighbours(&*mol, &*mol2);
+                                add_mol_neighbours(&(*mol), &(*mol2));
                                 add_part_neighbours(p1,p2);
                             
                                 // Local Order
@@ -208,20 +209,25 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
                     }
                 }
             }
-            neigh_list.push_back(neighbours);
         }
         else {
-            for (auto &mol2: *neigh_list.at((*mol).id-1)){
+            vector<int> neighbours = neigh_list.at((*mol).id-1);
+            molecule * moln;
+            //cout << neighbours.size() << endl;
+            for (auto &m: neighbours){
+                moln = &frame->molecules.at(m-1);
+                //cout << (*mol).id << " " << (*mol).num_neighbours() << " " << moln->id << " " << moln->num_neighbours() << endl;
+                //cout << (*moln)->atom_pos(0) << " " << (*moln)->atom_pos(1) << endl;
                 vector<particle *>::iterator p1, p2;
                 /*
                  * Properties of mol2
                  */
-                com2 = (*mol2).COM();
-                orient2 = orientation(&(*mol2), frame);
+                com2 = moln->COM();
+                orient2 = orientation(moln, frame);
                 // Global Order
                 mean_global_order.add(pow(dot_product(orient1, orient2),2));
                 // Relative Angles
-                angle_bin = ((int) (angle(&(*mol), frame) - angle(&(*mol2), frame) / (angle_range/(n_angle_bins))) + n_angle_bins) % n_angle_bins;
+                angle_bin = ((int) (angle(&(*mol), frame) - angle(moln, frame) / (angle_range/(n_angle_bins))) + n_angle_bins) % n_angle_bins;
                 relative_angles.at(angle_bin)++;
 
                 //double d_com = frame->dist(com1, com2);
@@ -229,7 +235,7 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
                 
                 if (print){
                     // print order atomic
-                    for (auto & x: (*mol2).atoms){
+                    for (auto & x: moln->atoms){
                         vect d = frame->direction(x->pos_vect(), com1);
                         double phi = atan2(d) + 5*PI/2 - atan2(orient1);
                         order_parameter_file << phi << "," << d.length() << "," << x->type << endl;
@@ -239,24 +245,29 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
                     double phi = atan2(d) + 5*PI/2 - atan2(orient1);
                     order_parameter_file << phi << "," << d.length() << "," << com_colour << endl;
                 }
-
-                for (auto &p2: (*mol2).atoms){
-                    for (auto &p1: (*mol).atoms){
-                        d_atom = frame->dist(p1->pos_vect(), p2->pos_vect());
-                        d_atom /= p1->radius + p2->radius;
+                
+                
+                for (p2 = moln->atoms.begin(); p2 != moln->atoms.end(); p2++){
+                    for (p1 = (*mol).atoms.begin(); p1 != (*mol).atoms.end(); p1++){
+                        d_atom = frame->dist((*p1)->pos_vect(), (*p2)->pos_vect());
+                        d_atom /= (*p1)->radius + (*p2)->radius;
                         if (d_atom < R_FACTOR){
                             // Average Neighbour Bond fraction
                             neigh_frac.add(d_atom);
                             
                             // Find Neighbours
-                            add_mol_neighbours(&*mol, &*mol2);
-                            add_part_neighbours(p1,p2);
+                            //(*mol).add_neighbour(*moln);
+                            //cout << moln->num_neighbours() << endl;
+                            //(*moln)->add_neighbour(&(*mol));
+                            add_mol_neighbours(&(*mol), moln);
+                            add_part_neighbours(*p1,*p2);
                             
                             // Local Order
                             mean_local_order.add(pow(dot_product(orient1, orient2),2));
                         }
                     }
                 }
+                
             }
         }
         /*
@@ -350,6 +361,7 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
     /*
      * Output
      */
+    
     
     // Collate key frames
     for (int k = 0; k < key_frames.size(); k++){

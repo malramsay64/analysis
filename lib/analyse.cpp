@@ -285,7 +285,6 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
                         short_order << theta << "," << d.length() << "," << 0.04 << "," << short_order_colour << endl;
                     }
                 }
-                break;
             }
         }
         if (!order){

@@ -12,7 +12,6 @@ using namespace std;
 
 static float R_FACTOR = pow(2,1./6);
 static float neighbour_size = 15;
-//static float order_size = 15;
 static int n_angle_bins = 360;
 static double angle_range = 2*PI;
 static int com_colour = 3;
@@ -28,7 +27,6 @@ ofstream rotations_file;
 
 // Neighbour List
 vector<vector<int>> neigh_list;
-//vector<molecule *> *neighbours;
 
 map<int, my_mean> collate_MSD, collate_c1, collate_c2, collate_c3, collate_c4;
 
@@ -226,7 +224,6 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
                 angle_bin = ((int) (angle(&(*mol), frame) - angle(moln, frame) / (angle_range/(n_angle_bins))) + n_angle_bins) % n_angle_bins;
                 relative_angles.at(angle_bin)++;
 
-                //double d_com = frame->dist(com1, com2);
                 double d_atom;
                 
                 if (print){

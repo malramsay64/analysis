@@ -14,7 +14,6 @@
 
 class molecule {
     int colour;
-    bool traversed;
     vect com;
 public:
     int type;

@@ -16,7 +16,6 @@ molecule::molecule (){
     nint = std::vector<int>(MAX_MOL_CONTACTS,0);
     contacts = 0;
     colour = 0;
-    traversed = false;
     type = 0;
     com = vect();
 }
@@ -103,43 +102,6 @@ int molecule::get_colour(){
 int molecule::set_colour(int i){
     colour = i;
     return 0;
-}
-
-int molecule::graph_colour(){
-    colour = 0;
-    
-    //int sum = 0;
-    vector<int> val (6,0);
-    vector<molecule*>::iterator i;
-    //cout << "Sizeof val " << val.size() << endl;
-    for (i = my_neighbours.begin(); i != my_neighbours.end(); i++){
-        //cout << "Colour: " << (*i)->get_colour() << endl;
-        if ((*i)->get_colour()){
-            val.at((*i)->get_colour()-1) = 1;
-        }
-        //sum += (int) pow(2,(*i)->get_colour()-1);
-    }
-    int j;
-    for (j = 0; j < val.size(); j++){
-        if (val.at(j) == 0){
-            j++;
-            break;
-        }
-    }
-    colour = j;
-    return colour;
-}
-
-bool molecule::get_traversed(){
-    return traversed;
-}
-
-void molecule::traverse(){
-    traversed = true;
-}
-
-void molecule::reset_traverse(){
-    traversed = false;
 }
 
 int molecule::same_period(){

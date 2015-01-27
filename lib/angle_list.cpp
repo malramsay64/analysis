@@ -39,7 +39,6 @@ int angle_list::push(double angle, double d){
 }
 
 int angle_list::print(std::ostream * file){
-    //std::cout << a.size() << std::endl;
     for (int i = 0; i < a.size(); i++){
         *file << (a.at(i).get_mean()) + PI/2 << " " << dist.at(i).get_mean() << " " << a.at(i).get_count() << std::endl;
     }

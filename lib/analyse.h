@@ -11,8 +11,9 @@
 
 #include <stdio.h>
 #include <map>
-#include "parallel.h"
 #include "mol_functions.h"
+#include "angle_list.h"
+#include "neighbours.h"
 
 int analyse(Frame *, std::vector<Frame *>, int print = 0, int movie = 0);
 

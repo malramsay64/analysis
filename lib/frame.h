@@ -16,14 +16,11 @@
 
 #include "particle.h"
 #include "molecule.h"
-#include <mutex>
 
 #ifndef FRAME_H
 #define FRAME_H
 
 #define DELTA_T 0.005
-
-#define cilk_for for
 
 class Frame {
     int atoms;
@@ -56,17 +53,6 @@ public:
     void add_link(int, int);
     double dist(vect,vect);
     vect direction(vect,vect);
-    vect size();
-    int reset_traverse();
-    int set_coloured();
-    int set_neighbours();
-    int reset_neighbours();
-    bool get_neighbours();
-    bool get_coloured();
-    
-    double num_contacts(std::vector<int> *);
-    double num_neighbours(std::vector<int> *);
-    double pairing(std::vector<int> *);
     
     int set_crys(double, double, double);
     double get_a();
@@ -75,19 +61,6 @@ public:
     double get_height();
     vect cartesian(vect v);
     vect fractional(vect v);
-    
-    void setx(double, double);
-    void sety(double, double);
-    void setz(double, double);
-    
-    double xlen();
-    double ylen();
-    double zlen();
-    
-    double length();
-    double xlength();
-    double ylength();
-    double zlength();
     
     double xmin();
     double xmax();

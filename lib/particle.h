@@ -22,33 +22,24 @@
 
 // Particle class
 class particle {
-    bool traversed;
 public:
+    vect pos;
     int id;
     int molid;
     int type;
     double radius;
     double mass;
-    double pos[2];
     std::vector<particle *> my_neighbours;
     
     particle();
-    //~particle();
     void append(particle *);
     int numn();
-    int n_large();
-    int n_small();
-    double xpos();
-    double ypos();
     int set_xpos(double);
     int set_ypos(double);
     int set_pos(vect);
     vect pos_vect();
     int index();
     int m_i();
-    bool get_traversed();
-    void traverse();
-    void reset_traverse();
     
     bool operator> (const particle &b);
     bool operator>= (const particle &b);

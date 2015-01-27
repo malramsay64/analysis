@@ -2,13 +2,9 @@
 #include "neighbours.h"
 #include "frame.h"
 #include "input.h"
-#include <iomanip>
-#include "parallel.h"
-#include "unit_cell.h"
 #include "analyse.h"
 #include <string>
 #include <sstream>
-#include <sys/stat.h>
 #include <algorithm>
 
 #define BOX 0

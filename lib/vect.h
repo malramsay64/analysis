@@ -50,7 +50,6 @@ public:
     
 };
 
-
 vect operator* (double i, vect v);
 
 double dist(vect v1, vect v2);

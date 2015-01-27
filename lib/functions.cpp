@@ -24,19 +24,6 @@ double dist(double x1, double x2){
     return acos(cos(x));
 }
 
-std::string split(std::string s, char delim){
-    int p;
-    p = (int) s.find_last_of(delim);
-    return s.substr(0,p);
-}
-
-std::string basename(std::string s){
-    size_t p;
-    char delim = '/';
-    p = s.find_last_of(delim);
-    return s.substr(p+1);
-}
-
 double legendre(int l, double x){
     switch (l){
         case 1:

@@ -29,7 +29,6 @@ void vect::normalise(){
     double l = length();
     x /= l;
     y /= l;
-    //std::cout <<length() << std::endl;
 }
 
 void vect::orthogonalise(){

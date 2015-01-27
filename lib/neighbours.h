@@ -20,12 +20,7 @@
 #include "dyn_queue.h"
 #include "constants.h"
 
-int par_neigh(Frame *frame);
-void *loop_neigh(Frame * frame, int begin, int end);
-void find_neighbours(particle *a, Frame *frame);
 int short_range_order(Frame * frame);
-void randomise_orientation(Frame * frame);
-int remove_neighbours(particle *, std::list<particle*>*);
 int check_single(Frame *, std::list<particle *> *, dyn_queue<particle> *,int, std::ofstream *);
 int order_type(molecule * m1, molecule * m2, Frame * frame);
 int add_mol_neighbours(molecule * m1, molecule *m2);

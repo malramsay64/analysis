@@ -16,7 +16,7 @@ static float neighbour_size = 15;
 static int n_angle_bins = 360;
 static double angle_range = 2*PI;
 static int com_colour = 3;
-static int short_order_types = 6;
+static int short_order_types = 7;
 
 /*
  * Output files
@@ -52,8 +52,8 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
     
     // Short range order
     vector<int> short_order_count(short_order_types,0);
-    int short_order_colour;
-    int total_short_order;
+    int short_order_colour = 0;
+    int total_short_order = 0;
     
     // Local Order
     my_mean mean_local_order;
@@ -177,7 +177,6 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
                 double d_atom;
                 if (d_com < neighbour_size){
                     neigh_list.at((*mol).id-1).push_back((*mol2).id);
-                    //neigh_list.at((*mol2).id-1).push_back(&(*mol));
                     if (print){
                         // print order atomic
                         for (auto & x: (*mol2).atoms){
@@ -186,7 +185,7 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
                             order_parameter_file << phi << "," << d.length() << "," << x->type << endl;
                         }
                         // Print order COM
-                        vect d = frame->direction(com1, com2);
+                        vect d = frame->direction(com2, com1);
                         double phi = atan2(d) + 5*PI/2 - atan2(orient1);
                         order_parameter_file << phi << "," << d.length() << "," << com_colour << endl;
                     }
@@ -213,11 +212,8 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
         else {
             vector<int> neighbours = neigh_list.at((*mol).id-1);
             molecule * moln;
-            //cout << neighbours.size() << endl;
             for (auto &m: neighbours){
                 moln = &frame->molecules.at(m-1);
-                //cout << (*mol).id << " " << (*mol).num_neighbours() << " " << moln->id << " " << moln->num_neighbours() << endl;
-                //cout << (*moln)->atom_pos(0) << " " << (*moln)->atom_pos(1) << endl;
                 vector<particle *>::iterator p1, p2;
                 /*
                  * Properties of mol2
@@ -241,11 +237,10 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
                         order_parameter_file << phi << "," << d.length() << "," << x->type << endl;
                     }
                     // Print order COM
-                    vect d = frame->direction(com1, com2);
+                    vect d = frame->direction(com2, com1);
                     double phi = atan2(d) + 5*PI/2 - atan2(orient1);
                     order_parameter_file << phi << "," << d.length() << "," << com_colour << endl;
                 }
-                
                 
                 for (p2 = moln->atoms.begin(); p2 != moln->atoms.end(); p2++){
                     for (p1 = (*mol).atoms.begin(); p1 != (*mol).atoms.end(); p1++){
@@ -256,9 +251,6 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
                             neigh_frac.add(d_atom);
                             
                             // Find Neighbours
-                            //(*mol).add_neighbour(*moln);
-                            //cout << moln->num_neighbours() << endl;
-                            //(*moln)->add_neighbour(&(*mol));
                             add_mol_neighbours(&(*mol), moln);
                             add_part_neighbours(*p1,*p2);
                             
@@ -275,14 +267,16 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
          */
         
         // Short Order
+        bool order = false;
         for (int j = 0; j < (*mol).num_neighbours(); j++){
-            // Multiple interactions between particles
-            if ((*mol).nint[j] > 1){
-                molecule *m2 = (*mol).my_neighbours[j];
-                short_order_colour = order_type(&(*mol), m2, frame);
+            molecule *m2 = (*mol).my_neighbours[j];
+            short_order_colour = order_type(&(*mol), m2, frame);
+            //cout << short_order_colour << " " << (*mol).nint.at(j) << endl;
+            if (short_order_colour){
                 short_order_count.at(short_order_colour)++;
                 total_short_order++;
-                if (short_order_colour && print){
+                order = true;
+                if (print){
                     vect d;
                     double theta;
                     for (int k = 0; k < m2->nump(); k++){
@@ -291,7 +285,13 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
                         short_order << theta << "," << d.length() << "," << 0.04 << "," << short_order_colour << endl;
                     }
                 }
+                break;
             }
+        }
+        if (!order){
+            //cout << (*mol).num_neighbours() << endl;
+            short_order_count.at(0)++;
+            total_short_order++;
         }
         
         int frame_no = 0;
@@ -376,7 +376,7 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
     // Percentage in each short range ordering
     if (key_frames.size() == 0){
         short_order_hist.open("short_order_hist.csv");
-        short_order_hist << "Timestep,No Colour, None, Parallel, Anti Parallel 1, Anti Parallel 2, Chiral, -" << endl;
+        short_order_hist << "Timestep,No Colour, None, Parallel, Anti Parallel 1, Anti Parallel 2, Chiral, Perpendicular" << endl;
     }
     else{
         short_order_hist.open("short_order_hist.csv", ofstream::app);

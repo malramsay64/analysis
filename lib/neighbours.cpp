@@ -196,12 +196,12 @@ int order_type(molecule * m1, molecule * m2, Frame * frame){
                      frame->dist(m1->atom_pos(0), m2->atom_pos(1)) );
     // Head-Head Dist
     double Dhh = frame->dist(m1->atom_pos(1), m2->atom_pos(1));
-    
+    //cout << Rb << " " << Rh << " " << theta << " " << Dbb << " " << Dbh << " " << Dhh << endl;
     double deltaD = 0.15;
     double deltaT = 5*PI/180;
     if (fabs( Dbh - (Rb + Rh) ) < deltaD){
         if (fabs( Dhh - (Rh + Rh) ) < deltaD){
-            if (fabs( theta - PI )  < deltaT){
+            if (my_mod( theta, PI )  < deltaT){
                 // Anti Parallel 1
                 return 3;
             }
@@ -211,15 +211,19 @@ int order_type(molecule * m1, molecule * m2, Frame * frame){
             }
         }
         else if (fabs( Dbb - (Rb + Rb)) < deltaD){
-            if (fabs( theta - 0 ) < deltaT){
+            if (my_mod (theta, 0) < deltaT){
                 // Parallel
                 return 2;
             }
-            else if (fabs( theta - PI ) < deltaT){
+            else if (my_mod( theta, PI ) < deltaT){
                 // Anti Parallel 2
                 return 4;
             }
         }
+    }
+    if (my_mod(theta-PI/2, PI) < deltaT){
+        // Perpendicular
+        return 6;
     }
     return 0;
 }

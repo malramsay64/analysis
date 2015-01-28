@@ -59,6 +59,7 @@ public:
     double get_b();
     double get_theta();
     double get_height();
+    double get_tilt();
     vect cartesian(vect v);
     vect fractional(vect v);
     

@@ -24,6 +24,7 @@ static int short_order_types = 7;
 ofstream short_order_hist;
 ofstream MSD_file;
 ofstream rotations_file;
+ofstream movie_file;
 
 // Neighbour List
 vector<vector<int>> neigh_list;
@@ -35,7 +36,7 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
     /*
      * Variables
      */
-    unsigned long num_key_frames = key_frames.size();
+    unsigned long num_key_frames = 1; //key_frames.size();
     angle_list frame_colour;
     
     // Dynamic Quantities
@@ -49,7 +50,7 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
     my_mean neigh_frac;
     
     // Short range order
-    vector<int> short_order_count(short_order_types,0);
+    vector<double> short_order_count(short_order_types,0);
     int short_order_colour = 0;
     int total_short_order = 0;
     
@@ -93,6 +94,9 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
         
         // Neighbour List
         neigh_list.resize(frame->num_mol(), vector<int>());
+        
+        // Movie File
+        movie_file.open("trj/movie.lammpstrj");
 
     }
     
@@ -118,6 +122,16 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
         snprintf(fname,40, "trj_contact/%010i-angles.csv", frame->timestep);
         angles.open(fname);
     }
+    if (movie){
+        // Lammpstrj frame info
+        movie_file << "ITEM: TIMESTEP" << endl << frame->timestep << endl;
+        movie_file << "ITEM: NUMBER OF ATOMS" << endl << frame->num_atoms() << endl;
+        movie_file << "ITEM: BOX BOUNDS xy xz yz pp pp pp" << endl;
+        movie_file << 0 << " " << frame->get_a() << " " << frame->get_tilt() << endl;
+        movie_file << 0 << " " << frame->get_height() << " " << 0 << endl;
+        movie_file << "-0.5 0.5 0" << endl;
+        movie_file << "ITEM: ATOMS id mol type x y z vx vy vz" << endl;
+    }
     
     /*
      * Parallelise TODO
@@ -136,7 +150,7 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
         int angle_bin = (int) (angle(&(*mol), frame) / (angle_range/(n_angle_bins)));
         absolute_angles.at(angle_bin)++;
 
-        
+        my_mean my_local_order = my_mean();
         if (print){
             vect d;
             for (auto & x: (*mol).atoms){
@@ -201,6 +215,7 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
                             
                                 // Local Order
                                 mean_local_order.add(pow(dot_product(orient1, orient2),2));
+                                my_local_order.add(pow(dot_product(orient1, orient2),2));
                             }
                         }
                     }
@@ -253,6 +268,7 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
                             
                             // Local Order
                             mean_local_order.add(pow(dot_product(orient1, orient2),2));
+                            my_local_order.add(pow(dot_product(orient1, orient2),2));
                         }
                     }
                 }
@@ -264,15 +280,12 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
          */
         
         // Short Order
-        bool order = false;
+        vector<int> this_short_order;
         for (int j = 0; j < (*mol).num_neighbours(); j++){
             molecule *m2 = (*mol).my_neighbours[j];
             short_order_colour = order_type(&(*mol), m2, frame);
-            //cout << short_order_colour << " " << (*mol).nint.at(j) << endl;
             if (short_order_colour){
-                short_order_count.at(short_order_colour)++;
-                total_short_order++;
-                order = true;
+                this_short_order.push_back(short_order_colour);
                 if (print){
                     vect d;
                     double theta;
@@ -283,15 +296,22 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
                     }
                 }
             }
+                    }
+        if (this_short_order.size() == 0){
+            short_order_count.at(0) += 1;
+            
         }
-        if (!order){
-            //cout << (*mol).num_neighbours() << endl;
-            short_order_count.at(0)++;
-            total_short_order++;
+        else {
+            for (auto &i: this_short_order){
+                short_order_count.at(i) += 1.0/this_short_order.size();
+            }
         }
+        total_short_order++;
         
         int frame_no = 0;
-        for (auto key: key_frames){
+        if (key_frames.size() > 0){
+            Frame * key = key_frames.front();
+        //for (auto key: key_frames){
             
             // MSD -> from each key frame
             com2 = key->molecules.at((*mol).id-1).COM();
@@ -352,6 +372,22 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
          */
         if (movie){
             // Print lammpstrj frame (every frame)
+            // id mol type x y z vx vy vz
+            vect cart_com, d;
+            double mol_colour = 0;
+            cart_com = frame->cartesian(mol->COM());
+            cart_com = wrap(cart_com, frame->get_a(), frame->get_height());
+            mol_colour = my_local_order.get_mean();
+            /*
+            if (this_short_order.size() > 0){
+                mol_colour = 1;
+            }
+             */
+            std::vector<particle *>::iterator i;
+            for (i = mol->atoms.begin(); i != mol->atoms.end(); i++){
+                d = frame->cartesian(direction(mol->COM(), (*i)->pos_vect()));
+                movie_file << (*i)->id << " " << mol->id << " " << (*i)->type << " " << cart_com + d << " 0 " << mol_colour << " 0 0" << endl;
+            }
         }
     }
     /*

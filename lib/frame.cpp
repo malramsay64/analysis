@@ -87,6 +87,10 @@ double Frame::get_height(){
     return b*sin(theta);
 }
 
+double Frame::get_tilt(){
+    return b*cos(theta);
+}
+
 vect Frame::cartesian(vect v){
     v = v/(2*PI);
     v.x = v.x*a + v.y*b*cos(theta);

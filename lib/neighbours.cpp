@@ -11,6 +11,8 @@
 using namespace std;
 
 static float R_FACTOR = pow(2,1./6);
+double deltaD = 0.2;
+double deltaT = 7*PI/180;
 
 bool check_mol_neighbours(molecule *m1, molecule * m2, Frame * frame){
     vector<particle *>::iterator p1, p2;
@@ -104,8 +106,6 @@ int order_type(molecule * m1, molecule * m2, Frame * frame){
                      frame->dist(m1->atom_pos(0), m2->atom_pos(1)) );
     // Head-Head Dist
     double Dhh = frame->dist(m1->atom_pos(1), m2->atom_pos(1));
-    double deltaD = 0.15;
-    double deltaT = 5*PI/180;
     if (fabs( Dbh - (Rb + Rh) ) < deltaD){
         if (fabs( Dhh - (Rh + Rh) ) < deltaD){
             if (my_mod( theta, PI )  < deltaT){

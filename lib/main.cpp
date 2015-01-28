@@ -18,8 +18,8 @@ int key_rate = 100;
 
 int main(int argc, char *argv[]){
     string in_fname, out_fname;
-    bool quench=false, fast=false;
-    int step_size = 1;
+    bool quench=false, fast=false, moved=false;
+    int step_size = 1, movie = 0, print;
     //int reference = BOX;
     
     /* Read arguments
@@ -28,6 +28,8 @@ int main(int argc, char *argv[]){
      * -q look at quenched configuration
      * -s <n> look at every n steps
      * -f fast, only first and last
+     * -m movie, output movie
+     * -d distance moved in quench
      */
     string arguments = "Valid Arguments are:\n -i <file>\t Input file\n -q\t\t Include quenched\n -s <n>\t\t Every nth frame\n -f \t\t Fast, only first and last frame\n";
     if (argc > 2){
@@ -48,6 +50,12 @@ int main(int argc, char *argv[]){
                     cerr << "Invalid number " << argv[1] << '\n';
                 }
                 i++;
+            }
+            else if (strcmp(argv[i],"-m") == 0){
+                movie = 1;
+            }
+            else if (strcmp(argv[i],"-d") == 0){
+                moved = true;
             }
             else {
                 cout << "Arguments Incorrect!" << endl << arguments << endl;
@@ -83,7 +91,8 @@ int main(int argc, char *argv[]){
         current_frame = new Frame;
         read_data(&myfile, current_frame);
         if (num_frames == 0){
-            analyse(current_frame, key_frames,1);
+            print = 1;
+            analyse(current_frame, key_frames, print, movie);
             key_frames.push_back(current_frame);
             inFile.seekg(myfile.tellg());
             num_frames = filesize/(filesize - count(istreambuf_iterator<char>(inFile),
@@ -95,12 +104,14 @@ int main(int argc, char *argv[]){
             frame_count = 0;
         }
         else if (frame_count == num_frames-1){
-            analyse(current_frame, key_frames,1);
+            print = 1;
+            analyse(current_frame, key_frames, print, movie);
             delete current_frame;
         }
         else {
             if (!fast && frame_count % step_size == 0){
-                analyse(current_frame, key_frames);
+                print = 0;
+                analyse(current_frame, key_frames, print, movie);
             }
             delete current_frame;
         }

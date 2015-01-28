@@ -60,7 +60,7 @@ vect sin(vect v);
 vect atan2(vect vx, vect vy);
 double atan2(vect v);
 double map_angle(double x);
-vect wrap(vect v, double x, double y);
+
 
 #endif
 

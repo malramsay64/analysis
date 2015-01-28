@@ -29,7 +29,8 @@ ostream& print_mol(ostream &os, molecule *mol, Frame *frame){
     vect d, com;
     
     com = frame->cartesian(mol->COM());
-    com = wrap(com, frame->get_a(), frame->get_height());
+    com = wrap_x(com, frame->get_a());
+    
     vector<particle *>::iterator i;
 
     for (i = mol->atoms.begin(); i != mol->atoms.end(); i++){
@@ -39,5 +40,19 @@ ostream& print_mol(ostream &os, molecule *mol, Frame *frame){
     
     return os;
 }
+
+vect wrap_x(vect v, double a){
+    double x = v.x/a;
+    x = x*2*PI;
+    x = atan2(sin(x),cos(x))+PI;
+    x = x/(2*PI);
+    x = x*a;
+    return vect(x,v.y);
+}
+
+vect wrap(vect v){
+    return atan2(sin(v),cos(v))+PI;
+}
+
 
 

@@ -375,14 +375,13 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
             // id mol type x y z vx vy vz
             vect cart_com, d;
             double mol_colour = 0;
+            
             cart_com = frame->cartesian(mol->COM());
-            cart_com = wrap(cart_com, frame->get_a(), frame->get_height());
-            mol_colour = my_local_order.get_mean();
-            /*
-            if (this_short_order.size() > 0){
+            cart_com = wrap_x(cart_com, frame->get_a());
+            
+            if ((*mol).num_contacts() > 8){
                 mol_colour = 1;
             }
-             */
             std::vector<particle *>::iterator i;
             for (i = mol->atoms.begin(); i != mol->atoms.end(); i++){
                 d = frame->cartesian(direction(mol->COM(), (*i)->pos_vect()));

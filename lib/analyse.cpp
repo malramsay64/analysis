@@ -385,7 +385,47 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie, int 
             
             cart_com = frame->cartesian(mol->COM());
             cart_com = wrap_x(cart_com, frame->get_a());
-            
+            // Colour on number of contacts
+            /*
+             if ((*mol).num_contacts() > 9){
+             mol_colour = 1;
+             }
+             */
+            // Colour on short range order parameter
+            /*
+             if (this_short_order.size() > 1){
+             mol_colour = 1;
+             }
+             */
+            // Has Antiparallel 1 short range order
+            //double prev = last_state.at((*mol).index());
+            for (auto j: this_short_order){
+                if (j == 4){
+                    mol_colour = 1;
+                }
+            }
+            // Smoothing
+            if (mol_colour == 1){
+                if (last_state.at((*mol).index()) > 0){
+                    mol_colour = 1;
+                    last_state.at((*mol).index()) = 1;
+                }
+                else {
+                    last_state.at((*mol).index()) = 0.5;
+                    mol_colour = 0;
+                }
+            }
+            else {
+                if (last_state.at((*mol).index()) < 1){
+                    mol_colour = 0;
+                    last_state.at((*mol).index()) = 0;
+                }
+                else {
+                    last_state.at((*mol).index()) = 0.5;
+                    mol_colour = 1;
+                }
+            }
+            //cout << "Prev : " << prev << " Current: " << last_state.at((*mol).index()) << endl;
             std::vector<particle *>::iterator i;
             for (i = mol->atoms.begin(); i != mol->atoms.end(); i++){
                 d = frame->cartesian(direction(mol->COM(), (*i)->pos_vect()));

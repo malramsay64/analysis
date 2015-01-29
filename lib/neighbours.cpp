@@ -11,7 +11,7 @@
 using namespace std;
 
 static float R_FACTOR = pow(2,1./6);
-double deltaD = 0.2;
+double deltaD = 0.30;
 double deltaT = 7*PI/180;
 
 bool check_mol_neighbours(molecule *m1, molecule * m2, Frame * frame){
@@ -108,7 +108,7 @@ int order_type(molecule * m1, molecule * m2, Frame * frame){
     double Dhh = frame->dist(m1->atom_pos(1), m2->atom_pos(1));
     if (fabs( Dbh - (Rb + Rh) ) < deltaD){
         if (fabs( Dhh - (Rh + Rh) ) < deltaD){
-            if (my_mod( theta, PI )  < deltaT){
+            if (dist( theta - PI, 2*PI )  < deltaT){
                 // Anti Parallel 1
                 return 3;
             }
@@ -118,11 +118,11 @@ int order_type(molecule * m1, molecule * m2, Frame * frame){
             }
         }
         else if (fabs( Dbb - (Rb + Rb)) < deltaD){
-            if (my_mod (theta, 0) < deltaT){
+            if (dist (theta, 2*PI) < deltaT){
                 // Parallel
                 return 2;
             }
-            else if (my_mod( theta, PI ) < deltaT){
+            else if (dist( theta - PI, 2*PI ) < deltaT){
                 // Anti Parallel 2
                 return 4;
             }

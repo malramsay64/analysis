@@ -10,7 +10,7 @@
 
 using namespace std;
 
-static float R_FACTOR = pow(2,1./6);
+static float R_FACTOR = 1.3; //pow(2,1./6);
 static float neighbour_size = 15;
 static int n_angle_bins = 360;
 static double angle_range = 2*PI;
@@ -31,7 +31,9 @@ vector<vector<int>> neigh_list;
 
 map<int, my_mean> collate_MSD, collate_c1, collate_c2, collate_c3, collate_c4;
 
-int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
+vector<double> last_state;
+
+int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie, int dist){
     
     /*
      * Variables
@@ -97,6 +99,9 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
         
         // Movie File
         movie_file.open("trj/movie.lammpstrj");
+        
+        // Last State
+        last_state = vector<double>(frame->num_mol(),0.5);
 
     }
     
@@ -132,6 +137,9 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
         movie_file << "-0.5 0.5 0" << endl;
         movie_file << "ITEM: ATOMS id mol type x y z vx vy vz" << endl;
     }
+    
+    // Average distance moved
+    my_mean quench_dist = my_mean();
     
     /*
      * Parallelise TODO
@@ -299,7 +307,6 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
                     }
         if (this_short_order.size() == 0){
             short_order_count.at(0) += 1;
-            
         }
         else {
             for (auto &i: this_short_order){
@@ -379,14 +386,14 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
             cart_com = frame->cartesian(mol->COM());
             cart_com = wrap_x(cart_com, frame->get_a());
             
-            if ((*mol).num_contacts() > 8){
-                mol_colour = 1;
-            }
             std::vector<particle *>::iterator i;
             for (i = mol->atoms.begin(); i != mol->atoms.end(); i++){
                 d = frame->cartesian(direction(mol->COM(), (*i)->pos_vect()));
                 movie_file << (*i)->id << " " << mol->id << " " << (*i)->type << " " << cart_com + d << " 0 " << mol_colour << " 0 0" << endl;
             }
+        }
+        if (dist){
+            quench_dist.add(frame->dist(mol->COM(), key_frames.back()->molecules.at(mol->id-1).COM()));
         }
     }
     /*
@@ -395,7 +402,9 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
     
     
     // Collate key frames
-    for (int k = 0; k < key_frames.size(); k++){
+    if (key_frames.size() > 0){
+        int k = 0;
+    //for (int k = 0; k < key_frames.size(); k++){
         int steps = frame->timestep - key_frames.at(k)->timestep;
         collate_MSD[steps].add(MSD.at(k).get_mean());
         collate_c1[steps].add(c1.at(k).get_mean());
@@ -505,6 +514,12 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie){
         // Print Pairing
         // TODO
     }
+    
+    if (dist){
+        cout << "Vibration mean: " << quench_dist.get_mean() << endl;
+        cout << "Vibration stdev: " << quench_dist.get_stdev() << endl;
+    }
+    
     if (print){
         
         // Print angle

@@ -18,8 +18,8 @@ int key_rate = 100;
 
 int main(int argc, char *argv[]){
     string in_fname, out_fname;
-    bool quench=false, fast=false, moved=false;
-    int step_size = 1, movie = 0, print;
+    bool quench=false, fast=false;
+    int step_size = 1, movie = 0, moved = 0, print;
     //int reference = BOX;
     
     /* Read arguments
@@ -55,7 +55,7 @@ int main(int argc, char *argv[]){
                 movie = 1;
             }
             else if (strcmp(argv[i],"-d") == 0){
-                moved = true;
+                moved = 1;
             }
             else {
                 cout << "Arguments Incorrect!" << endl << arguments << endl;
@@ -74,6 +74,7 @@ int main(int argc, char *argv[]){
     int data = true;
     vector<Frame *> key_frames;
     Frame  *current_frame;
+    //Frame *previous_frame;
     
     // Input file
     
@@ -103,9 +104,14 @@ int main(int argc, char *argv[]){
             }
             frame_count = 0;
         }
+        else if (moved && frame_count == num_frames - 2){
+            print = 0;
+            key_frames.push_back(current_frame);
+            analyse(current_frame, key_frames, print, movie);
+        }
         else if (frame_count == num_frames-1){
             print = 1;
-            analyse(current_frame, key_frames, print, movie);
+            analyse(current_frame, key_frames, print, movie, moved);
             delete current_frame;
         }
         else {

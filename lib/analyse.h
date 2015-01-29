@@ -15,6 +15,6 @@
 #include "angle_list.h"
 #include "neighbours.h"
 
-int analyse(Frame *, std::vector<Frame *>, int print = 0, int movie = 0);
+int analyse(Frame *, std::vector<Frame *>, int print = 0, int movie = 0, int dist = 0);
 
 #endif /* defined(MY_ANALYSE_H) */

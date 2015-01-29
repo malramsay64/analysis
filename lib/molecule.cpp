@@ -114,3 +114,7 @@ int molecule::same_period(){
     }
     return 0;
 }
+
+int molecule::index(){
+    return id-1;
+}

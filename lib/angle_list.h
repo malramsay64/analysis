@@ -18,8 +18,8 @@
 #include "functions.h"
 #include "constants.h"
 
-static double deltaA = 5*PI/180;
-static double deltaD = 0.15;
+static double deltaA = 10*PI/180;
+static double deltaD = 0.30;
 
 class angle_list{
     std::vector<my_mean> a;

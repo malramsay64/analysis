@@ -10,8 +10,8 @@
 
 using namespace std;
 
-static float R_FACTOR = 1.3; //pow(2,1./6);
-static float neighbour_size = 15;
+static double R_FACTOR = 1.3; //pow(2,1./6);
+static double neighbour_size = 15;
 static int n_angle_bins = 360;
 static double angle_range = 2*PI;
 static int com_colour = 3;
@@ -31,7 +31,10 @@ vector<vector<int>> neigh_list;
 
 map<int, my_mean> collate_MSD, collate_c1, collate_c2, collate_c3, collate_c4;
 
+// For smoothing of movie output
 vector<double> last_state;
+
+
 
 int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie, int dist){
     
@@ -80,9 +83,10 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie, int 
     // Pairing of Neighbours
     // TODO
     
-    
-    char fname[40];
-    
+    // Radial distribution
+    int points = 1000;
+    double resolution = neighbour_size/points;
+    vector<int> radial(points,0);
     
     // Open new file if first;
     if (key_frames.size() == 0){
@@ -105,12 +109,13 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie, int 
 
     }
     
-    
     ofstream short_order;
     ofstream order_parameter_file;
     ofstream gnuplot;
     ofstream angles;
     if (print){
+        char fname[40];
+        
         // Short range order
         short_order.open("short_order.csv");
         
@@ -198,6 +203,8 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie, int 
                 if (d_com < neighbour_size){
                     neigh_list.at((*mol).id-1).push_back((*mol2).id);
                     if (print){
+                        // Radial distribution function
+                        radial.at(int(d_com/resolution))++;
                         // print order atomic
                         for (auto & x: (*mol2).atoms){
                             vect d = frame->direction(x->pos_vect(), com1);
@@ -234,7 +241,7 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie, int 
             vector<int> neighbours = neigh_list.at((*mol).id-1);
             molecule * moln;
             for (auto &m: neighbours){
-                moln = &frame->molecules.at(m-1);
+                moln = &(frame->molecules.at(m-1));
                 vector<particle *>::iterator p1, p2;
                 /*
                  * Properties of mol2
@@ -246,10 +253,15 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie, int 
                 // Relative Angles
                 angle_bin = ((int) (angle(&(*mol), frame) - angle(moln, frame) / (angle_range/(n_angle_bins))) + n_angle_bins) % n_angle_bins;
                 relative_angles.at(angle_bin)++;
-
+                
                 double d_atom;
                 
                 if (print){
+                    // Radial Distribution
+                    double d_com = frame->dist(com1, com2);
+                    if (d_com < neighbour_size){
+                        radial.at(int(d_com/resolution))++;
+                    }
                     // print order atomic
                     for (auto & x: moln->atoms){
                         vect d = frame->direction(x->pos_vect(), com1);
@@ -479,6 +491,7 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie, int 
     
     // Only want to print this the last time
     if (print && key_frames.size() > 0){
+        char fname[40];
         
         // Relaxation times
         int t1 = 0, t2 = 0, t3 = 0, t4 = 0;
@@ -553,6 +566,15 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie, int 
         
         // Print Pairing
         // TODO
+        
+        // Radial Distribution function
+        ofstream radial_dist;
+        radial_dist.open("radial_dist.dat");
+        double volume;
+        for (int i = 0; i < points; i++){
+            volume = 4*PI*pow(i*resolution,2)*resolution;
+            radial_dist << i*resolution << " " << radial.at(i)/volume << endl;
+        }
     }
     
     if (dist){

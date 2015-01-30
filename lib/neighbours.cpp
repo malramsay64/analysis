@@ -12,7 +12,7 @@ using namespace std;
 
 static float R_FACTOR = pow(2,1./6);
 double deltaD = 0.30;
-double deltaT = 7*PI/180;
+double deltaT = 10*PI/180;
 
 bool check_mol_neighbours(molecule *m1, molecule * m2, Frame * frame){
     vector<particle *>::iterator p1, p2;

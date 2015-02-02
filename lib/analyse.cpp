@@ -572,8 +572,8 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie, int 
         radial_dist.open("radial_dist.dat");
         double volume;
         for (int i = 0; i < points; i++){
-            volume = 4*PI*pow(i*resolution,2)*resolution;
-            radial_dist << i*resolution << " " << radial.at(i)/volume << endl;
+            volume = PI*(i*resolution)*resolution;
+            radial_dist << i*resolution << " " << (radial.at(i)/volume) << endl;
         }
     }
     

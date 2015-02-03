@@ -53,6 +53,8 @@ public:
     void add_link(int, int);
     double dist(vect,vect);
     vect direction(vect,vect);
+    double get_area();
+    double get_density();
     
     int set_crys(double, double, double);
     double get_a();

@@ -91,6 +91,14 @@ double Frame::get_tilt(){
     return b*cos(theta);
 }
 
+double Frame::get_area(){
+    return get_a()*get_height();
+}
+
+double Frame::get_density(){
+    return num_atoms()/get_area();
+}
+
 vect Frame::cartesian(vect v){
     v = v/(2*PI);
     v.x = v.x*a + v.y*b*cos(theta);

@@ -570,10 +570,10 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie, int 
         // Radial Distribution function
         ofstream radial_dist;
         radial_dist.open("radial_dist.dat");
-        double volume;
+        double area;
         for (int i = 0; i < points; i++){
-            volume = PI*(i*resolution)*resolution;
-            radial_dist << i*resolution << " " << (radial.at(i)/volume) << endl;
+            area = PI*(i*resolution)*resolution;
+            radial_dist << i*resolution << " " << frame->get_density()*radial.at(i)*area << endl;
         }
     }
     

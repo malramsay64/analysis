@@ -1,6 +1,7 @@
 
 # Binary files
 */analysis
+cpp_llvm
 
 # Xcode Project files
 analysis.xcodeproj/*

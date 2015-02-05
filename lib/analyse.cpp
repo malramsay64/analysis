@@ -571,9 +571,10 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie, int 
         ofstream radial_dist;
         radial_dist.open("radial_dist.dat");
         double area;
+        double density = frame->num_mol()/frame->get_area();
         for (int i = 0; i < points; i++){
             area = PI*(i*resolution)*resolution;
-            radial_dist << i*resolution << " " << frame->get_density()*radial.at(i)*area << endl;
+            radial_dist << i*resolution << " " << radial.at(i)/(area*frame->num_mol()*density) << endl;
         }
     }
     

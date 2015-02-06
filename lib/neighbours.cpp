@@ -14,6 +14,101 @@ static float R_FACTOR = pow(2,1./6);
 double deltaD = 0.30;
 double deltaT = 10*PI/180;
 
+static double neigh_cutoff = 5.0;
+static double neigh_alert = 7.0;
+
+int check_particles(molecule * mol1, molecule * mol2, Frame * frame){
+    double d_atom;
+    for (auto &p2: mol2->atoms){
+        for (auto &p1: mol1->atoms){
+            d_atom = frame->dist(p1->pos_vect(), p2->pos_vect());
+            d_atom /= p1->radius + p2->radius;
+            if (d_atom < R_FACTOR){
+                // Add Neighbours
+                add_mol_neighbours(mol1, mol2);
+                add_part_neighbours(p1,p2);
+            }
+        }
+    }
+    return 0;
+}
+
+int find_mol_neighbours(molecule * mol, Frame * frame, vector<vector<int>> *neigh_list){
+    vect com;
+    vector<int> * neighbours = &neigh_list->at(mol->id-1);
+    // mol properties
+    com = mol->COM();
+    bool recompute = false;
+    
+    // Check no neighbours in list
+    if (neighbours->size() == 0){
+        // Iterate through all molecules with id > mol
+        vector<molecule>::iterator mol2;
+        for (mol2 = frame->molecules.begin()+mol->id; mol2 != frame->molecules.end(); mol2++){
+            double d_com = frame->dist(com, (*mol2).COM());
+            if (d_com < neigh_cutoff){
+                neighbours->push_back(mol2->id);
+                // Check interparticle distnces
+                check_particles(mol, &(*mol2), frame);
+            }
+        }
+    }
+    // Iterate through neighbour list
+    else {
+        for (auto &m: *neighbours){
+            molecule *mol2 = &(frame->molecules.at(m-1));
+            
+            double d_com = frame->dist(com, mol2->COM());
+            if (d_com < neigh_cutoff){
+                check_particles(mol, mol2, frame);
+            }
+            else if (d_com > neigh_alert){
+                // Flag local neighbour list for recomputation
+                recompute = true;
+            }
+        }
+        // Recompute local neighbour list
+        if (recompute){
+            // Reset particle neighbour list
+            neigh_list->at(mol->id-1) = vector<int>();
+            neighbours = &neigh_list->at(mol->id-1);
+            molecule *mol2;
+            dyn_queue queue = dyn_queue(mol);
+            queue.pop();
+            while (queue.get_depth() < 2){
+                mol2 = queue.pop();
+                if (mol2 > mol){
+                    double d_com = frame->dist(com, mol2->COM());
+                    if (d_com < neigh_cutoff){
+                        neighbours->push_back(mol2->id);
+                        check_particles(mol, mol2, frame);
+                    }
+                }
+            }
+                
+            // All neighbours
+            for (auto &m: *neighbours){
+                molecule *m1 = &(frame->molecules.at(m-1));
+                neigh_list->at(m1->id-1) = vector<int>();
+                neighbours = &neigh_list->at(m1->id-1);
+                dyn_queue queue = dyn_queue(m1);
+                queue.pop();
+                while (queue.get_depth() < 2){
+                    mol2 = queue.pop();
+                    if (mol2 > mol){
+                        double d_com = frame->dist(m1->COM(), mol2->COM());
+                        if (d_com < neigh_cutoff){
+                            neighbours->push_back(mol2->id);
+                            check_particles(m1, mol2, frame);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return 0;
+}
+
 bool check_mol_neighbours(molecule *m1, molecule * m2, Frame * frame){
     vector<particle *>::iterator p1, p2;
     double d;

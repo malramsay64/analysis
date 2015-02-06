@@ -89,10 +89,14 @@ int molecule::num_neighbours(){
     return uniqc();
 }
 
-int molecule::pairing(molecule *b){
-    int pos;
-    pos = (int) (std::find(my_neighbours.begin(), my_neighbours.end(), b) - my_neighbours.begin());
-    return nint[pos];
+distribution molecule::pairing(){
+    distribution d = distribution(MAX_MOL_CONTACTS);
+    for (auto &n: nint){
+        if ( n != 0){
+            d.add(n);
+        }
+    }
+    return d;
 }
 
 int molecule::get_colour(){

@@ -2,7 +2,8 @@
 #include "neighbours.h"
 #include "frame.h"
 #include "input.h"
-#include "analyse.h"
+//#include "analyse.h"
+#include "modular.h"
 #include <string>
 #include <sstream>
 #include <algorithm>
@@ -93,7 +94,7 @@ int main(int argc, char *argv[]){
         read_data(&myfile, current_frame);
         if (num_frames == 0){
             print = 1;
-            analyse(current_frame, key_frames, print, movie);
+            mod_analyse(current_frame, key_frames, print, movie);
             key_frames.push_back(current_frame);
             inFile.seekg(myfile.tellg());
             num_frames = filesize/(filesize - count(istreambuf_iterator<char>(inFile),
@@ -107,17 +108,17 @@ int main(int argc, char *argv[]){
         else if (moved && frame_count == num_frames - 2){
             print = 0;
             key_frames.push_back(current_frame);
-            analyse(current_frame, key_frames, print, movie);
+            mod_analyse(current_frame, key_frames, print, movie);
         }
         else if (frame_count == num_frames-1){
             print = 1;
-            analyse(current_frame, key_frames, print, movie, moved);
+            mod_analyse(current_frame, key_frames, print, movie, moved);
             delete current_frame;
         }
         else {
             if (!fast && frame_count % step_size == 0){
                 print = 0;
-                analyse(current_frame, key_frames, print, movie);
+                mod_analyse(current_frame, key_frames, print, movie);
             }
             delete current_frame;
         }

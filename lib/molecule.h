@@ -7,6 +7,7 @@
 //
 
 #include "particle.h"
+#include "distribution.h"
 
 #ifndef MY_MOLECULE
 #define MY_MOLECULE
@@ -33,7 +34,7 @@ public:
     vect atom_pos(int);
     int num_contacts();
     int num_neighbours();
-    int pairing(molecule *);
+    distribution pairing();
     int get_colour();
     int set_colour(int);
     int graph_colour();

@@ -89,8 +89,8 @@ int molecule::num_neighbours(){
     return uniqc();
 }
 
-distribution molecule::pairing(){
-    distribution d = distribution(MAX_MOL_CONTACTS);
+distribution<int> molecule::pairing(){
+    distribution<int> d = distribution<int>(MAX_MOL_CONTACTS);
     for (auto &n: nint){
         if ( n != 0){
             d.add(n);

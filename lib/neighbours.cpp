@@ -13,6 +13,7 @@ using namespace std;
 static float R_FACTOR = pow(2,1./6);
 double deltaD = 0.30;
 double deltaT = 10*PI/180;
+static int short_order_types = 7;
 
 static double neigh_cutoff = 5.0;
 static double neigh_alert = 7.0;
@@ -135,6 +136,20 @@ int add_part_neighbours(particle *p1, particle *p2){
     return 0;
 }
 
+vector<int> short_neighbour_list(molecule * m, Frame * frame){
+    vector<int> dist = vector<int>();
+    int type;
+    for (auto &neigh: m->my_neighbours){
+        type = order_type(m, neigh, frame);
+        if (type != 0) {
+            dist.push_back(type);
+        }
+    }
+    if (dist.size() == 0){
+        dist.push_back(0);
+    }
+    return dist;
+}
 
 int short_range_order(Frame * frame){
     ofstream file;

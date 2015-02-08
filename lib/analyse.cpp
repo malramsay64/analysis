@@ -15,7 +15,8 @@ static double neighbour_size = 15;
 static int n_angle_bins = 360;
 static double angle_range = 2*PI;
 static int com_colour = 3;
-static int short_order_types = 7;
+//static int short_order_types = 7;
+
 
 /*
  * Output files
@@ -55,7 +56,7 @@ int analyse(Frame *frame, vector<Frame *> key_frames, int print, int movie, int 
     my_mean neigh_frac;
     
     // Short range order
-    vector<double> short_order_count(short_order_types,0);
+    vector<double> short_order_count(7,0);
     int short_order_colour = 0;
     int total_short_order = 0;
     

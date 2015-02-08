@@ -34,7 +34,7 @@ public:
     vect atom_pos(int);
     int num_contacts();
     int num_neighbours();
-    distribution pairing();
+    distribution<int> pairing();
     int get_colour();
     int set_colour(int);
     int graph_colour();

@@ -22,13 +22,8 @@ static int com_colour = 3;
  * Output files
  */
 
-ofstream short_order_hist;
 ofstream MSD_file;
 ofstream rotations_file;
-ofstream movie_file;
-
-// Neighbour List
-vector<vector<int>> neigh_list;
 
 map<int, my_mean> collate_MSD, collate_c1, collate_c2, collate_c3, collate_c4;
 

@@ -140,12 +140,22 @@ int print_distribution(distribution<type> *d, std::string filename){
     std::ofstream file;
     file.open(filename.c_str());
     for (int i = 0; i < d->get_size(); i++){
-        file << i << " " << d->at(i) << std::
-        endl;
+        file << i << " " << d->at(i) << std::endl;
     }
     
     return 0;
 }
+
+template <class type>
+int print_time_distribution(distribution<type> *d, int timestep, std::ofstream *file){
+    *file << timestep;
+    for (int i = 0; i < d->get_size(); i++){
+        *file << "," << d->at(i);
+    }
+    *file << std::endl;
+    return 0;
+}
+
 
 int print_radial_distribution(distribution<int> *d, std::string filename, int nmol, double frame_area);
 

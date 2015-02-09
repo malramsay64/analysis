@@ -21,13 +21,15 @@
 #include "constants.h"
 
 int short_range_order(Frame * frame);
-int find_mol_neighbours(molecule * mol, Frame * frame, std::vector<std::vector<int>> *neigh_list);
+bool find_mol_neighbours(molecule * mol, Frame * frame, std::vector<std::vector<int>> *neigh_list);
 int check_particles(molecule * mol1, molecule * mol2, Frame * frame);
+int recompute_neighbours(molecule * mol, Frame * frame, std::vector<std::vector<int>> *neigh_list);
 //int check_single(Frame *, std::list<particle *> *, dyn_queue *,int, std::ofstream *);
 int order_type(molecule * m1, molecule * m2, Frame * frame);
 int add_mol_neighbours(molecule * m1, molecule *m2);
 int add_part_neighbours(particle *p1, particle *p2);
 std::vector<int> short_neighbour_list(molecule * m, Frame * frame);
+
 
 #endif /* endif(NEIGHBOURS_H) */
 

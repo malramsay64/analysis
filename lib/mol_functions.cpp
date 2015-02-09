@@ -25,7 +25,7 @@ double angle(molecule *m, Frame * frame){
     return atan2(orientation(m, frame)) + PI;
 }
 
-ostream& print_mol(ostream &os, molecule *mol, Frame *frame){
+int print_mol(ostream *os, molecule *mol, Frame *frame){
     vect d, com;
     
     com = frame->cartesian(mol->COM());
@@ -35,10 +35,10 @@ ostream& print_mol(ostream &os, molecule *mol, Frame *frame){
 
     for (i = mol->atoms.begin(); i != mol->atoms.end(); i++){
         d = frame->cartesian(direction(mol->COM(), (*i)->pos_vect()));
-        os << com + d << " " << (*i)->radius << " " << mol->get_colour() << " " << mol->id << endl;
+        *os << com + d << " " << (*i)->radius << " " << mol->get_colour() << " " << mol->id << endl;
     }
     
-    return os;
+    return 0;
 }
 
 vect wrap_x(vect v, double a){
@@ -53,6 +53,7 @@ vect wrap_x(vect v, double a){
 vect wrap(vect v){
     return atan2(sin(v),cos(v))+PI;
 }
+
 
 
 

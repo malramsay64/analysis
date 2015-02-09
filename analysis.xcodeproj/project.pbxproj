@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		D451E6791A844D4A00F89B60 /* modular.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D451E6771A844D4A00F89B60 /* modular.cpp */; };
 		D451E6941A845B4200F89B60 /* distribution.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D451E6921A845B4200F89B60 /* distribution.cpp */; };
+		D451E69A1A88501E00F89B60 /* movie.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D451E6981A88501E00F89B60 /* movie.cpp */; };
+		D451E69F1A8868A300F89B60 /* output.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D451E69D1A8868A300F89B60 /* output.cpp */; };
 		D454B44A1A43D1EE005ACB79 /* angle_list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D454B4491A43D1EE005ACB79 /* angle_list.cpp */; };
 		D454B44B1A43D1EE005ACB79 /* angle_list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D454B4491A43D1EE005ACB79 /* angle_list.cpp */; };
 		D458CADB1A44128A001EFFC5 /* analysis in CopyFiles */ = {isa = PBXBuildFile; fileRef = D44E43811A33DCB70095271F /* analysis */; };
@@ -132,6 +134,14 @@
 		D451E6921A845B4200F89B60 /* distribution.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = distribution.cpp; path = lib/distribution.cpp; sourceTree = SOURCE_ROOT; };
 		D451E6931A845B4200F89B60 /* distribution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = distribution.h; path = lib/distribution.h; sourceTree = SOURCE_ROOT; };
 		D451E6951A84679200F89B60 /* pairing.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pairing.dat; sourceTree = "<group>"; };
+		D451E6961A881D6E00F89B60 /* short_order_dist.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = short_order_dist.csv; path = work/short_order_dist.csv; sourceTree = "<group>"; };
+		D451E6971A881DA900F89B60 /* short_order_hist.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = short_order_hist.csv; path = work/short_order_hist.csv; sourceTree = "<group>"; };
+		D451E6981A88501E00F89B60 /* movie.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = movie.cpp; path = lib/movie.cpp; sourceTree = SOURCE_ROOT; };
+		D451E6991A88501E00F89B60 /* movie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = movie.h; path = lib/movie.h; sourceTree = SOURCE_ROOT; };
+		D451E69C1A8859B900F89B60 /* movie.lammpstrj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = movie.lammpstrj; path = work/trj/movie.lammpstrj; sourceTree = "<group>"; };
+		D451E69D1A8868A300F89B60 /* output.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = output.cpp; path = lib/output.cpp; sourceTree = SOURCE_ROOT; };
+		D451E69E1A8868A300F89B60 /* output.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = output.h; path = lib/output.h; sourceTree = SOURCE_ROOT; };
+		D451E6A01A886C1A00F89B60 /* rotations.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = rotations.csv; path = work/rotations.csv; sourceTree = "<group>"; };
 		D454B4491A43D1EE005ACB79 /* angle_list.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = angle_list.cpp; path = lib/angle_list.cpp; sourceTree = SOURCE_ROOT; };
 		D45EE73A1A65DFCC001AB0E7 /* analyse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = analyse.cpp; path = lib/analyse.cpp; sourceTree = SOURCE_ROOT; };
 		D45EE73B1A65DFCC001AB0E7 /* analyse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = analyse.h; path = lib/analyse.h; sourceTree = SOURCE_ROOT; };
@@ -141,7 +151,6 @@
 		D4D8F96B1A874CEA004860F7 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		D4D8F9701A874D11004860F7 /* my_list.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = my_list.cpp; sourceTree = "<group>"; };
 		D4D8F9711A874D11004860F7 /* my_list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = my_list.h; sourceTree = "<group>"; };
-		D4D8F9741A8764BB004860F7 /* short_order_dist.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = short_order_dist.dat; path = work/short_order_dist.dat; sourceTree = "<group>"; };
 		D4E6D7A31A3598C500A9D7F6 /* angle_list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = angle_list.h; path = lib/angle_list.h; sourceTree = SOURCE_ROOT; };
 		D4E6D7A41A3598C500A9D7F6 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = constants.h; path = lib/constants.h; sourceTree = SOURCE_ROOT; };
 		D4E6D7A51A3598C500A9D7F6 /* dyn_queue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dyn_queue.cpp; path = lib/dyn_queue.cpp; sourceTree = SOURCE_ROOT; };
@@ -235,8 +244,12 @@
 				D44E43F51A341D4C0095271F /* input.h */,
 				D44E43FB1A341D4C0095271F /* mol_functions.cpp */,
 				D44E43FC1A341D4C0095271F /* mol_functions.h */,
+				D451E69D1A8868A300F89B60 /* output.cpp */,
+				D451E69E1A8868A300F89B60 /* output.h */,
 				D44E43FE1A341D4C0095271F /* neighbours.cpp */,
 				D44E43FF1A341D4C0095271F /* neighbours.h */,
+				D451E6981A88501E00F89B60 /* movie.cpp */,
+				D451E6991A88501E00F89B60 /* movie.h */,
 				D44E44061A341D4C0095271F /* particle.cpp */,
 				D44E44071A341D4C0095271F /* particle.h */,
 				D44E44091A341D4C0095271F /* vect.cpp */,
@@ -255,12 +268,15 @@
 		D44E43BE1A33DD9C0095271F /* work */ = {
 			isa = PBXGroup;
 			children = (
+				D451E69C1A8859B900F89B60 /* movie.lammpstrj */,
 				D451E67A1A84513F00F89B60 /* diffusion.csv */,
 				D451E67B1A84513F00F89B60 /* msd.csv */,
+				D451E6A01A886C1A00F89B60 /* rotations.csv */,
 				D451E67C1A84514000F89B60 /* order */,
 				D451E68A1A84514000F89B60 /* radial_dist.dat */,
 				D451E68B1A84514000F89B60 /* rotation.csv */,
-				D4D8F9741A8764BB004860F7 /* short_order_dist.dat */,
+				D451E6971A881DA900F89B60 /* short_order_hist.csv */,
+				D451E6961A881D6E00F89B60 /* short_order_dist.csv */,
 				D451E68E1A84514000F89B60 /* short_order.csv */,
 				D451E68F1A84514000F89B60 /* stats */,
 				D45EE73D1A675C49001AB0E7 /* out.lammpstrj */,
@@ -512,8 +528,10 @@
 				D4E6D79A1A35987900A9D7F6 /* functions.cpp in Sources */,
 				D451E6941A845B4200F89B60 /* distribution.cpp in Sources */,
 				D454B44A1A43D1EE005ACB79 /* angle_list.cpp in Sources */,
+				D451E69F1A8868A300F89B60 /* output.cpp in Sources */,
 				D451E6791A844D4A00F89B60 /* modular.cpp in Sources */,
 				D4E6D7991A35987500A9D7F6 /* frame.cpp in Sources */,
+				D451E69A1A88501E00F89B60 /* movie.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -803,6 +821,7 @@
 				D4D8F96E1A874CEA004860F7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D4F27F811A8357EA00C43BE6 /* Build configuration list for PBXNativeTarget "radial" */ = {
 			isa = XCConfigurationList;

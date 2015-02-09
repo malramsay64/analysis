@@ -9,8 +9,12 @@
 #ifndef MY_MODULAR
 #define MY_MODULAR
 
+#include <map>
 #include "neighbours.h"
 #include "distribution.h"
+#include "movie.h"
+#include "output.h"
+
 
 int mod_analyse(Frame *, std::vector<Frame *>, int print = 0, int movie = 0, int dist = 0);
 

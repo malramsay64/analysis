@@ -81,11 +81,8 @@ int recompute_neighbours(molecule * mol, Frame * frame, vector<vector<int>> *nei
     vect com = mol->COM();
     molecule *mol2;
     dyn_queue queue = dyn_queue(mol);
-    queue.pop();
-    int count = 0;
-    while (queue.get_depth() < 2){
-        cout << count << endl;
-        count++;
+    mol2 = queue.pop();
+    while (queue.get_depth() < 2 && mol2){
         mol2 = queue.pop();
         if (mol2->id > mol->id){
             double d_com = frame->dist(com, mol2->COM());
@@ -101,11 +98,8 @@ int recompute_neighbours(molecule * mol, Frame * frame, vector<vector<int>> *nei
         neigh_list->at(m1->id-1) = vector<int>();
         neighbours = &neigh_list->at(m1->id-1);
         dyn_queue queue = dyn_queue(m1);
-        queue.pop();
-        int count = 0;
-        while (queue.get_depth() < 2){
-            cout << count << endl;
-            count++;
+        mol2 = queue.pop();
+        while (queue.get_depth() < 2 && mol2){
             mol2 = queue.pop();
             if (mol2 > mol){
                 double d_com = frame->dist(m1->COM(), mol2->COM());

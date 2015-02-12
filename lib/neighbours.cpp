@@ -15,8 +15,8 @@ double deltaD = 0.30;
 double deltaT = 10*PI/180;
 static int short_order_types = 7;
 
-static double neigh_cutoff = 5.0;
-static double neigh_alert = 7.0;
+static double neigh_cutoff = 7.0;
+static double neigh_alert = 9.0;
 
 int check_particles(molecule * mol1, molecule * mol2, Frame * frame){
     double d_atom;
@@ -69,6 +69,8 @@ bool find_mol_neighbours(molecule * mol, Frame * frame, vector<vector<int>> *nei
             }
         }
     }
+    //cout << "Id: " << mol->id << " num neighbours " << mol->num_neighbours() << " contacts " << mol->num_contacts() << " neigh list " << neigh_list->at(mol->index()).size() << endl;
+    //cout << neigh_list->at(mol->index()).size() << endl;
     return recompute;
 }
 
@@ -82,21 +84,22 @@ int recompute_neighbours(molecule * mol, Frame * frame, vector<vector<int>> *nei
     molecule *mol2;
     dyn_queue queue = dyn_queue(mol);
     mol2 = queue.pop();
+    //mol->my_neighbours = vector<molecule *>();
     while (queue.get_depth() < 2 && mol2){
         mol2 = queue.pop();
-        if (mol2->id > mol->id){
+        if (mol2 > mol){
             double d_com = frame->dist(com, mol2->COM());
             if (d_com < neigh_cutoff){
                 neighbours->push_back(mol2->index());
-                check_particles(mol, mol2, frame);
+                //check_particles(mol, mol2, frame);
             }
         }
     }
     // All neighbours
     for (auto &m: *neighbours){
-        molecule *m1 = &(frame->molecules.at(m-1));
+        molecule *m1 = &(frame->molecules.at(m));
         neigh_list->at(m1->id-1) = vector<int>();
-        neighbours = &neigh_list->at(m1->id-1);
+        neighbours = &neigh_list->at(m1->index());
         dyn_queue queue = dyn_queue(m1);
         mol2 = queue.pop();
         while (queue.get_depth() < 2 && mol2){
@@ -104,12 +107,13 @@ int recompute_neighbours(molecule * mol, Frame * frame, vector<vector<int>> *nei
             if (mol2 > mol){
                 double d_com = frame->dist(m1->COM(), mol2->COM());
                 if (d_com < neigh_cutoff){
-                    neighbours->push_back(mol2->id);
-                    check_particles(m1, mol2, frame);
+                    neighbours->push_back(mol2->index());
+                    //check_particles(m1, mol2, frame);
                 }
             }
         }
     }
+    cout << "Id: " << mol->id << " num neighbours " << mol->num_neighbours() << " contacts " << mol->num_contacts() << " neigh list " << neigh_list->at(mol->index()).size() << endl;
     return 0;
 }
 

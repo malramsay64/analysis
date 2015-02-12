@@ -63,11 +63,14 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
     vector<molecule *> recompute_list;
     for (auto &mol: frame->molecules){
         recompute = find_mol_neighbours(&mol, frame, &mod_neigh_list);
+        //cout << mol.id << " " << mol.num_neighbours() << " " << mol.num_contacts() << endl;
         if (recompute) {
             recompute_list.push_back(&mol);
+            //cout << mol.id << " " << mol.num_neighbours() << " " << mol.num_contacts() << endl;
         }
     }
     for (auto &m: recompute_list){
+        //cout << m->id << " " << m->num_neighbours() << endl;
         recompute_neighbours(m, frame, &mod_neigh_list);
     }
     
@@ -75,7 +78,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
      * Analysis
      */
     for (auto &mol: frame->molecules){
-        
+        cout << mol.id << " " << mol.num_contacts() << endl;
         num_neigh.add(mol.num_neighbours());
         num_contact.add(mol.num_contacts());
         pairing.add(mol.pairing());

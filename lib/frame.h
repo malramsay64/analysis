@@ -38,7 +38,6 @@ public:
     std::vector<molecule> molecules;
     int timestep;
     int num_molecules;
-    std::vector<std::mutex> m;
     
     Frame();
     

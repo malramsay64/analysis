@@ -31,7 +31,6 @@ int Frame::num_atoms(){
 void Frame::set_num_mol(int n){
     num_molecules = n;
     molecules.resize(n);
-    m = vector<mutex>(n);
 }
 
 int Frame::num_mol(){

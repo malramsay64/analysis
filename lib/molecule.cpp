@@ -34,6 +34,12 @@ void molecule::add_neighbour(molecule *m){
     contacts++;
 }
 
+void molecule::delete_neighbours(){
+    my_neighbours = vector<molecule*>(0,0);
+    nint = vector<int>(MAX_MOL_CONTACTS,0);
+    contacts = 0;
+}
+
 double molecule::mass(){
     double mass = 0;
     std::vector<particle *>::iterator i;
@@ -97,6 +103,16 @@ distribution<int> molecule::pairing(){
         }
     }
     return d;
+}
+
+int molecule::max_pairing(){
+    int max = 0;
+    for (auto n: nint){
+        if (n > max){
+            max = n;
+        }
+    }
+    return max;
 }
 
 int molecule::get_colour(){

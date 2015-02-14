@@ -15,5 +15,6 @@
 #include "neighbours.h"
 
 int print_map(std::map<int, my_mean>, std::ofstream *);
+int print_short_order(std::ofstream * file, molecule * mol,  Frame * frame);
 
 #endif /* defined(__analysis__output__) */

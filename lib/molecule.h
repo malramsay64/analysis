@@ -26,6 +26,7 @@ public:
     
     molecule();
     void add_neighbour(molecule *);
+    void delete_neighbours();
     int uniqc();
     int nump();
     double mass();
@@ -35,6 +36,7 @@ public:
     int num_contacts();
     int num_neighbours();
     distribution<int> pairing();
+    int max_pairing();
     int get_colour();
     int set_colour(int);
     int graph_colour();

@@ -12,6 +12,7 @@
 #include <vector>
 #include <fstream>
 #include "constants.h"
+#include "my_mean.h"
 
 template <class type>
 class distribution{
@@ -27,6 +28,7 @@ class distribution{
     
     void add(int);
     void add(double);
+    void add(int, int);
     void add(distribution);
     //void add(distribution<int>);
     void add(std::vector<int>);
@@ -46,6 +48,14 @@ distribution<type>::distribution(int size){
     sum = 0;
     elements = 0;
 }
+
+template <> inline
+distribution<my_mean>::distribution(int size){
+    dist = std::vector<my_mean>(size);
+    delta_r = 1;
+    elements = 0;
+}
+
 
 template <class type>
 distribution<type>::distribution(int size, double range){
@@ -72,6 +82,20 @@ void distribution<type>::add(double d){
 }
 
 template <class type>
+void distribution<type>::add(int i, int j){
+    dist.at(i) += j;
+    sum += i*j;
+    elements += j;
+}
+
+template <> inline
+void distribution<my_mean>::add(int i, int j){
+    dist.at(i).add(j);
+    //sum = sum + j;
+    elements++;
+}
+
+template <class type>
 void distribution<type>::add(distribution<type> d){
     // Largest size
     if (d.get_size() > get_size()){
@@ -87,15 +111,6 @@ void distribution<type>::add(distribution<type> d){
     sum += d.get_sum();
     elements += d.get_elements();
 }
-
-/*
-template <>
-void distribution<double>::add(distribution<int> d) {
-    for (auto &e: v){
-        dist.at(e) += 1.0/v.size();
-    }
-}
-*/
 
 template <class type>
 void distribution<type>::add(std::vector<int> v) {
@@ -141,6 +156,17 @@ int print_distribution(distribution<type> *d, std::string filename){
     file.open(filename.c_str());
     for (int i = 0; i < d->get_size(); i++){
         file << i << " " << d->at(i) << std::endl;
+    }
+    
+    return 0;
+}
+
+template <> inline
+int print_distribution(distribution<my_mean> *d, std::string filename){
+    std::ofstream file;
+    file.open(filename.c_str());
+    for (int i = 0; i < d->get_size(); i++){
+        file << i << " " << d->at(i).get_mean() << std::endl;
     }
     
     return 0;

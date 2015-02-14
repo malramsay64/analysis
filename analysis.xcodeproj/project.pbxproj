@@ -143,7 +143,7 @@
 		D451E69E1A8868A300F89B60 /* output.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = output.h; path = lib/output.h; sourceTree = SOURCE_ROOT; };
 		D451E6A01A886C1A00F89B60 /* rotations.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = rotations.csv; path = work/rotations.csv; sourceTree = "<group>"; };
 		D454B4491A43D1EE005ACB79 /* angle_list.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = angle_list.cpp; path = lib/angle_list.cpp; sourceTree = SOURCE_ROOT; };
-		D45EE73A1A65DFCC001AB0E7 /* analyse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = analyse.cpp; path = lib/analyse.cpp; sourceTree = SOURCE_ROOT; };
+		D45EE73A1A65DFCC001AB0E7 /* analyse.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = analyse.txt; path = lib/analyse.txt; sourceTree = SOURCE_ROOT; };
 		D45EE73B1A65DFCC001AB0E7 /* analyse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = analyse.h; path = lib/analyse.h; sourceTree = SOURCE_ROOT; };
 		D45EE73D1A675C49001AB0E7 /* out.lammpstrj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = out.lammpstrj; path = work/out.lammpstrj; sourceTree = "<group>"; };
 		D4AB718D1A477C6300ED8A6B /* front.lammpstrj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = front.lammpstrj; path = work/front.lammpstrj; sourceTree = "<group>"; };
@@ -254,7 +254,7 @@
 				D44E44071A341D4C0095271F /* particle.h */,
 				D44E44091A341D4C0095271F /* vect.cpp */,
 				D44E440A1A341D4C0095271F /* vect.h */,
-				D45EE73A1A65DFCC001AB0E7 /* analyse.cpp */,
+				D45EE73A1A65DFCC001AB0E7 /* analyse.txt */,
 				D45EE73B1A65DFCC001AB0E7 /* analyse.h */,
 				D451E6771A844D4A00F89B60 /* modular.cpp */,
 				D451E6781A844D4A00F89B60 /* modular.h */,

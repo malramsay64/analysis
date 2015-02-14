@@ -16,3 +16,50 @@ int print_map(std::map<int, my_mean> map, std::ofstream * file){
     }
     return 0;
 }
+
+int print_mol(ostream *os, molecule *mol, Frame *frame){
+    vect d, com;
+    
+    com = frame->cartesian(mol->COM());
+    com = wrap_x(com, frame->get_a());
+    
+    particle * p;
+    
+    for (int i = 0; i < mol->atoms.size(); i++){
+        p = mol->atoms.at((i+1) % mol->atoms.size());
+        d = frame->cartesian(direction(mol->COM(), p->pos_vect()));
+        *os << com + d << " " << p->radius << " " << mol->get_colour() << " " << mol->id << endl;
+    }
+    
+    
+    return 0;
+}
+
+int print_short_order(ofstream * file, molecule * mol,  Frame * frame){
+    int type;
+    vect d;
+    double theta;
+    for (auto mol2: mol->my_neighbours){
+        type = order_type(mol, mol2, frame);
+        for (int k = 0; k < mol2->nump(); k++){
+            d = frame->direction(mol2->atom_pos(k),mol->COM());
+            theta = atan2(d) + 5*PI/2 - atan2(orientation(mol, frame));
+            *file << theta << "," << d.length() << "," << 0.04 << "," << type << endl;
+        }
+    }
+    return 0;
+}
+
+int print_frame(Frame * frame){
+    char fname[40];
+    ofstream gnuplot;
+    snprintf(fname,40, "trj_contact/%010i.dat", frame->timestep);
+    gnuplot.open(fname);
+    gnuplot << frame->get_a() << " " << frame->get_height() << endl << endl;
+    
+    for (auto &m: frame->molecules){
+        print_mol(&gnuplot, &m, frame);
+    }
+    
+    return 0;
+}

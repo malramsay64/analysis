@@ -34,6 +34,11 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
     distribution<int> pairing = distribution<int>(MAX_MOL_CONTACTS);
     distribution<int> radial = distribution<int>(1000, radial_plot);
     
+    distribution<my_mean> pair_contact = distribution<my_mean>(MAX_MOL_CONTACTS);
+    distribution<my_mean> pair_neigh = distribution<my_mean>(MAX_MOL_CONTACTS);
+    
+    my_mean neigh_frac;
+    
     int num_key_frames = (int) key_frames.size();
     vector<my_mean> MSD(num_key_frames), c1(num_key_frames), c2(num_key_frames), c3(num_key_frames), c4(num_key_frames);
     
@@ -50,10 +55,10 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
     gnuplot.open(fname);
     gnuplot << frame->get_a() << " " << frame->get_height() << endl << endl;
     
+    // Dynamics
     ofstream MSD_file, rotations_file;
     MSD_file.open("MSD.csv");
-    rotations_file.open("rotations.csv");
-    
+    rotations_file.open("rotation.csv");
     
     
     /*
@@ -63,25 +68,31 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
     vector<molecule *> recompute_list;
     for (auto &mol: frame->molecules){
         recompute = find_mol_neighbours(&mol, frame, &mod_neigh_list);
-        //cout << mol.id << " " << mol.num_neighbours() << " " << mol.num_contacts() << endl;
         if (recompute) {
-            recompute_list.push_back(&mol);
-            //cout << mol.id << " " << mol.num_neighbours() << " " << mol.num_contacts() << endl;
+            break;
         }
     }
-    for (auto &m: recompute_list){
-        //cout << m->id << " " << m->num_neighbours() << endl;
-        recompute_neighbours(m, frame, &mod_neigh_list);
+    if (recompute){
+        // Delete any neighbours
+        mod_neigh_list = vector<vector<int>>(frame->num_mol(), vector<int>());
+        for (auto &mol: frame->molecules){
+            mol.delete_neighbours();
+        }
+        for (auto &mol: frame->molecules){
+            find_mol_neighbours(&mol, frame, &mod_neigh_list);
+        }
     }
-    
+
     /*
      * Analysis
      */
     for (auto &mol: frame->molecules){
-        cout << mol.id << " " << mol.num_contacts() << endl;
         num_neigh.add(mol.num_neighbours());
         num_contact.add(mol.num_contacts());
         pairing.add(mol.pairing());
+        
+        pair_contact.add(mol.max_pairing(), mol.num_contacts());
+        pair_neigh.add(mol.max_pairing(), mol.num_neighbours());
         
         // Short range order
         short_order.add(short_neighbour_list(&mol, frame));
@@ -114,6 +125,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
             print_movie(&movie_file, frame, &mol);
         }
         print_mol(&gnuplot, &mol, frame);
+        print_short_order(&short_order_file, &mol, frame);
     }
     
 
@@ -148,7 +160,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
         print_radial_distribution(&radial, "radial_dist.dat", frame->num_mol(), frame->get_area());
         
         // Print short range order
-        //print_distribution<double>(&short_order, "short_order_dist.dat");
+        print_distribution<double>(&short_order, "short_order_dist.dat");
         
         print_map(collate_MSD, &MSD_file);
         for (auto c: collate_c1){
@@ -157,7 +169,10 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
             collate_c3.at(c.first).get_mean() << "," <<\
             collate_c4.at(c.first).get_mean() << endl;
         }
-        return 0;
+        
+        
+        print_distribution(&pair_contact, "stats/pair_contact.dat");
+        print_distribution(&pair_neigh, "stats/pair_neigh");
         
     }
     return 0;

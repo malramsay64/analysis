@@ -104,4 +104,33 @@ int read_data(std::ifstream *myfile, Frame *frame){
     return 0;
 }
 
+int skip_frame(std::ifstream *myfile){
+    string line;
+    int num_atoms;
+    if (!getline(*myfile, line)){
+        throw 20;
+    }
+    // NUMBER OF ATOMS
+    getline(*myfile, line);
+    getline(*myfile, line);
+    *myfile >> num_atoms;
+    // BOX BOUNDS
+    getline(*myfile, line);
+    getline(*myfile, line);
+    // X
+    getline(*myfile, line);
+    // Y
+    getline(*myfile, line);
+    // Z
+    getline(*myfile, line);
+    // Crystal parameters
+    //ITEM: ATOMS
+    getline(*myfile, line);
+    for (int i=0; i < num_atoms; i++){
+        getline(*myfile, line);
+    }
+    return 0;
+}
+
+
 

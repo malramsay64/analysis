@@ -14,7 +14,7 @@ vector<vector<int>> mod_neigh_list;
 
 map<int, my_mean> collate_MSD, collate_c1, collate_c2, collate_c3, collate_c4;
 
-ofstream movie_file;
+ofstream MSD_file, rotations_file, movie_file, short_order_file;
 
 static double radial_plot = 15;
 static double radial_cutoff = 20;
@@ -27,6 +27,15 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
         mod_neigh_list = vector<vector<int>>(frame->num_mol(), vector<int>());
         movie_file.open("trj/movie.lammpstrj");
         print_movie(&movie_file, frame);
+        
+        // Dynamics
+        MSD_file.open("MSD.csv");
+        rotations_file.open("rotation.csv");
+        
+        // Short Order
+        short_order_file.open("short_order_hist.csv");
+        short_order_file << "Timestep,No Colour,None,Parallel,Anti Parallel 1,Anti Parallel 2,Chiral,Perpendicular" << endl;
+
     }
     
     distribution<int> num_neigh = distribution<int>(MAX_MOL_CONTACTS);
@@ -44,21 +53,22 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
     
     // Short order histogram
     distribution<double> short_order = distribution<double>(short_order_types);
-    ofstream short_order_file;
-    short_order_file.open("short_order_hist.csv");
-    short_order_file << "Timestep,No Colour,None,Parallel,Anti Parallel 1,Anti Parallel 2,Chiral,Perpendicular" << endl;
     
-    // Gnuplot
+    
     ofstream gnuplot;
-    char fname[40];
-    snprintf(fname,40, "trj_contact/%010i.dat", frame->timestep);
-    gnuplot.open(fname);
-    gnuplot << frame->get_a() << " " << frame->get_height() << endl << endl;
+    ofstream short_range;
+    if (print){
+        // Gnuplot
+        char fname[40];
+        //snprintf(fname,40, "trj_contact/%010i.dat", frame->timestep);
+        //gnuplot.open(fname);
+        //gnuplot << frame->get_a() << " " << frame->get_height() << endl << endl;
+        
+        // Short order
+        gnuplot.open("short_order.dat");
+    }
+        
     
-    // Dynamics
-    ofstream MSD_file, rotations_file;
-    MSD_file.open("MSD.csv");
-    rotations_file.open("rotation.csv");
     
     
     /*
@@ -124,8 +134,10 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
         if (movie){
             print_movie(&movie_file, frame, &mol);
         }
-        print_mol(&gnuplot, &mol, frame);
-        print_short_order(&short_order_file, &mol, frame);
+        if (print){
+            //print_mol(&gnuplot, &mol, frame);
+            print_short_order(&short_range, &mol, frame);
+        }
     }
     
 
@@ -143,7 +155,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
     
     
     
-    if (print){
+    if (print && key_frames.size() > 0){
         // Print num neighbours
         cout << "Num Neighbours: " << num_neigh.get_mean() << endl;
         print_distribution<int>(&num_neigh, "stats/neighbours.dat");
@@ -160,7 +172,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
         print_radial_distribution(&radial, "radial_dist.dat", frame->num_mol(), frame->get_area());
         
         // Print short range order
-        print_distribution<double>(&short_order, "short_order_dist.dat");
+        //print_distribution<double>(&short_order, "short_order_dist.dat");
         
         print_map(collate_MSD, &MSD_file);
         for (auto c: collate_c1){
@@ -172,7 +184,10 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
         
         
         print_distribution(&pair_contact, "stats/pair_contact.dat");
-        print_distribution(&pair_neigh, "stats/pair_neigh");
+        print_distribution(&pair_neigh, "stats/pair_neigh.dat");
+    }
+    if  (print){
+        print_frame(frame);
         
     }
     return 0;

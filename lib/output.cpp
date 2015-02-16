@@ -17,7 +17,7 @@ int print_map(std::map<int, my_mean> map, std::ofstream * file){
     return 0;
 }
 
-int print_mol(ostream *os, molecule *mol, Frame *frame){
+int print_mol(ostream *file, molecule *mol, Frame *frame){
     vect d, com;
     
     com = frame->cartesian(mol->COM());
@@ -28,9 +28,9 @@ int print_mol(ostream *os, molecule *mol, Frame *frame){
     for (int i = 0; i < mol->atoms.size(); i++){
         p = mol->atoms.at((i+1) % mol->atoms.size());
         d = frame->cartesian(direction(mol->COM(), p->pos_vect()));
-        *os << com + d << " " << p->radius << " " << mol->get_colour() << " " << mol->id << endl;
+        *file << com + d << " " << p->radius << " " << mol->get_colour() << " " << mol->id << endl;
     }
-    
+    *file << endl;
     
     return 0;
 }
@@ -58,7 +58,19 @@ int print_frame(Frame * frame){
     gnuplot << frame->get_a() << " " << frame->get_height() << endl << endl;
     
     for (auto &m: frame->molecules){
-        print_mol(&gnuplot, &m, frame);
+        vect d, com;
+        com = frame->cartesian(m.COM());
+        com = wrap_x(com, frame->get_a());
+        
+        particle * p;
+        
+        for (int i = 0; i < m.atoms.size(); i++){
+            p = m.atoms.at((i+1) % m.atoms.size());
+            d = frame->cartesian(direction(m.COM(), p->pos_vect()));
+            gnuplot << com + d << " " << p->radius << " " << 6 << " " << m.id << endl;
+        }
+        gnuplot << endl;
+        //print_mol(&gnuplot, &m, frame);
     }
     
     return 0;

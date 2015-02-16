@@ -16,5 +16,7 @@
 
 int print_map(std::map<int, my_mean>, std::ofstream *);
 int print_short_order(std::ofstream * file, molecule * mol,  Frame * frame);
+int print_mol(std::ostream *os, molecule *mol, Frame *frame);
+int print_frame(Frame * frame);
 
 #endif /* defined(__analysis__output__) */

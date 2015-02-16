@@ -16,7 +16,6 @@
 
 vect orientation(molecule *, Frame *);
 double angle(molecule *, Frame *);
-int print_mol(std::ostream *, molecule *,Frame *);
 vect wrap_x(vect v, double a);
 
 

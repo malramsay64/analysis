@@ -20,7 +20,7 @@ int key_rate = 100;
 int main(int argc, char *argv[]){
     string in_fname, out_fname;
     bool quench=false, fast=false;
-    int step_size = 1, movie = 0, moved = 0, print;
+    int step_size = 1, movie = 0, moved = 0, print, key_rate = 100;
     //int reference = BOX;
     
     /* Read arguments
@@ -48,7 +48,7 @@ int main(int argc, char *argv[]){
             else if (strcmp(argv[i],"-s") == 0){
                 istringstream ss(argv[i+1]);
                 if (!(ss >> step_size)){
-                    cerr << "Invalid number " << argv[1] << '\n';
+                    cerr << "Invalid number " << argv[i+1] << '\n';
                 }
                 i++;
             }
@@ -57,6 +57,13 @@ int main(int argc, char *argv[]){
             }
             else if (strcmp(argv[i],"-d") == 0){
                 moved = 1;
+            }
+            else if (strcmp(argv[i],"-k") == 0){
+                istringstream ss(argv[i+1]);
+                if (!(ss >> key_rate)){
+                    cerr << "Invalid number " << argv[i+1] << '\n';
+                }
+                i++;
             }
             else {
                 cout << "Arguments Incorrect!" << endl << arguments << endl;

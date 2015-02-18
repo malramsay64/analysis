@@ -12,7 +12,7 @@ using namespace std;
 
 vector<vector<int>> mod_neigh_list;
 
-map<int, my_mean> collate_MSD, collate_c1, collate_c2, collate_c3, collate_c4;
+map<int, my_mean> collate_MSD, collate_MFD, collate_c1, collate_c2, collate_c3, collate_c4;
 
 ofstream MSD_file, rotations_file, movie_file, short_order_file;
 
@@ -49,7 +49,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
     my_mean neigh_frac;
     
     int num_key_frames = (int) key_frames.size();
-    vector<my_mean> MSD(num_key_frames), c1(num_key_frames), c2(num_key_frames), c3(num_key_frames), c4(num_key_frames);
+    vector<my_mean> MSD(num_key_frames), MFD(num_key_frames), c1(num_key_frames), c2(num_key_frames), c3(num_key_frames), c4(num_key_frames);
     
     // Short order histogram
     distribution<double> short_order = distribution<double>(short_order_types);
@@ -59,13 +59,13 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
     ofstream short_range;
     if (print){
         // Gnuplot
-        char fname[40];
+        //char fname[40];
         //snprintf(fname,40, "trj_contact/%010i.dat", frame->timestep);
         //gnuplot.open(fname);
         //gnuplot << frame->get_a() << " " << frame->get_height() << endl << endl;
         
         // Short order
-        gnuplot.open("short_order.dat");
+        //gnuplot.open("short_order.dat");
     }
         
     
@@ -107,12 +107,15 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
         // Short range order
         short_order.add(short_neighbour_list(&mol, frame));
         
+        
         // MSD / Rotations
         double phi;
         int k = 0;
         for (auto key: key_frames) {
             molecule * mol2 = &key->molecules.at(mol.index());
-            MSD.at(k).add(frame->dist(mol.COM(), mol2->COM()));
+            double displacement = frame->dist(mol.COM(), mol2->COM());
+            MSD.at(k).add(pow(displacement,2));
+            MFD.at(k).add(pow(displacement,4));
             phi = dot_product(orientation(&mol, frame), orientation(mol2, frame));
             c1.at(k).add(legendre(1,phi));
             c2.at(k).add(legendre(2,phi));
@@ -144,6 +147,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
     for (int k = 0; k < key_frames.size(); k++){
         int steps = frame->timestep - key_frames.at(k)->timestep;
         collate_MSD[steps].add(MSD.at(k).get_mean());
+        collate_MFD[steps].add(MFD.at(k).get_mean());
         collate_c1[steps].add(c1.at(k).get_mean());
         collate_c2[steps].add(c2.at(k).get_mean());
         collate_c3[steps].add(c3.at(k).get_mean());
@@ -175,12 +179,36 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
         //print_distribution<double>(&short_order, "short_order_dist.dat");
         
         print_map(collate_MSD, &MSD_file);
+        double alpha;
+        for (auto d: collate_MSD){
+            alpha = collate_MFD.at(d.first).get_mean() / (2*pow(d.second.get_mean(),2)) - 1;
+            MSD_file << d.first << "," << d.second.get_mean() << "," << collate_MFD.at(d.first).get_mean() << "," << alpha << endl;
+        }
+        int t1 = 0, t2 = 0, t3 = 0, t4 = 0;
         for (auto c: collate_c1){
             rotations_file << c.first << "," << c.second.get_mean() << "," << \
             collate_c2.at(c.first).get_mean() << "," <<\
             collate_c3.at(c.first).get_mean() << "," <<\
             collate_c4.at(c.first).get_mean() << endl;
+            if (c.second.get_mean() < 1/CONST_E && t1 == 0){
+                t1 = c.first;
+            }
+            // 0.25 relax
+            else if (collate_c2.at(c.first).get_mean() < 1/CONST_E && t2 == 0){
+                t2 = c.first;
+            }
+            else if (collate_c3.at(c.first).get_mean() < 1/CONST_E && t3 == 0){
+                t3 = c.first;
+            }
+            // 0.1406 relax
+            else if (collate_c4.at(c.first).get_mean() < 1/CONST_E && t4 == 0){
+                t4 = c.first;
+            }
         }
+        cout << "t1: " << t1 << endl;
+        cout << "t2: " << t2 << endl;
+        cout << "t3: " << t3 << endl;
+        cout << "t4: " << t4 << endl;
         
         
         print_distribution(&pair_contact, "stats/pair_contact.dat");

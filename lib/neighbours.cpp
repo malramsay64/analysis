@@ -160,7 +160,6 @@ vector<int> short_neighbour_list(molecule * m, Frame * frame){
 }
 
 
-
 int short_range_order(Frame * frame){
     ofstream file;
     file.open("short_order.csv", ios::out);

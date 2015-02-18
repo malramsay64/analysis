@@ -13,6 +13,8 @@
 #define PI 3.1415265358978323
 #endif
 
+#define CONST_E 2.7182818284
+
 #define MAX_MOL_CONTACTS 20
 #define MAX_ATOM_CONTACTS 10
 #define MOL_SIZE 3

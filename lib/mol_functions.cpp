@@ -38,6 +38,17 @@ vect wrap(vect v){
     return atan2(sin(v),cos(v))+PI;
 }
 
+int mol_colour(molecule * m, Frame * frame){
+    vector<int> list;
+    list = short_neighbour_list(m, frame);
+    int max = 0;
+    for (auto i: list){
+        if ( i > max){
+            max = i;
+        }
+    }
+    return max;
+}
 
 
 

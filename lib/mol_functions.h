@@ -12,12 +12,13 @@
 #include "particle.h"
 #include "frame.h"
 #include "my_mean.h"
+#include "neighbours.h"
 #include "dyn_queue.h"
 
 vect orientation(molecule *, Frame *);
 double angle(molecule *, Frame *);
 vect wrap_x(vect v, double a);
-
+int mol_colour(molecule * m, Frame * frame);
 
 #endif /* defined(MY_MOL_FUNCTIONS) */
 

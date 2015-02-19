@@ -16,6 +16,7 @@ class my_mean{
 public:
     my_mean();
     double add(double);
+    double add(my_mean);
     double get_mean();
     double get_stdev();
     double combine(my_mean);

@@ -12,9 +12,9 @@ using namespace std;
 
 vector<vector<int>> mod_neigh_list;
 
-map<int, my_mean> collate_MSD, collate_MFD, collate_c1, collate_c2, collate_c3, collate_c4;
+map<int, my_mean> collate_MSD, collate_MFD, collate_c1, collate_c2, collate_c3, collate_c4, collate_struct;
 
-ofstream MSD_file, rotations_file, movie_file, short_order_file;
+ofstream MSD_file, rotations_file, movie_file, short_order_file, struct_file;
 
 static double radial_plot = 15;
 static double radial_cutoff = 20;
@@ -31,6 +31,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
         // Dynamics
         MSD_file.open("MSD.csv");
         rotations_file.open("rotation.csv");
+        struct_file.open("struct.csv");
         
         // Short Order
         short_order_file.open("short_order_hist.csv");
@@ -47,9 +48,13 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
     distribution<my_mean> pair_neigh = distribution<my_mean>(MAX_MOL_CONTACTS);
     
     my_mean neigh_frac;
+    //my_mean struct_func;
+    
     
     int num_key_frames = (int) key_frames.size();
-    vector<my_mean> MSD(num_key_frames), MFD(num_key_frames), c1(num_key_frames), c2(num_key_frames), c3(num_key_frames), c4(num_key_frames);
+    vector<my_mean> MSD(num_key_frames), MFD(num_key_frames), c1(num_key_frames),\
+    c2(num_key_frames), c3(num_key_frames), c4(num_key_frames),\
+    struct_func(num_key_frames);
     
     // Short order histogram
     distribution<double> short_order = distribution<double>(short_order_types);
@@ -114,14 +119,20 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
         for (auto key: key_frames) {
             molecule * mol2 = &key->molecules.at(mol.index());
             double displacement = frame->dist(mol.COM(), mol2->COM());
+            // Displacement
             MSD.at(k).add(pow(displacement,2));
             MFD.at(k).add(pow(displacement,4));
+            // Rotations
             phi = dot_product(orientation(&mol, frame), orientation(mol2, frame));
             c1.at(k).add(legendre(1,phi));
             c2.at(k).add(legendre(2,phi));
             c3.at(k).add(legendre(3,phi));
             c4.at(k).add(legendre(4,phi));
+            // Structural Relaxation
+            struct_func.at(k).add(struct_relax(&mol, key));
         }
+        
+        
         
         dyn_queue r = dyn_queue(&mol);
         molecule *mol2 = r.pop();
@@ -152,6 +163,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
         collate_c2[steps].add(c2.at(k).get_mean());
         collate_c3[steps].add(c3.at(k).get_mean());
         collate_c4[steps].add(c4.at(k).get_mean());
+        collate_struct[steps].add(struct_func.at(k).get_mean());
     }
 
     
@@ -178,18 +190,24 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
         // Print short range order
         //print_distribution<double>(&short_order, "short_order_dist.dat");
         
-        print_map(collate_MSD, &MSD_file);
+        //print_map(collate_MSD, &MSD_file);
+        
+        // Displacement
         double alpha;
         for (auto d: collate_MSD){
             alpha = collate_MFD.at(d.first).get_mean() / (2*pow(d.second.get_mean(),2)) - 1;
             MSD_file << d.first << "," << d.second.get_mean() << "," << collate_MFD.at(d.first).get_mean() << "," << alpha << endl;
         }
+        
+        // Rotations
         int t1 = 0, t2 = 0, t3 = 0, t4 = 0;
         for (auto c: collate_c1){
             rotations_file << c.first << "," << c.second.get_mean() << "," << \
             collate_c2.at(c.first).get_mean() << "," <<\
             collate_c3.at(c.first).get_mean() << "," <<\
             collate_c4.at(c.first).get_mean() << endl;
+            
+            // 0 relax
             if (c.second.get_mean() < 1/CONST_E && t1 == 0){
                 t1 = c.first;
             }
@@ -197,6 +215,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
             else if (collate_c2.at(c.first).get_mean() < 1/CONST_E && t2 == 0){
                 t2 = c.first;
             }
+            // 0 relax
             else if (collate_c3.at(c.first).get_mean() < 1/CONST_E && t3 == 0){
                 t3 = c.first;
             }
@@ -209,6 +228,16 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
         cout << "t2: " << t2 << endl;
         cout << "t3: " << t3 << endl;
         cout << "t4: " << t4 << endl;
+        
+        // Structure
+        int ts = 0;
+        for (auto c: collate_struct){
+            struct_file << c.first << "," << c.second.get_mean() << endl;
+            if (c.second.get_mean() < 1/CONST_E && ts == 0){
+                ts = c.first;
+            }
+        }
+        cout << "Structural relaxation: " << ts << endl;
         
         
         print_distribution(&pair_contact, "stats/pair_contact.dat");

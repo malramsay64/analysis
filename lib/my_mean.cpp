@@ -22,6 +22,12 @@ double my_mean::add(double val){
     return m;
 }
 
+double my_mean::add(my_mean val){
+    m = (n*m + val.n*val.m)/(n+val.n);
+    n += val.n;
+    return m;
+}
+
 double my_mean::get_mean(){
     return m;
 }

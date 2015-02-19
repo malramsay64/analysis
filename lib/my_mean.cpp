@@ -9,37 +9,48 @@
 #include "my_mean.h"
 
 my_mean::my_mean(){
-    m = 0;
-    stdev = 0;
+    mean = 0;
+    M2 = 0;
     n = 0;
 }
 
-double my_mean::add(double val){
-    double mprev = m;
+double my_mean::add(double x){
     n += 1;
-    m += (val - m)/(n);
-    stdev += (val- m) * (val - mprev);
-    return m;
+    double delta = x - mean;
+    mean += delta/(n);
+    M2 += delta * (x - mean);
+    return mean;
 }
 
 double my_mean::add(my_mean val){
-    m = (n*m + val.n*val.m)/(n+val.n);
+    mean = (n*mean + val.n*val.mean)/(n+val.n);
     n += val.n;
-    return m;
+    return mean;
 }
 
 double my_mean::get_mean(){
-    return m;
+    return mean;
 }
 
 double my_mean::get_stdev(){
-    return stdev;
+    if (n < 2){
+        return 0;
+    }
+    return sqrt(M2/(n));
+}
+
+double my_mean::get_variance(){
+    if (n < 2){
+        return 0;
+    }
+    return M2/(n);
+
 }
 
 double my_mean::combine(my_mean val){
-    m = (n*m + val.n*val.m)/(n+val.n);
+    mean = (n*mean + val.n*val.mean)/(n+val.n);
     n += val.n;
-    return m;
+    return mean;
 }
 
 int my_mean::get_count(){

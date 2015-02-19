@@ -29,6 +29,7 @@ int main(int argc, const char * argv[]) {
     cout << (-4) % 3 << endl;
     
     // Testing Coordinates
+    /*
     Frame frame;
     frame.set_crys(2.5, 1.8, 2*PI/3);
     vect v = vect(1.1,0.1);
@@ -36,8 +37,9 @@ int main(int argc, const char * argv[]) {
     cout << "Initial " << v << endl;
     cout << "Fractional " << v1 << endl;
     cout << "Final " << frame.fractional(v1) << endl;
-
+     */
     // Testing Angle List
+    /*
     angle_list a;
     a.push(0, 1);
     a.push(0.0005, 4);
@@ -45,9 +47,18 @@ int main(int argc, const char * argv[]) {
     a.push(PI, 1);
     ostream * file = &cout;
     a.print(file);
-    
+    */
     // Testing vect functions
     
+    
+    // Testing my_mean
+    vector<int> sample = { 2, 4, 4, 4, 5, 5, 7, 9 };
+    my_mean mean_test;
+    for (auto &i: sample){
+        mean_test.add(i);
+    }
+    cout << "Mean - Test: " <<  mean_test.get_mean() << " Real: 5" << endl;
+    cout << "Stdev - Test: " <<  mean_test.get_stdev() << " Real: 2" << endl;
     
     return 0;
 }

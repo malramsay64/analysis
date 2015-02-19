@@ -231,8 +231,10 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
         
         // Structure
         int ts = 0;
+        struct_file << "Timestep,F(t),\\xi(t)"  << endl;
         for (auto c: collate_struct){
-            struct_file << c.first << "," << c.second.get_mean() << endl;
+            struct_file << c.first << "," << c.second.get_mean() \
+            << "," << c.second.get_variance() << endl;
             if (c.second.get_mean() < 1/CONST_E && ts == 0){
                 ts = c.first;
             }

@@ -29,7 +29,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
         print_movie(&movie_file, frame);
         
         // Dynamics
-        MSD_file.open("MSD.csv");
+        MSD_file.open("msd.csv");
         rotations_file.open("rotation.csv");
         struct_file.open("struct.csv");
         

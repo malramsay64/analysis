@@ -212,7 +212,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
                 t1 = c.first;
             }
             // 0.25 relax
-            else if (collate_c2.at(c.first).get_mean() < 1/CONST_E && t2 == 0){
+            else if (collate_c2.at(c.first).get_mean() < (1-0.25)/CONST_E && t2 == 0){
                 t2 = c.first;
             }
             // 0 relax
@@ -220,7 +220,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
                 t3 = c.first;
             }
             // 0.1406 relax
-            else if (collate_c4.at(c.first).get_mean() < 1/CONST_E && t4 == 0){
+            else if (collate_c4.at(c.first).get_mean() < (1-0.104)/CONST_E && t4 == 0){
                 t4 = c.first;
             }
         }

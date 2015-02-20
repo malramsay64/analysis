@@ -31,6 +31,7 @@ int main(int argc, char *argv[]){
      * -f fast, only first and last
      * -m movie, output movie
      * -d distance moved in quench
+     * -k <n> key frame rate
      */
     string arguments = "Valid Arguments are:\n -i <file>\t Input file\n -q\t\t Include quenched\n -s <n>\t\t Every nth frame\n -f \t\t Fast, only first and last frame\n";
     if (argc > 2){
@@ -57,6 +58,7 @@ int main(int argc, char *argv[]){
             }
             else if (strcmp(argv[i],"-d") == 0){
                 moved = 1;
+                quench = true;
             }
             else if (strcmp(argv[i],"-k") == 0){
                 istringstream ss(argv[i+1]);
@@ -78,6 +80,7 @@ int main(int argc, char *argv[]){
     
     long filesize;
     long num_frames = 0;
+    long frames_read = 0;
     long frame_count = -1;
     int data = true;
     vector<Frame *> key_frames;
@@ -96,13 +99,20 @@ int main(int argc, char *argv[]){
                      istreambuf_iterator<char>(), '\n');
     
     while (data && frame_count < num_frames){
-        // Read frame
-        current_frame = new Frame;
-        read_data(&myfile, current_frame);
         if (num_frames == 0){
+            // Read first frame
+            current_frame = new Frame;
+            read_data(&myfile, current_frame);
+            frames_read++;
+            
+            // Analyse
             print = 1;
             mod_analyse(current_frame, key_frames, print, movie);
+            
+            // Add key frame
             key_frames.push_back(current_frame);
+            
+            // Fraction of file read
             inFile.seekg(myfile.tellg());
             num_frames = filesize/(filesize - count(istreambuf_iterator<char>(inFile),
                                                     istreambuf_iterator<char>(), '\n'));
@@ -112,27 +122,50 @@ int main(int argc, char *argv[]){
             }
             frame_count = 0;
         }
-        else if (moved && frame_count == num_frames - 2){
-            print = 0;
-            key_frames.push_back(current_frame);
-            mod_analyse(current_frame, key_frames, print, movie);
-        }
         else if (frame_count == num_frames-1){
+            // Read last frame
+            current_frame = new Frame;
+            read_data(&myfile, current_frame);
+            frames_read++;
+            
+            // Analyse
             print = 1;
             mod_analyse(current_frame, key_frames, print, movie, moved);
+            
+            // Delete unneeded frame
+            delete current_frame;
+        }
+        else if (frame_count % key_rate == 0){
+            // Read frame
+            current_frame = new Frame;
+            read_data(&myfile, current_frame);
+            frames_read++;
+            
+            // Analyse
+            print = 0;
+            mod_analyse(current_frame, key_frames, print, movie);
+            
+            // Add key frame
+            key_frames.push_back(current_frame);
+        }
+        else if (!fast && frame_count % step_size == 0){
+            // Read frame
+            current_frame = new Frame;
+            read_data(&myfile, current_frame);
+            frames_read++;
+            
+            print = 0;
+            mod_analyse(current_frame, key_frames, print, movie);
+            
             delete current_frame;
         }
         else {
-            if (!fast && frame_count % step_size == 0){
-                print = 0;
-                mod_analyse(current_frame, key_frames, print, movie);
-            }
-            delete current_frame;
+            // Move to next frame
+            skip_frame(&myfile);
         }
         frame_count++;
     }
-    
-    fprintf(stderr, "Frames Read: %ld\n", frame_count);
+    cerr << "Frames Read: " << frames_read << " of " << frame_count << endl;
     
     for (auto &frame: key_frames){
         delete frame;

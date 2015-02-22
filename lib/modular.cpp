@@ -201,6 +201,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
         
         // Rotations
         int t1 = 0, t2 = 0, t3 = 0, t4 = 0;
+        rotations_file << "Timestep,c1,c2,c3,c4" << endl;
         for (auto c: collate_c1){
             rotations_file << c.first << "," << c.second.get_mean() << "," << \
             collate_c2.at(c.first).get_mean() << "," <<\

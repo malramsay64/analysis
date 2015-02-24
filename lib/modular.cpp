@@ -211,6 +211,8 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
         
         print_distribution(&pair_contact, "stats/pair_contact.dat");
         print_distribution(&pair_neigh, "stats/pair_neigh.dat");
+        
+        print_moved(key_frames.front(), frame);
     }
     if  (print){
         print_frame(frame);

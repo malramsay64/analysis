@@ -72,6 +72,22 @@ int print_relax_time(string s, int t){
     return 0;
 }
 
+int print_moved(Frame * init, Frame * final){
+    ofstream file;
+    file.open("moved.dat");
+    
+    file << init->get_a() << " " << init->get_height() << endl << endl;
+    
+    vect com1, com2;
+    for (auto &m: init->molecules){
+        com1 = init->cartesian(m.COM());
+        com2 = final->cartesian(final->molecules.at(m.index()).COM());
+        file << com1 << endl << com2 << endl << endl;
+    }
+    file.close();
+    return 0;
+}
+
 int print_frame(Frame * frame){
     char fname[40];
     ofstream gnuplot;
@@ -95,8 +111,8 @@ int print_frame(Frame * frame){
             gnuplot << com + d << " " << p->radius << " " << mol_colour(&m,frame) << " " << m.id << endl;
         }
         gnuplot << endl;
-        //print_mol(&gnuplot, &m, frame);
     }
-    
+    gnuplot.close();
+    complot.close();
     return 0;
 }

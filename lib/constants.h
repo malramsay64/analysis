@@ -23,4 +23,6 @@
 
 #define ORDER_LEN 15
 
+#define STEP_SIZE 0.005
+
 #endif /* defined(CONSTANTS_H) */

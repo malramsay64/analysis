@@ -60,7 +60,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-i out.lammpstrj -k 1000 -s 10"
+            argument = "-i out.lammpstrj -k 100 -s 10"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

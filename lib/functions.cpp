@@ -28,14 +28,19 @@ double legendre(int l, double x){
     switch (l){
         case 1:
             return x;
+            break;
         case 2:
-            return 0.5*(3*pow(x,2) - 1);
-        case 3:
-            return 0.5*(5*pow(x,3) - 3*x);
-        case 4:
-            return (1./8)*(35*pow(x,4) - 30*pow(x,2) + 3);
+            return 2*pow(x,2) - 1;
+            break;
         default:
             return 0;
+            break;
+        //case 3:
+        //    return 0.5*(5*pow(x,3) - 3*x);
+        //case 4:
+        //    return (1./8)*(35*pow(x,4) - 30*pow(x,2) + 3);
+        //default:
+        //    return 0;
     }
 }
 

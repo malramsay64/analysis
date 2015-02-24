@@ -165,7 +165,7 @@ int main(int argc, char *argv[]){
         }
         frame_count++;
     }
-    cerr << "Frames Read: " << frames_read << " of " << frame_count << endl;
+    cerr << "Frames Read: " << frames_read << " of " << frame_count << ", " << key_frames.size() << " key frames" << endl;
     
     for (auto &frame: key_frames){
         delete frame;

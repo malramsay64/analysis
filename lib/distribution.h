@@ -183,6 +183,4 @@ int print_time_distribution(distribution<type> *d, int timestep, std::ofstream *
 }
 
 
-int print_radial_distribution(distribution<int> *d, std::string filename, int nmol, double frame_area);
-
 #endif /* defined(MY_DISTRIBUTION) */

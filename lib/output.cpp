@@ -50,12 +50,37 @@ int print_short_order(ofstream * file, molecule * mol,  Frame * frame){
     return 0;
 }
 
+int print_radial_distribution(distribution<int> *d, string filename, int nmol, double frame_area){
+    ofstream file;
+    file.open(filename.c_str());
+    double area;
+    double density = 2*nmol/frame_area;
+    for (int i = 0; i < d->get_size(); i++){
+        area = PI*(i*d->get_delta_r())*d->get_delta_r();
+        file << i*d->get_delta_r() << " " << d->at(i)/(area*nmol*density) << endl;
+    }
+    return 0;
+}
+
+int print_relax_time(string s, int t){
+    if (t){
+        cout << s << t << endl;
+    }
+    else {
+        cout << s << 1 << endl;
+    }
+    return 0;
+}
+
 int print_frame(Frame * frame){
     char fname[40];
     ofstream gnuplot;
+    ofstream complot;
     snprintf(fname,40, "trj_contact/%010i.dat", frame->timestep);
     gnuplot.open(fname);
+    complot.open("complot.dat");
     gnuplot << frame->get_a() << " " << frame->get_height() << endl << endl;
+    complot << frame->get_a() << " " << frame->get_height() << endl << endl;
     
     for (auto &m: frame->molecules){
         vect d, com;
@@ -63,7 +88,7 @@ int print_frame(Frame * frame){
         com = wrap_x(com, frame->get_a());
         
         particle * p;
-        
+        complot << com << endl;
         for (int i = 0; i < m.atoms.size(); i++){
             p = m.atoms.at((i+2) % m.atoms.size());
             d = frame->cartesian(direction(m.COM(), p->pos_vect()));

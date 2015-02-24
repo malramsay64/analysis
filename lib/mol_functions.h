@@ -15,13 +15,13 @@
 #include "neighbours.h"
 #include "dyn_queue.h"
 
-static double STRUCT_DIST = 3;
+static double STRUCT_DIST = 0.3;
 
 vect orientation(molecule *, Frame *);
 double angle(molecule *, Frame *);
 vect wrap_x(vect v, double a);
 int mol_colour(molecule * m, Frame * frame);
-my_mean struct_relax(molecule * m, Frame * frame);
+double struct_relax(molecule * m, Frame * frame);
 
 #endif /* defined(MY_MOL_FUNCTIONS) */
 

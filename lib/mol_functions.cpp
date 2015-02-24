@@ -51,17 +51,19 @@ int mol_colour(molecule * m, Frame * frame){
 }
 
 
-my_mean struct_relax(molecule * m, Frame * init){
+double struct_relax(molecule * m, Frame * init){
     my_mean relax;
     molecule * m2 = &init->molecules.at(m->index());
     for (int i = 0; i < m->nump(); i++){
+        //cout << init->dist(m->atom_pos(i), m2->atom_pos(i)) << endl;
         if (init->dist(m->atom_pos(i), m2->atom_pos(i)) > STRUCT_DIST){
             relax.add(0);
         }
         else
             relax.add(1);
     }
-    return relax;
+    //cout << relax.get_mean() << endl;
+    return relax.get_mean();
 }
 
 

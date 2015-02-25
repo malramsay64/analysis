@@ -67,7 +67,7 @@ int print_relax_time(string s, int t){
         cout << s << t << endl;
     }
     else {
-        cout << s << 1 << endl;
+        cout << s << "NAN" << endl;
     }
     return 0;
 }

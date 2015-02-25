@@ -114,6 +114,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
             c1.at(k).add(legendre(1,phi));
             c2.at(k).add(legendre(2,phi));
             // Structural Relaxation
+            //cout << k << " " <<  struct_relax(&mol, key) << endl;
             struct_func.at(k).add(struct_relax(&mol, key));
             
             k++;
@@ -145,6 +146,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
         collate_c1[steps].add(c1.at(k).get_mean());
         collate_c2[steps].add(c2.at(k).get_mean());
         collate_struct[steps].add(struct_func.at(k).get_mean());
+        //cout << steps << " " << struct_func.at(k).get_mean() << endl;
     }
 
     print_time_distribution(&short_order, frame->timestep, &short_order_file);

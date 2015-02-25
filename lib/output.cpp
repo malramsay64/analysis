@@ -80,9 +80,10 @@ int print_moved(Frame * init, Frame * final){
     
     vect com1, com2;
     for (auto &m: init->molecules){
-        com1 = init->cartesian(m.COM());
-        com2 = final->cartesian(final->molecules.at(m.index()).COM());
-        file << com1 << endl << com2 << endl << endl;
+        com1 = m.COM();
+        com2 = final->molecules.at(m.index()).COM();
+        
+        file << init->cartesian(com1) << endl << init->cartesian(com1)+init->direction(com1, com2)  << endl << endl;
     }
     file.close();
     return 0;

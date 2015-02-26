@@ -12,6 +12,7 @@
 #include "frame.h"
 #include "angle_list.h"
 #include <assert.h>
+#include "output.h"
 
 using namespace std;
 
@@ -50,7 +51,7 @@ int main(int argc, const char * argv[]) {
     */
     // Testing vect functions
     
-    
+    /*
     // Testing my_mean
     vector<int> sample = { 2, 4, 4, 4, 5, 5, 7, 9 };
     my_mean mean_test;
@@ -59,6 +60,8 @@ int main(int argc, const char * argv[]) {
     }
     cout << "Mean - Test: " <<  mean_test.get_mean() << " Real: 5" << endl;
     cout << "Stdev - Test: " <<  mean_test.get_stdev() << " Real: 2" << endl;
-    
+    */
+    cout << " relax " << print_relax_time(0) << endl;
+    cout << "NAN " <<  NAN << endl;
     return 0;
 }

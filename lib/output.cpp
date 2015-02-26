@@ -63,14 +63,18 @@ int print_radial_distribution(distribution<int> *d, string filename, int nmol, d
 }
 
 int print_relax_time(string s, int t){
-    if (t){
-        cout << s << t << endl;
-    }
-    else {
-        cout << s << "NAN" << endl;
-    }
+    cout << s << print_relax_time(t) << endl;
     return 0;
 }
+
+string print_relax_time(int t){
+    if (t){
+        return to_string(t);
+    }
+    return "NAN";
+}
+
+
 
 int print_moved(Frame * init, Frame * final){
     ofstream file;
@@ -79,11 +83,15 @@ int print_moved(Frame * init, Frame * final){
     file << init->get_a() << " " << init->get_height() << endl << endl;
     
     vect com1, com2;
+    double rotation;
     for (auto &m: init->molecules){
         com1 = m.COM();
         com2 = final->molecules.at(m.index()).COM();
+        rotation = dist(angle(&m,init), angle(&final->molecules.at(m.index()), final))/(4*PI);
         
-        file << init->cartesian(com1) << endl << init->cartesian(com1)+init->direction(com1, com2)  << endl << endl;
+        file << init->cartesian(com1) << " " << 0 << endl;
+        file << init->cartesian(com1)+init->direction(com1, com2) << " " << rotation << endl;
+        file << endl;
     }
     file.close();
     return 0;

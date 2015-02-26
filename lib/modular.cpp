@@ -14,14 +14,18 @@ vector<vector<int>> mod_neigh_list;
 
 map<int, my_mean> collate_MSD, collate_MFD, collate_c1, collate_c2, collate_struct;
 
-ofstream MSD_file, rotations_file, movie_file, short_order_file, struct_file;
+ofstream MSD_file, rotations_file, movie_file, short_order_file, struct_file, regio_file;
+
+vector<map<int,my_mean>> collate_regio_c1, collate_regio_c2, collate_regio_MSD;
 
 static double radial_plot = 15;
 static double radial_cutoff = 20;
 static int short_order_types = 7;
+static int regio_res = 50;
 
 
-int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int movie, int dist){
+int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int regio, int print, int movie,\
+                int dist){
     
     if (key_frames.size() == 0){
         mod_neigh_list = vector<vector<int>>(frame->num_mol(), vector<int>());
@@ -36,7 +40,13 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
         // Short Order
         short_order_file.open("short_order_hist.csv");
         short_order_file << "Timestep,No Colour,None,Parallel,Anti Parallel 1,Anti Parallel 2,Chiral,Perpendicular" << endl;
-
+        
+        if (regio){
+            // Regio relaxations
+            collate_regio_c1 = vector<map<int,my_mean>>(regio_res);
+            collate_regio_c2 = vector<map<int,my_mean>>(regio_res);
+            collate_regio_MSD = vector<map<int,my_mean>>(regio_res);
+        }
     }
     
     distribution<int> num_neigh = distribution<int>(MAX_MOL_CONTACTS);
@@ -54,6 +64,14 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
     int num_key_frames = (int) key_frames.size();
     vector<my_mean> MSD(num_key_frames), MFD(num_key_frames), c1(num_key_frames),\
     c2(num_key_frames), struct_func(num_key_frames);
+    
+
+    vector<vector<my_mean>> regio_c1, regio_c2, regio_MSD;
+    if (regio){
+        regio_c1 = vector<vector<my_mean>>(regio_res, vector<my_mean>(num_key_frames));
+        regio_c2 = vector<vector<my_mean>>(regio_res, vector<my_mean>(num_key_frames));
+        regio_MSD = vector<vector<my_mean>>(regio_res, vector<my_mean>(num_key_frames));
+    }
     
     // Short order histogram
     distribution<double> short_order = distribution<double>(short_order_types);
@@ -114,9 +132,26 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
             c1.at(k).add(legendre(1,phi));
             c2.at(k).add(legendre(2,phi));
             // Structural Relaxation
-            //cout << k << " " <<  struct_relax(&mol, key) << endl;
             struct_func.at(k).add(struct_relax(&mol, key));
             
+            // Regio
+            if (regio){
+                // x divide
+                int index;
+                if (key->get_a() > key->get_height()){
+                    index = int (mol2->COM().x/(2*PI/regio_res));
+                    regio_c1.at(index).at(k).add(legendre(1,phi));
+                    regio_c2.at(index).at(k).add(legendre(2,phi));
+                    regio_MSD.at(index).at(k).add(pow(displacement,2));
+                }
+                // y divide
+                else {
+                    index = int (mol2->COM().y/regio_res);
+                    regio_c1.at(index).at(k).add(legendre(1,phi));
+                    regio_c2.at(index).at(k).add(legendre(2,phi));
+                    regio_MSD.at(index).at(k).add(pow(displacement,2));
+                }
+            }
             k++;
         }
         
@@ -146,7 +181,13 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
         collate_c1[steps].add(c1.at(k).get_mean());
         collate_c2[steps].add(c2.at(k).get_mean());
         collate_struct[steps].add(struct_func.at(k).get_mean());
-        //cout << steps << " " << struct_func.at(k).get_mean() << endl;
+        if (regio){
+            for (int i = 0; i < regio_res; i++){
+                collate_regio_c1.at(i)[steps].add(regio_c1.at(i).at(k).get_mean());
+                collate_regio_c2.at(i)[steps].add(regio_c2.at(i).at(k).get_mean());
+                collate_regio_MSD.at(i)[steps].add(regio_MSD.at(i).at(k).get_mean());
+            }
+        }
     }
 
     print_time_distribution(&short_order, frame->timestep, &short_order_file);
@@ -210,6 +251,46 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int m
         cout << "Diffusion-constant: " << \
         collate_MSD.at(frame->timestep).get_mean()/(4*frame->timestep*STEP_SIZE)  \
         << endl;
+        
+        if (regio){
+            // Regio relaxations
+            regio_file.open("regio.csv");
+            regio_file << "Timestep,Position,MSD,R1,R2" << endl;
+            
+            ofstream regio_relax;
+            regio_relax.open("regio-relax.csv");
+            regio_relax << "Pos,t1,t2" << endl;
+            
+            int regio_t1, regio_t2;
+            double delta;
+            if (frame->get_a() > frame->get_height()){
+                delta = frame->get_a()/regio_res;
+            }
+            else {
+                delta = frame->get_height()/regio_res;
+            }
+            for (int i = 0; i < regio_res; i++){
+                regio_t1 = 0;
+                regio_t2 = 0;
+                //cout << i*delta << " " << delta << endl;
+                for (auto &c: collate_regio_MSD.at(i)){
+                    regio_file << c.first << "," << i*delta << "," << c.second.get_mean() \
+                    << "," << collate_regio_c1.at(i).at(c.first).get_mean() \
+                    << "," << collate_regio_c2.at(i).at(c.first).get_mean() << endl;
+                    
+                    if (collate_regio_c1.at(i).at(c.first).get_mean() < 1/CONST_E && regio_t1 == 0){
+                        regio_t1 = c.first;
+                    }
+                    else if (collate_regio_c2.at(i).at(c.first).get_mean() < 1/CONST_E && regio_t2 == 0){
+                        regio_t2 = c.first;
+                    }
+                }
+                regio_file << endl;
+                regio_relax << i*delta << "," << print_relax_time(regio_t1) << "," << print_relax_time(regio_t2) << endl;
+                //regio_t1 = 0;
+                //regio_t2 = 0;
+            }
+        }
         
         print_distribution(&pair_contact, "stats/pair_contact.dat");
         print_distribution(&pair_neigh, "stats/pair_neigh.dat");

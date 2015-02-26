@@ -20,7 +20,7 @@ int key_rate = 100;
 int main(int argc, char *argv[]){
     string in_fname, out_fname;
     bool quench=false, fast=false;
-    int step_size = 1, movie = 0, moved = 0, print, key_rate = 100;
+    int step_size = 1, movie = 0, moved = 0, print, key_rate = 100, regio = 0;
     //int reference = BOX;
     
     /* Read arguments
@@ -32,6 +32,7 @@ int main(int argc, char *argv[]){
      * -m movie, output movie
      * -d distance moved in quench
      * -k <n> key frame rate
+     * -r regio data
      */
     string arguments = "Valid Arguments are:\n -i <file>\t Input file\n -q\t\t Include quenched\n -s <n>\t\t Every nth frame\n -f \t\t Fast, only first and last frame\n";
     if (argc > 2){
@@ -59,6 +60,9 @@ int main(int argc, char *argv[]){
             else if (strcmp(argv[i],"-d") == 0){
                 moved = 1;
                 quench = true;
+            }
+            else if (strcmp(argv[i],"-r") == 0){
+                regio = 1;
             }
             else if (strcmp(argv[i],"-k") == 0){
                 istringstream ss(argv[i+1]);
@@ -107,7 +111,7 @@ int main(int argc, char *argv[]){
             
             // Analyse
             print = 1;
-            mod_analyse(current_frame, key_frames, print, movie);
+            mod_analyse(current_frame, key_frames, regio, print, movie);
             
             // Add key frame
             key_frames.push_back(current_frame);
@@ -130,7 +134,7 @@ int main(int argc, char *argv[]){
             
             // Analyse
             print = 1;
-            mod_analyse(current_frame, key_frames, print, movie, moved);
+            mod_analyse(current_frame, key_frames, regio, print, movie, moved);
             
             // Delete unneeded frame
             delete current_frame;
@@ -143,7 +147,7 @@ int main(int argc, char *argv[]){
             
             // Analyse
             print = 0;
-            mod_analyse(current_frame, key_frames, print, movie);
+            mod_analyse(current_frame, key_frames, regio, print, movie);
             
             // Add key frame
             key_frames.push_back(current_frame);
@@ -155,7 +159,7 @@ int main(int argc, char *argv[]){
             frames_read++;
             
             print = 0;
-            mod_analyse(current_frame, key_frames, print, movie);
+            mod_analyse(current_frame, key_frames, regio, print, movie);
             
             delete current_frame;
         }

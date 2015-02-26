@@ -16,6 +16,7 @@
 #include "output.h"
 
 
-int mod_analyse(Frame *, std::vector<Frame *>, int print = 0, int movie = 0, int dist = 0);
+int mod_analyse(Frame *, std::vector<Frame *>, int regio = 0, int print = 0, int movie = 0, \
+                int dist = 0);
 
 #endif /* defined(MY_MODULAR) */

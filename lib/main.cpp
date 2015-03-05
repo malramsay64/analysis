@@ -88,7 +88,7 @@ int main(int argc, char *argv[]){
     long frame_count = -1;
     int data = true;
     vector<Frame *> key_frames;
-    Frame  *current_frame;
+    Frame  *current_frame = new Frame;
     //Frame *previous_frame;
     
     // Input file
@@ -105,7 +105,6 @@ int main(int argc, char *argv[]){
     while (data && frame_count < num_frames){
         if (num_frames == 0){
             // Read first frame
-            current_frame = new Frame;
             read_data(&myfile, current_frame);
             frames_read++;
             
@@ -115,7 +114,7 @@ int main(int argc, char *argv[]){
             
             // Add key frame
             key_frames.push_back(current_frame);
-            
+            current_frame = new Frame;
             // Fraction of file read
             inFile.seekg(myfile.tellg());
             num_frames = filesize/(filesize - count(istreambuf_iterator<char>(inFile),
@@ -128,8 +127,7 @@ int main(int argc, char *argv[]){
         }
         else if (frame_count == num_frames-1){
             // Read last frame
-            current_frame = new Frame;
-            read_data(&myfile, current_frame);
+            update(&myfile, current_frame);
             frames_read++;
             
             // Analyse
@@ -137,12 +135,10 @@ int main(int argc, char *argv[]){
             mod_analyse(current_frame, key_frames, regio, print, movie, moved);
             
             // Delete unneeded frame
-            delete current_frame;
         }
         else if (frame_count % key_rate == 0){
             // Read frame
-            current_frame = new Frame;
-            read_data(&myfile, current_frame);
+            update(&myfile, current_frame);
             frames_read++;
             
             // Analyse
@@ -151,17 +147,15 @@ int main(int argc, char *argv[]){
             
             // Add key frame
             key_frames.push_back(current_frame);
+            current_frame = new Frame;
         }
         else if (!fast && frame_count % step_size == 0){
             // Read frame
-            current_frame = new Frame;
-            read_data(&myfile, current_frame);
+            update(&myfile, current_frame);
             frames_read++;
             
             print = 0;
             mod_analyse(current_frame, key_frames, regio, print, movie);
-            
-            delete current_frame;
         }
         else {
             // Move to next frame

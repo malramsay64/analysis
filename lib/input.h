@@ -24,7 +24,7 @@
 
 // Variables
 int read_data(std::ifstream *myfile, Frame *frame);
-
+int update(std::ifstream *myfile, Frame *frame);
 int skip_frame(std::ifstream *myfile);
 
 #endif /* defined(INPUT_H) */

@@ -75,3 +75,10 @@ double hexatic(int n, molecule* m1, Frame *frame){
     return mean.get_mean();
 }
 
+double circle_ordering(molecule *m){
+    my_mean order;
+    for (auto &p: m->atoms){
+        order.add(p->order());
+    }
+    return order.get_mean();
+}

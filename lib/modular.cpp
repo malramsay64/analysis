@@ -14,7 +14,7 @@ vector<vector<int>> mod_neigh_list;
 
 map<int, my_mean> collate_MSD, collate_MFD, collate_c1, collate_c2, collate_struct;
 
-ofstream MSD_file, rotations_file, movie_file, short_order_file, struct_file, regio_file, hexatic_file;
+ofstream MSD_file, rotations_file, movie_file, short_order_file, struct_file, regio_file, order_file;
 
 vector<map<int,my_mean>> collate_regio_c1, collate_regio_c2, collate_regio_MSD;
 
@@ -42,8 +42,8 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int regio, int p
         short_order_file << "Timestep,No Colour,None,Parallel,Anti Parallel 1,Anti Parallel 2,Chiral,Perpendicular" << endl;
         
         // Hexatic Ordering
-        hexatic_file.open("hexatic_order.csv");
-        hexatic_file << "Timestep,6" << endl;
+        order_file.open("order.csv");
+        order_file << "Timestep,Hexatic,Circle" << endl;
         
         if (regio){
             // Regio relaxations
@@ -63,6 +63,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int regio, int p
     
     my_mean neigh_frac;
     my_mean hexatic_order;
+    my_mean circle_order;
     //my_mean struct_func;
     
     
@@ -121,8 +122,9 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int regio, int p
         // Short range order
         short_order.add(short_neighbour_list(&mol, frame));
         
-        // Hexatic
+        // Order
         hexatic_order.add(fabs(hexatic(6, &mol, frame)));
+        circle_order.add(circle_ordering(&mol));
         
         // MSD / Rotations
         double phi;
@@ -199,7 +201,8 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int regio, int p
 
     print_time_distribution(&short_order, frame->timestep, &short_order_file);
     
-    hexatic_file << frame->timestep << "," << hexatic_order.get_mean() << endl;
+    order_file << frame->timestep << "," << hexatic_order.get_mean()\
+               << "," << circle_order.get_mean() << endl;
     
     if (print && key_frames.size() > 0){
         // Print num neighbours

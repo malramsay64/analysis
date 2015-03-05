@@ -40,6 +40,7 @@ public:
     vect pos_vect();
     int index();
     int m_i();
+    int order();
     
     bool operator> (const particle &b);
     bool operator>= (const particle &b);

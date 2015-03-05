@@ -48,6 +48,26 @@ vect particle::pos_vect(){
     return pos;
 }
 
+int particle::order(){
+    int small = 0, large = 0;
+    for (auto &p: my_neighbours){
+        if (p->type == 1){
+            large++;
+        }
+        else{
+            small++;
+        }
+    }
+    // Ordering for d=1.637556 dimers
+    if (type == 1 && large == 3 && small == 4 ){
+        return 1;
+    }
+    else if (type == 2 && large == 4 && small == 1 ){
+        return 1;
+    }
+    return 0;
+}
+
 bool particle::operator> (const particle &b){
     return id > b.id;
 }

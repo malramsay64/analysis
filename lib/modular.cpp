@@ -14,7 +14,7 @@ vector<vector<int>> mod_neigh_list;
 
 map<int, my_mean> collate_MSD, collate_MFD, collate_c1, collate_c2, collate_struct;
 
-ofstream MSD_file, rotations_file, movie_file, short_order_file, struct_file, regio_file;
+ofstream MSD_file, rotations_file, movie_file, short_order_file, struct_file, regio_file, hexatic_file;
 
 vector<map<int,my_mean>> collate_regio_c1, collate_regio_c2, collate_regio_MSD;
 
@@ -41,6 +41,10 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int regio, int p
         short_order_file.open("short_order_hist.csv");
         short_order_file << "Timestep,No Colour,None,Parallel,Anti Parallel 1,Anti Parallel 2,Chiral,Perpendicular" << endl;
         
+        // Hexatic Ordering
+        hexatic_file.open("hexatic_order.csv");
+        hexatic_file << "Timestep,6" << endl;
+        
         if (regio){
             // Regio relaxations
             collate_regio_c1 = vector<map<int,my_mean>>(regio_res);
@@ -58,6 +62,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int regio, int p
     distribution<my_mean> pair_neigh = distribution<my_mean>(MAX_MOL_CONTACTS);
     
     my_mean neigh_frac;
+    my_mean hexatic_order;
     //my_mean struct_func;
     
     
@@ -116,6 +121,8 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int regio, int p
         // Short range order
         short_order.add(short_neighbour_list(&mol, frame));
         
+        // Hexatic
+        hexatic_order.add(fabs(hexatic(6, &mol, frame)));
         
         // MSD / Rotations
         double phi;
@@ -192,6 +199,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int regio, int p
 
     print_time_distribution(&short_order, frame->timestep, &short_order_file);
     
+    hexatic_file << frame->timestep << "," << hexatic_order.get_mean() << endl;
     
     if (print && key_frames.size() > 0){
         // Print num neighbours
@@ -272,7 +280,6 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int regio, int p
             for (int i = 0; i < regio_res; i++){
                 regio_t1 = 0;
                 regio_t2 = 0;
-                //cout << i*delta << " " << delta << endl;
                 for (auto &c: collate_regio_MSD.at(i)){
                     regio_file << c.first << "," << i*delta << "," << c.second.get_mean() \
                     << "," << collate_regio_c1.at(i).at(c.first).get_mean() \
@@ -287,8 +294,6 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int regio, int p
                 }
                 regio_file << endl;
                 regio_relax << i*delta << "," << print_relax_time(regio_t1) << "," << print_relax_time(regio_t2) << endl;
-                //regio_t1 = 0;
-                //regio_t2 = 0;
             }
         }
         

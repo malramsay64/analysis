@@ -37,6 +37,10 @@ void vect::orthogonalise(){
     y = temp;
 }
 
+double vect::angle(){
+    return atan2(*this) + PI;
+}
+
 double vect::length(){
     return sqrt(dot_product(*this, *this));
 }

@@ -55,15 +55,23 @@ double struct_relax(molecule * m, Frame * init){
     my_mean relax;
     molecule * m2 = &init->molecules.at(m->index());
     for (int i = 0; i < m->nump(); i++){
-        //cout << init->dist(m->atom_pos(i), m2->atom_pos(i)) << endl;
         if (init->dist(m->atom_pos(i), m2->atom_pos(i)) > STRUCT_DIST){
             relax.add(0);
         }
         else
             relax.add(1);
     }
-    //cout << relax.get_mean() << endl;
     return relax.get_mean();
 }
 
+double hexatic(int n, molecule* m1, Frame *frame){
+    my_mean mean;
+    complex<double> i = sqrt(-1);
+    double theta;
+    for (auto &m2: m1->my_neighbours){
+        theta = frame->direction(m2->COM(), m1->COM()).angle();
+        mean.add(exp(n*theta*i).real());
+    }
+    return mean.get_mean();
+}
 

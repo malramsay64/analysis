@@ -9,6 +9,7 @@
 #ifndef MY_MOL_FUNCTIONS
 #define MY_MOL_FUNCTIONS
 
+#include <complex>
 #include "particle.h"
 #include "frame.h"
 #include "my_mean.h"
@@ -22,6 +23,7 @@ double angle(molecule *, Frame *);
 vect wrap_x(vect v, double a);
 int mol_colour(molecule * m, Frame * frame);
 double struct_relax(molecule * m, Frame * frame);
+double hexatic(int n, molecule* m1, Frame *frame);
 
 #endif /* defined(MY_MOL_FUNCTIONS) */
 

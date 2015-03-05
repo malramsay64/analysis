@@ -23,6 +23,7 @@ public:
     double length();
     double orientation();
     void orthogonalise();
+    double angle();
     
     vect operator+= (double);
     vect operator+= (vect);

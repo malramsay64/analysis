@@ -54,7 +54,7 @@ vect molecule::COM(){
         return com;
     }
     else{
-        com = calc_COM();
+        calc_COM();
         return com;
     }
 }
@@ -72,6 +72,7 @@ vect molecule::calc_COM(){
     zeta /= total;
     theta = atan2(-zeta,-xi) + PI;
     out = theta;
+    com = out;
     return out;
 }
 

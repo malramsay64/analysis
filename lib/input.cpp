@@ -165,13 +165,17 @@ int update(std::ifstream *myfile, Frame *frame){
     for (int i=0; i < frame->num_atoms(); i++){
         getline(*myfile, line);
         stringstream sp(line);
+        
         sp >> p->id >> p->molid >> p->type >> p->radius >> pos[0] >> pos[1] >> zp;
-        // Shift axes of box to 0
+        // Update coordinates
         frame->particles.at(p->index()).set_pos(frame->fractional(vect(pos[0], pos[1]) - vect(x[0], y[0])));
+
     }
     delete p;
     for (auto &m: frame->molecules){
+        //cout << "OLD: " << m.COM();
         m.calc_COM();
+        //cout << " NEW: " << m.COM() << endl;
         m.delete_neighbours();
         m.same_period();
     }

@@ -62,6 +62,18 @@ int print_radial_distribution(distribution<int> *d, string filename, int nmol, d
     return 0;
 }
 
+vector<double> get_radial_distribution(distribution<int> *d, int nmol, double frame_area){
+    double area;
+    double density = 2*nmol/frame_area;
+    vector<double> radial;
+    for (int i = 0; i < d->get_size(); i++){
+        area = PI*(i*d->get_delta_r())*d->get_delta_r();
+        radial.push_back(d->at(i)/(area*nmol*density));
+    }
+    return radial;
+}
+
+
 int print_relax_time(string s, int t){
     cout << s << print_relax_time(t) << endl;
     return 0;

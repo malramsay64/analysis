@@ -9,6 +9,7 @@
 #include <math.h>
 #include <iostream>
 #include <string>
+#include <vector>
 
 #ifndef XX
 #define XX 0
@@ -27,5 +28,7 @@ double dot_product(double *v1, double *v2, int len);
 double legendre(int l, double x);
 double dist(double, double);
 double my_mod(double, double);
+double structure_factor(double q, std::vector<double> g, double rho, double dr);
+double max_structure_factor(std::vector<double> g, double rho, double dr);
 
 #endif /* defined(FUNCTIONS_H) */

@@ -38,6 +38,7 @@ class distribution{
     int get_size();
     double get_delta_r();
     type at(int);
+    std::vector<type> get_dist(double scale);
     
 };
 
@@ -148,6 +149,15 @@ double distribution<type>::get_delta_r(){
 template <class type>
 type distribution<type>::at(int i){
     return dist.at(i);
+}
+
+template <class type>
+std::vector<type> distribution<type>::get_dist(double scale){
+    std::vector<type> t = std::vector<type>(dist);
+    for (auto &i: t){
+        i *= scale;
+    }
+    return t;
 }
 
 template <class type>

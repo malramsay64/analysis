@@ -43,7 +43,7 @@ double legendre(int l, double x){
         //    return 0;
     }
 }
-
+ 
 double my_mod(double a, double b){
     double ret = fmod(a, b);
     if (ret < 0){
@@ -52,4 +52,26 @@ double my_mod(double a, double b){
     return ret;
 }
 
+double max_structure_factor(std::vector<double> g, double rho, double dr){
+    double max_val = 0, max = 0, res;
+    for (int i = 0; i < g.size(); i++){
+        res = structure_factor(2*PI/(i*dr), g, rho, dr);
+        if (res > max_val){
+            max_val = res;
+            max = 2*PI/(i*dr);
+        }
+    }
+    
+    return max;
+}
+
+double structure_factor(double q, std::vector<double> g, double rho, double dr){
+    double s = 0;
+    for (int i = 0; i < g.size(); i++){
+        s+=dr*(i*dr)*(g.at(i)-1)*j0(q*(dr*i));
+    }
+    s *= 2*PI*rho;
+    s += 1;
+    return s;
+}
 

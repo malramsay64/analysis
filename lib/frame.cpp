@@ -5,6 +5,7 @@ using namespace std;
 
 Frame::Frame(){
     num_molecules = 0;
+    atoms = 0;
     molecules = vector<molecule>();
     particles = vector<particle>();
     coloured = false;

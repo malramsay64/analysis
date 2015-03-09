@@ -79,11 +79,10 @@ double struct_relax(molecule * m, Frame * init){
 
 double hexatic(int n, molecule* m1, Frame *frame){
     my_mean mean;
-    complex<double> i = sqrt(-1);
     double theta;
     for (auto &m2: m1->my_neighbours){
         theta = frame->direction(m2->COM(), m1->COM()).angle();
-        mean.add(exp(n*theta*i).real());
+        mean.add(cos(n*theta));
     }
     return mean.get_mean();
 }

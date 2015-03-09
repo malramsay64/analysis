@@ -43,6 +43,12 @@ class distribution{
 };
 
 template <class type>
+distribution<type>::distribution(){
+    dist = std::vector<type>();
+    elements = 0;
+}
+
+template <class type>
 distribution<type>::distribution(int size){
     dist = std::vector<type>(size, 0);
     delta_r = 1;

@@ -16,6 +16,8 @@
 #include "output.h"
 
 
+extern bool time_structure;
+
 int mod_analyse(Frame *, std::vector<Frame *>, int regio = 0, int print = 0, int movie = 0, \
                 int dist = 0);
 

@@ -14,6 +14,8 @@
 
 using namespace std;
 
+bool time_structure=false;
+
 // Key frame every <n> frames
 int key_rate = 100;
 
@@ -33,6 +35,7 @@ int main(int argc, char *argv[]){
      * -d distance moved in quench
      * -k <n> key frame rate
      * -r regio data
+     * -t time depedent structure
      */
     string arguments = "Valid Arguments are:\n -i <file>\t Input file\n -q\t\t Include quenched\n -s <n>\t\t Every nth frame\n -f \t\t Fast, only first and last frame\n";
     if (argc > 2){
@@ -70,6 +73,9 @@ int main(int argc, char *argv[]){
                     cerr << "Invalid number " << argv[i+1] << '\n';
                 }
                 i++;
+            }
+            else if (strcmp(argv[i],"-t") == 0){
+                time_structure = true;
             }
             else {
                 cout << "Arguments Incorrect!" << endl << arguments << endl;

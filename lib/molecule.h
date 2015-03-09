@@ -40,9 +40,6 @@ public:
     int get_colour();
     int set_colour(int);
     int graph_colour();
-    bool get_traversed();
-    void traverse();
-    void reset_traverse();
     int same_period();
     int index();
 } ;

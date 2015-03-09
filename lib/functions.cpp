@@ -62,12 +62,12 @@ double max_structure_factor(std::vector<double> g, double rho, double dr){
         }
     }
     
-    return max;
+    return max_val;
 }
 
 double structure_factor(double q, std::vector<double> g, double rho, double dr){
     double s = 0;
-    for (int i = 0; i < g.size(); i++){
+    for (int i = 1; i < g.size(); i++){
         s+=dr*(i*dr)*(g.at(i)-1)*j0(q*(dr*i));
     }
     s *= 2*PI*rho;

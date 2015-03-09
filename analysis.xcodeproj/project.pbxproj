@@ -97,6 +97,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D41369BE1AAD036F00432E67 /* radial.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = radial.dat; path = work/radial.dat; sourceTree = "<group>"; };
 		D41B70C61A46C6F000AA73F3 /* short.lammpstrj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = short.lammpstrj; path = work/short.lammpstrj; sourceTree = "<group>"; };
 		D44E43811A33DCB70095271F /* analysis */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = analysis; sourceTree = BUILT_PRODUCTS_DIR; };
 		D44E43F01A341D4C0095271F /* frame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = frame.cpp; path = lib/frame.cpp; sourceTree = SOURCE_ROOT; };
@@ -273,6 +274,7 @@
 		D44E43BE1A33DD9C0095271F /* work */ = {
 			isa = PBXGroup;
 			children = (
+				D41369BE1AAD036F00432E67 /* radial.dat */,
 				D451E69C1A8859B900F89B60 /* movie.lammpstrj */,
 				D451E67A1A84513F00F89B60 /* diffusion.csv */,
 				D451E67B1A84513F00F89B60 /* msd.csv */,

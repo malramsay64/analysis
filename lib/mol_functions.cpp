@@ -39,6 +39,19 @@ vect wrap(vect v){
 }
 
 int mol_colour(molecule * m, Frame * frame){
+    return circle_colour(m);
+}
+
+
+int circle_colour(molecule * m){
+    int colour = 0;
+    for (auto &p: m->atoms){
+        colour += p->order();
+    }
+    return colour;
+}
+
+int neighbour_colour(molecule * m, Frame *frame){
     vector<int> list;
     list = short_neighbour_list(m, frame);
     int max = 0;
@@ -48,8 +61,8 @@ int mol_colour(molecule * m, Frame * frame){
         }
     }
     return max;
-}
 
+}
 
 double struct_relax(molecule * m, Frame * init){
     my_mean relax;

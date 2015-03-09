@@ -23,6 +23,11 @@ particle::particle (){
     pos = vect(0,0);
 }
 
+
+void particle::delete_neighbours(){
+    my_neighbours = std::vector<particle *>(0,0);
+}
+
 int particle::index(){
     return id-1;
 }
@@ -59,10 +64,11 @@ int particle::order(){
         }
     }
     // Ordering for d=1.637556 dimers
-    if (type == 1 && large == 3 && small == 4 ){
+    // Not including bonded particle
+    if (type == 1 && large == 3 && small == 3 ){
         return 1;
     }
-    else if (type == 2 && large == 4 && small == 1 ){
+    else if (type == 2 && large == 3 && small == 1 ){
         return 1;
     }
     return 0;

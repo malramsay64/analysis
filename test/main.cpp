@@ -8,6 +8,8 @@
 
 #include <iostream>
 #include <cmath>
+#include <sstream>
+#include <map>
 #include "functions.h"
 #include "frame.h"
 #include "angle_list.h"
@@ -24,10 +26,10 @@ int main(int argc, const char * argv[]) {
     //cout << my_mod(-120*PI/180,PI) << endl;
     //cout << atan2(sin(-2*PI/3), cos(-2*PI/3)) << endl;
     //cout << acos(cos(-2*PI/3)) << endl;
-    cout << 3 % 4 << endl;
-    cout << -3 % 4 << endl;
-    cout << 4 % 3 << endl;
-    cout << (-4) % 3 << endl;
+    //cout << 3 % 4 << endl;
+    //cout << -3 % 4 << endl;
+    //cout << 4 % 3 << endl;
+    //cout << (-4) % 3 << endl;
     
     // Testing Coordinates
     /*
@@ -61,7 +63,30 @@ int main(int argc, const char * argv[]) {
     cout << "Mean - Test: " <<  mean_test.get_mean() << " Real: 5" << endl;
     cout << "Stdev - Test: " <<  mean_test.get_stdev() << " Real: 2" << endl;
     */
-    cout << " relax " << print_relax_time(0) << endl;
-    cout << "NAN " <<  NAN << endl;
+    //cout << " relax " << print_relax_time(0) << endl;
+    //cout << "NAN " <<  NAN << endl;
+    
+    // Structure Factor
+    
+    ifstream radial_dist;
+    radial_dist.open("/Users/malcolm/make/analysis/work/radial_dist.dat");
+    string line;
+    stringstream ss;
+    vector<double> dist;
+    vector<double> val;
+    map<double, double> gr;
+    double d,v;
+    while (getline(radial_dist, line)){
+        ss = stringstream(line);
+        ss >> d >> v;
+        gr[d] = v;
+        dist.push_back(v);
+    }
+    
+    cout << structure_factor(3.2, dist, 1, 0.015) << endl;
+    cout << max_structure_factor(dist, 1, 0.015) << endl;
+    
+    
+    
     return 0;
 }

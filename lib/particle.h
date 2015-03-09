@@ -41,6 +41,7 @@ public:
     int index();
     int m_i();
     int order();
+    void delete_neighbours();
     
     bool operator> (const particle &b);
     bool operator>= (const particle &b);

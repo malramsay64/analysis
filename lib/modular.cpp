@@ -220,7 +220,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int regio, int p
         // Print radial distribution
         print_radial_distribution(&radial, "radial_dist.dat", frame->num_mol(), frame->get_area());
         
-        cout << "Structure factor: " << max_structure_factor(get_radial_distribution(&radial, frame->num_mol(), frame->get_area()), frame->get_density(), 0.015) << endl;
+        cout << "Structure-factor: " << max_structure_factor(get_radial_distribution(&radial, frame->num_mol(), frame->get_area()), frame->get_density(), 0.015) << endl;
         
         // Print short range order
         //print_distribution<double>(&short_order, "short_order_dist.dat");

@@ -38,6 +38,9 @@ void molecule::delete_neighbours(){
     my_neighbours = vector<molecule*>(0,0);
     nint = vector<int>(MAX_MOL_CONTACTS,0);
     contacts = 0;
+    for (auto &p: atoms){
+        p->delete_neighbours();
+    }
 }
 
 double molecule::mass(){

@@ -86,6 +86,30 @@ string print_relax_time(int t){
     return "NAN";
 }
 
+int print_rot_diff(vector<Frame *> key_frames, Frame * frame){
+    ofstream rot_diff;
+    rot_diff.open("rot_diff.csv");
+    rot_diff << "Molecule,rotation,diffusion" << endl;
+    double rot, diff, total_rot;
+    //Frame * prev = key_frames.front();
+    int i;
+    for (auto m: frame->molecules){
+        total_rot = 0;
+        i = m.index();
+        for (auto key: key_frames){
+            rot = key->at(i).get_orientation();
+            total_rot += rot;
+            diff = (key->at(i).COM() - key_frames.front()->at(i).COM()).length();
+            rot_diff << m.id << "," << total_rot << "," << diff << endl;
+        }
+        rot = m.get_orientation();
+        total_rot += rot;
+        diff = (m.COM() - key_frames.front()->at(i).COM()).length();
+        rot_diff << m.id << "," << total_rot << "," << diff << endl;
+    }
+    
+    return 0;
+}
 
 
 int print_moved(Frame * init, Frame * final){

@@ -14,6 +14,8 @@
 
 
 class molecule {
+    double rotation;
+    double orientation;
     int colour;
     vect com;
 public:
@@ -42,6 +44,9 @@ public:
     int graph_colour();
     int same_period();
     int index();
+    double update_orientation(double);
+    double get_orientation();
+    
 } ;
 
 

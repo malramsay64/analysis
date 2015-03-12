@@ -23,6 +23,7 @@ int print_radial_distribution(distribution<int> *, std::string, int, double);
 int print_relax_time(std::string s, int t);
 std::string print_relax_time(int t);
 int print_moved(Frame * init, Frame * final);
-std::vector<double> get_radial_distribution(distribution<int> *d, int nmol, double frame_area);
+std::vector<double> get_radial_distribution(distribution<int> *, int, double);
+int print_rot_diff(std::vector<Frame *> key_frames, Frame * frame);
 
 #endif /* defined(__analysis__output__) */

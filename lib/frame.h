@@ -54,6 +54,7 @@ public:
     vect direction(vect,vect);
     double get_area();
     double get_density();
+    molecule at(int);
     
     int set_crys(double, double, double);
     double get_a();

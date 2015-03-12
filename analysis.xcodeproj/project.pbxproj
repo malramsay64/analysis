@@ -149,8 +149,6 @@
 		D451E69E1A8868A300F89B60 /* output.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = output.h; path = lib/output.h; sourceTree = SOURCE_ROOT; };
 		D451E6A01A886C1A00F89B60 /* rotations.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = rotations.csv; path = work/rotations.csv; sourceTree = "<group>"; };
 		D454B4491A43D1EE005ACB79 /* angle_list.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = angle_list.cpp; path = lib/angle_list.cpp; sourceTree = SOURCE_ROOT; };
-		D45EE73A1A65DFCC001AB0E7 /* analyse.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = analyse.txt; path = lib/analyse.txt; sourceTree = SOURCE_ROOT; };
-		D45EE73B1A65DFCC001AB0E7 /* analyse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = analyse.h; path = lib/analyse.h; sourceTree = SOURCE_ROOT; };
 		D45EE73D1A675C49001AB0E7 /* out.lammpstrj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = out.lammpstrj; path = work/out.lammpstrj; sourceTree = "<group>"; };
 		D4AB718D1A477C6300ED8A6B /* front.lammpstrj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = front.lammpstrj; path = work/front.lammpstrj; sourceTree = "<group>"; };
 		D4D8F9691A874CEA004860F7 /* template */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = template; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -233,39 +231,37 @@
 		D44E43831A33DCB70095271F /* analysis */ = {
 			isa = PBXGroup;
 			children = (
-				D4E6D7A31A3598C500A9D7F6 /* angle_list.h */,
-				D454B4491A43D1EE005ACB79 /* angle_list.cpp */,
 				D4E6D7A41A3598C500A9D7F6 /* constants.h */,
-				D4E6D7A51A3598C500A9D7F6 /* dyn_queue.cpp */,
-				D4E6D7A61A3598C500A9D7F6 /* dyn_queue.h */,
-				D4E6D7AA1A3598C600A9D7F6 /* molecule.cpp */,
-				D4E6D7AB1A3598C600A9D7F6 /* molecule.h */,
-				D4E6D7AC1A3598C600A9D7F6 /* my_mean.cpp */,
-				D4E6D7AD1A3598C600A9D7F6 /* my_mean.h */,
-				D44E43F01A341D4C0095271F /* frame.cpp */,
-				D44E43F11A341D4C0095271F /* frame.h */,
 				D44E43F21A341D4C0095271F /* functions.cpp */,
 				D44E43F31A341D4C0095271F /* functions.h */,
+				D44E44091A341D4C0095271F /* vect.cpp */,
+				D44E440A1A341D4C0095271F /* vect.h */,
+				D44E44061A341D4C0095271F /* particle.cpp */,
+				D44E44071A341D4C0095271F /* particle.h */,
+				D4E6D7AA1A3598C600A9D7F6 /* molecule.cpp */,
+				D4E6D7AB1A3598C600A9D7F6 /* molecule.h */,
+				D44E43F01A341D4C0095271F /* frame.cpp */,
+				D44E43F11A341D4C0095271F /* frame.h */,
+				D4E6D7AC1A3598C600A9D7F6 /* my_mean.cpp */,
+				D4E6D7AD1A3598C600A9D7F6 /* my_mean.h */,
+				D451E6921A845B4200F89B60 /* distribution.cpp */,
+				D451E6931A845B4200F89B60 /* distribution.h */,
+				D4E6D7A51A3598C500A9D7F6 /* dyn_queue.cpp */,
+				D4E6D7A61A3598C500A9D7F6 /* dyn_queue.h */,
+				D4E6D7A31A3598C500A9D7F6 /* angle_list.h */,
+				D454B4491A43D1EE005ACB79 /* angle_list.cpp */,
 				D44E43F41A341D4C0095271F /* input.cpp */,
 				D44E43F51A341D4C0095271F /* input.h */,
 				D44E43FB1A341D4C0095271F /* mol_functions.cpp */,
 				D44E43FC1A341D4C0095271F /* mol_functions.h */,
-				D451E69D1A8868A300F89B60 /* output.cpp */,
-				D451E69E1A8868A300F89B60 /* output.h */,
 				D44E43FE1A341D4C0095271F /* neighbours.cpp */,
 				D44E43FF1A341D4C0095271F /* neighbours.h */,
+				D451E69D1A8868A300F89B60 /* output.cpp */,
+				D451E69E1A8868A300F89B60 /* output.h */,
 				D451E6981A88501E00F89B60 /* movie.cpp */,
 				D451E6991A88501E00F89B60 /* movie.h */,
-				D44E44061A341D4C0095271F /* particle.cpp */,
-				D44E44071A341D4C0095271F /* particle.h */,
-				D44E44091A341D4C0095271F /* vect.cpp */,
-				D44E440A1A341D4C0095271F /* vect.h */,
-				D45EE73A1A65DFCC001AB0E7 /* analyse.txt */,
-				D45EE73B1A65DFCC001AB0E7 /* analyse.h */,
 				D451E6771A844D4A00F89B60 /* modular.cpp */,
 				D451E6781A844D4A00F89B60 /* modular.h */,
-				D451E6921A845B4200F89B60 /* distribution.cpp */,
-				D451E6931A845B4200F89B60 /* distribution.h */,
 				D44E43F81A341D4C0095271F /* main.cpp */,
 			);
 			path = analysis;

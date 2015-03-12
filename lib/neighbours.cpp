@@ -13,8 +13,6 @@ using namespace std;
 static float R_FACTOR = pow(2,1./6);
 double deltaD = 0.30;
 double deltaT = 10*PI/180;
-static int short_order_types = 7;
-
 static double neigh_cutoff = 7.0;
 static double neigh_alert = 9.0;
 

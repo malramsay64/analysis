@@ -18,6 +18,7 @@ molecule::molecule (){
     colour = 0;
     type = 0;
     com = vect();
+    rotation = 0;
 }
 
 void molecule::add_neighbour(molecule *m){
@@ -77,6 +78,19 @@ vect molecule::calc_COM(){
     out = theta;
     com = out;
     return out;
+}
+
+double molecule::update_orientation(double angle){
+    double delta;
+    delta = orientation;
+    orientation = angle;
+    delta = dist(angle, delta);
+    rotation += delta;
+    return delta;
+}
+
+double molecule::get_orientation(){
+    return orientation;
 }
 
 vect molecule::atom_pos(int i){

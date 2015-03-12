@@ -99,8 +99,10 @@ int read_data(std::ifstream *myfile, Frame *frame){
     }
     
     // Put all particles from molecule on same frame based on COM
-    for (j = frame->molecules.begin(); j != frame->molecules.end(); ++j){
-        (*j).same_period();
+    // Update angle of molecule
+    for (auto &m: frame->molecules){
+        m.same_period();
+        m.update_orientation(angle(&m,frame));
     }
     return 0;
 }
@@ -112,7 +114,7 @@ int update(std::ifstream *myfile, Frame *frame){
     }
     double x[3], y[3], z[3];
     double zp;
-    int timestep, num_atoms;
+    int timestep;
     string line;
     double a,b,theta;
     // TIMESTEP
@@ -165,7 +167,6 @@ int update(std::ifstream *myfile, Frame *frame){
     for (int i=0; i < frame->num_atoms(); i++){
         getline(*myfile, line);
         stringstream sp(line);
-        
         sp >> p->id >> p->molid >> p->type >> p->radius >> pos[0] >> pos[1] >> zp;
         // Update coordinates
         frame->particles.at(p->index()).set_pos(frame->fractional(vect(pos[0], pos[1]) - vect(x[0], y[0])));
@@ -173,11 +174,10 @@ int update(std::ifstream *myfile, Frame *frame){
     }
     delete p;
     for (auto &m: frame->molecules){
-        //cout << "OLD: " << m.COM();
         m.calc_COM();
-        //cout << " NEW: " << m.COM() << endl;
         m.delete_neighbours();
         m.same_period();
+        m.update_orientation(angle(&m,frame));
     }
     return 0;
 }

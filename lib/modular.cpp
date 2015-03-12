@@ -9,23 +9,21 @@
 #include "modular.h"
 
 using namespace std;
-
+// Neighbour List
 vector<vector<int>> mod_neigh_list;
 
+
 map<int, my_mean> collate_MSD, collate_MFD, collate_c1, collate_c2, collate_struct;
+vector<map<int,my_mean>> collate_regio_c1, collate_regio_c2, collate_regio_MSD;
 
 ofstream MSD_file, rotations_file, movie_file, short_order_file, struct_file, regio_file, order_file;
-
-vector<map<int,my_mean>> collate_regio_c1, collate_regio_c2, collate_regio_MSD;
 
 static double radial_plot = 15;
 static double radial_cutoff = 20;
 static int short_order_types = 7;
 static int regio_res = 50;
 
-
-int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int regio, int print, int movie,\
-                int dist){
+int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int dist){
     
     if (key_frames.size() == 0){
         mod_neigh_list = vector<vector<int>>(frame->num_mol(), vector<int>());
@@ -35,16 +33,10 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int regio, int p
         rotations_file.open("rotation.csv");
         struct_file.open("struct.csv");
         
-        if (movie){
-            movie_file.open("trj/movie.lammpstrj");
-            print_movie(&movie_file, frame);
-        }
-        
         if (time_structure){
             // Short Order
             short_order_file.open("short_order_hist.csv");
             short_order_file << "Timestep,No Colour,None,Parallel,Anti Parallel 1,Anti Parallel 2,Chiral,Perpendicular" << endl;
-        
         
             // Hexatic Ordering
             order_file.open("order.csv");
@@ -56,6 +48,11 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int regio, int p
             collate_regio_c1 = vector<map<int,my_mean>>(regio_res);
             collate_regio_c2 = vector<map<int,my_mean>>(regio_res);
             collate_regio_MSD = vector<map<int,my_mean>>(regio_res);
+        }
+        
+        if (movie){
+            movie_file.open("trj/movie.lammpstrj");
+            print_movie(&movie_file, frame);
         }
     }
     
@@ -333,6 +330,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int regio, int p
                 regio_relax << i*delta << "," << print_relax_time(regio_t1) << "," << print_relax_time(regio_t2) << endl;
             }
         }
+        print_rot_diff(key_frames, frame);
         
         print_distribution(&pair_contact, "stats/pair_contact.dat");
         print_distribution(&pair_neigh, "stats/pair_neigh.dat");

@@ -54,6 +54,10 @@ void Frame::add_link(int molpos, int ppos, bool b_sort=true){
     }
 }
 
+molecule Frame::at(int i){
+    return molecules.at(i);
+}
+
 void Frame::set_timestep(int t){
     timestep = t;
 }
@@ -61,7 +65,6 @@ void Frame::set_timestep(int t){
 int Frame::get_timestep(){
     return timestep;
 }
-
 
 // Crystal Coordinates
 int Frame::set_crys(double a, double b, double theta){

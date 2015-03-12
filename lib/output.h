@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <map>
 #include <limits>
+#include <iomanip>
 #include "my_mean.h"
 #include "neighbours.h"
 

@@ -15,6 +15,7 @@
 #include "angle_list.h"
 #include <assert.h>
 #include "output.h"
+#include <iomanip>
 
 using namespace std;
 
@@ -68,6 +69,9 @@ int main(int argc, const char * argv[]) {
     
     // Structure Factor
     
+    int f = 299792458;
+    cout << "c = " <<  setprecision(4) << scientific << f << endl;
+    
     ifstream radial_dist;
     radial_dist.open("/Users/malcolm/make/analysis/work/radial_dist.dat");
     string line;
@@ -83,8 +87,8 @@ int main(int argc, const char * argv[]) {
         dist.push_back(v);
     }
     
-    cout << structure_factor(3.2, dist, 1, 0.015) << endl;
-    cout << max_structure_factor(dist, 1, 0.015) << endl;
+    //cout << structure_factor(3.2, dist, 1, 0.015) << endl;
+    //cout << max_structure_factor(dist, 1, 0.015) << endl;
     
     
     

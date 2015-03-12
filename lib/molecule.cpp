@@ -82,7 +82,8 @@ vect molecule::calc_COM(){
 
 double molecule::update_orientation(double angle){
     double delta;
-    delta = asin(sin(angle-PI - orientation));
+    delta = (angle-PI) - orientation;
+    delta = atan2(sin(delta),cos(delta));
     orientation += delta;
     rotation += delta;
     return delta;

@@ -239,7 +239,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         // Print radial distribution
         print_radial_distribution(&radial, "radial_dist.dat", frame->num_mol(), frame->get_area());
         
-        cout << "Structure-factor: " << max_structure_factor(get_radial_distribution(&radial, frame->num_mol(), frame->get_area()), frame->get_density(), 0.015) << endl;
+        cout << "Structure-factor: " << setprecision(5) << scientific << max_structure_factor(get_radial_distribution(&radial, frame->num_mol(), frame->get_area()), frame->get_density(), 0.015) << endl;
         
         // Order Parameters
         
@@ -290,7 +290,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
             }
         }
         print_relax_time("Struct-relax: ", ts);
-        cout << "Diffusion-constant: " << \
+        cout << "Diffusion-constant: " << setprecision(5) << scientific <<\
         collate_MSD.at(frame->timestep).get_mean()/(4*frame->timestep*STEP_SIZE)  \
         << endl;
         

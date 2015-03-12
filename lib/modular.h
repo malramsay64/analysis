@@ -10,6 +10,7 @@
 #define MY_MODULAR
 
 #include <map>
+#include <iomanip>
 #include "neighbours.h"
 #include "distribution.h"
 #include "movie.h"

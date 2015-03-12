@@ -81,7 +81,10 @@ int print_relax_time(string s, int t){
 
 string print_relax_time(int t){
     if (t){
-        return to_string(t);
+        stringstream ss;
+        ss << setprecision(5) << scientific << double (t);
+        return ss.str();
+        //return to_string(double (t));
     }
     return "NAN";
 }

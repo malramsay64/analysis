@@ -119,7 +119,7 @@ int main(int argc, char *argv[]){
             mod_analyse(current_frame, key_frames, print);
             
             // Add key frame
-            key_frames.push_back(current_frame);
+            key_frames.push_back(new Frame(*current_frame));
             current_frame = new Frame;
             // Fraction of file read
             inFile.seekg(myfile.tellg());
@@ -152,8 +152,8 @@ int main(int argc, char *argv[]){
             mod_analyse(current_frame, key_frames, print);
             
             // Add key frame
-            key_frames.push_back(current_frame);
-            current_frame = new Frame;
+            key_frames.push_back(new Frame(*current_frame));
+            //current_frame = new Frame;
         }
         else if (!fast && frame_count % step_size == 0){
             // Read frame

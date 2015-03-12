@@ -46,6 +46,8 @@ public:
     int index();
     double update_orientation(double);
     double get_orientation();
+    int set_orientation(double);
+    double get_rotation();
     
 } ;
 

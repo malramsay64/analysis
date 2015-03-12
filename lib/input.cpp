@@ -102,7 +102,7 @@ int read_data(std::ifstream *myfile, Frame *frame){
     // Update angle of molecule
     for (auto &m: frame->molecules){
         m.same_period();
-        m.update_orientation(angle(&m,frame));
+        m.set_orientation(angle(&m,frame));
     }
     return 0;
 }

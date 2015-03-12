@@ -97,17 +97,16 @@ int print_rot_diff(vector<Frame *> key_frames, Frame * frame){
         total_rot = 0;
         i = m.index();
         for (auto key: key_frames){
-            rot = key->at(i).get_orientation();
-            total_rot += rot;
-            diff = (key->at(i).COM() - key_frames.front()->at(i).COM()).length();
-            rot_diff << m.id << "," << total_rot << "," << diff << endl;
+            rot = key->at(i).get_rotation();
+            //total_rot += rot;
+            diff = frame->dist(key->at(i).COM(),key_frames.front()->at(i).COM());
+            rot_diff << m.id << "," << fabs(rot) << "," << diff << endl;
         }
-        rot = m.get_orientation();
-        total_rot += rot;
-        diff = (m.COM() - key_frames.front()->at(i).COM()).length();
-        rot_diff << m.id << "," << total_rot << "," << diff << endl;
+        rot = m.get_rotation();
+        //total_rot += rot;
+        diff = frame->dist(m.COM(), key_frames.front()->at(i).COM());
+        rot_diff << m.id << "," << fabs(rot) << "," << diff << endl;
     }
-    
     return 0;
 }
 

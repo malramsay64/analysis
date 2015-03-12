@@ -242,7 +242,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int regio, int p
         // Print radial distribution
         print_radial_distribution(&radial, "radial_dist.dat", frame->num_mol(), frame->get_area());
         
-        cout << "Structure-factor: " << max_structure_factor(get_radial_distribution(&radial, frame->num_mol(), frame->get_area()), frame->get_density(), 0.015) << endl;
+        
         
         // Order Parameters
         
@@ -251,6 +251,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int regio, int p
         ordering << "Hexatic: " << hexatic_order.get_mean() << endl;
         ordering << "Circle-order: " << circle_order.get_mean() << endl;
         ordering << "Frac-6-fold: " << num_neigh.fraction_at(6) << endl;
+        ordering << "Structure-factor: " << max_structure_factor(get_radial_distribution(&radial, frame->num_mol(), frame->get_area()), frame->get_density(), 0.015) << endl;
         ordering.close();
 
         // Print short range order

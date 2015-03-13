@@ -26,9 +26,6 @@ class Frame {
     int atoms;
     bool coloured;
     bool neighbours;
-    double xdim[2];
-    double ydim[2];
-    double zdim[2];
     double a;
     double b;
     double theta;
@@ -40,7 +37,7 @@ public:
     int num_molecules;
     
     Frame();
-    
+    Frame(Frame const &);
     void set_timestep(int);
     int get_timestep();
     void set_atoms(int);
@@ -55,6 +52,7 @@ public:
     double get_area();
     double get_density();
     molecule at(int);
+    void update_links();
     
     int set_crys(double, double, double);
     double get_a();
@@ -64,13 +62,6 @@ public:
     double get_tilt();
     vect cartesian(vect v);
     vect fractional(vect v);
-    
-    double xmin();
-    double xmax();
-    double ymin();
-    double ymax();
-    double zmin();
-    double zmax();
 };
 
 #endif /* defined(FRAME_H) */

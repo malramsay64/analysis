@@ -71,20 +71,23 @@ double struct_relax(molecule * m, Frame * init){
         if (init->dist(m->atom_pos(i), m2->atom_pos(i)) > STRUCT_DIST){
             relax.add(0);
         }
-        else
+        else {
             relax.add(1);
+        }
     }
     return relax.get_mean();
 }
 
 double hexatic(int n, molecule* m1, Frame *frame){
-    my_mean mean;
     double theta;
+    complex<double> sum = complex<double>(0,0);
+    complex<double> i = complex<double>(0,1);
     for (auto &m2: m1->my_neighbours){
         theta = frame->direction(m2->COM(), m1->COM()).angle();
-        mean.add(cos(n*theta));
+        sum += (1/6.)*exp(6*theta*i);
     }
-    return mean.get_mean();
+    //cout << abs(sum) << endl;
+    return abs(sum);
 }
 
 double circle_ordering(molecule *m){

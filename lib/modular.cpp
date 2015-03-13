@@ -25,6 +25,25 @@ static int regio_res = 50;
 
 int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int dist){
     
+    // Initialise Variables
+    int num_key_frames = (int) key_frames.size();
+    
+    vector<my_mean> MSD(num_key_frames), MFD(num_key_frames), c1(num_key_frames),\
+    c2(num_key_frames), struct_func(num_key_frames);
+    
+    vector<vector<my_mean>> regio_c1, regio_c2, regio_MSD;
+    
+    distribution<int> num_neigh, num_contact, pairing, radial;
+    distribution<my_mean> pair_contact, pair_neigh;
+    distribution<double> short_order;
+    
+    my_mean neigh_frac;
+    my_mean hexatic_order;
+    my_mean circle_order;
+    
+    ofstream gnuplot;
+    ofstream short_range;
+    
     if (key_frames.size() == 0){
         mod_neigh_list = vector<vector<int>>(frame->num_mol(), vector<int>());
         
@@ -56,14 +75,6 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         }
     }
     
-    distribution<int> num_neigh, num_contact, pairing, radial;
-    distribution<my_mean> pair_contact, pair_neigh;
-    
-    my_mean neigh_frac;
-    my_mean hexatic_order;
-    my_mean circle_order;
-    //my_mean struct_func;
-
     if (time_structure || print){
         num_neigh = distribution<int>(MAX_MOL_CONTACTS);
         num_contact = distribution<int>(MAX_MOL_CONTACTS);
@@ -75,23 +86,11 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
 
     }
     
-    int num_key_frames = (int) key_frames.size();
-    vector<my_mean> MSD(num_key_frames), MFD(num_key_frames), c1(num_key_frames),\
-    c2(num_key_frames), struct_func(num_key_frames);
-    
-
-    vector<vector<my_mean>> regio_c1, regio_c2, regio_MSD;
     if (regio){
         regio_c1 = vector<vector<my_mean>>(regio_res, vector<my_mean>(num_key_frames));
         regio_c2 = vector<vector<my_mean>>(regio_res, vector<my_mean>(num_key_frames));
         regio_MSD = vector<vector<my_mean>>(regio_res, vector<my_mean>(num_key_frames));
     }
-    
-    // Short order histogram
-    distribution<double> short_order;
-    
-    ofstream gnuplot;
-    ofstream short_range;
     
     if (time_structure || print){
         short_order = distribution<double>(short_order_types);
@@ -206,6 +205,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         collate_c1[steps].add(c1.at(k).get_mean());
         collate_c2[steps].add(c2.at(k).get_mean());
         collate_struct[steps].add(struct_func.at(k).get_mean());
+        //cout << steps << " " << struct_func.at(k).get_mean() << endl;
         if (regio){
             for (int i = 0; i < regio_res; i++){
                 collate_regio_c1.at(i)[steps].add(regio_c1.at(i).at(k).get_mean());
@@ -214,8 +214,6 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
             }
         }
     }
-
-    
     
     if (time_structure){
         print_time_distribution(&short_order, frame->timestep, &short_order_file);

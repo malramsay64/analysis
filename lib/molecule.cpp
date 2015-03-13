@@ -42,6 +42,7 @@ void molecule::delete_neighbours(){
     for (auto &p: atoms){
         p->delete_neighbours();
     }
+    //atoms = vector<particle*>();
 }
 
 double molecule::mass(){
@@ -104,7 +105,7 @@ double molecule::get_rotation(){
 }
 
 vect molecule::atom_pos(int i){
-    return atoms[i]->pos_vect();
+    return atoms.at(i)->pos_vect();
 }
 
 int molecule::nump(){

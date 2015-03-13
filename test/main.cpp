@@ -68,7 +68,7 @@ int main(int argc, const char * argv[]) {
     //cout << "NAN " <<  NAN << endl;
     
     // Structure Factor
-    
+    /*
     int f = 299792458;
     cout << "c = " <<  setprecision(4) << scientific << f << endl;
     
@@ -86,11 +86,17 @@ int main(int argc, const char * argv[]) {
         gr[d] = v;
         dist.push_back(v);
     }
-    
+    */
     //cout << structure_factor(3.2, dist, 1, 0.015) << endl;
     //cout << max_structure_factor(dist, 1, 0.015) << endl;
     
+    vector<int> integers = {1,2,3,4};
+    vector<int> i_2 = integers;
+    integers.at(1) = 5;
     
+    for (int i = 0; i < i_2.size(); i++){
+        cout << i_2.at(i) << " ";
+    }
     
     return 0;
 }

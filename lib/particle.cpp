@@ -32,7 +32,7 @@ int particle::index(){
     return id-1;
 }
 
-int particle::m_i(){
+int particle::mol_index(){
     return molid-1;
 }
 

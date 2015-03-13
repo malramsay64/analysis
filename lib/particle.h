@@ -39,7 +39,7 @@ public:
     int set_pos(vect);
     vect pos_vect();
     int index();
-    int m_i();
+    int mol_index();
     int order();
     void delete_neighbours();
     

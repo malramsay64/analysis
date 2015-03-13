@@ -120,7 +120,7 @@ int main(int argc, char *argv[]){
             
             // Add key frame
             key_frames.push_back(new Frame(*current_frame));
-            current_frame = new Frame;
+            //current_frame = new Frame;
             // Fraction of file read
             inFile.seekg(myfile.tellg());
             num_frames = filesize/(filesize - count(istreambuf_iterator<char>(inFile),

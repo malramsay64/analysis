@@ -95,7 +95,7 @@ int read_data(std::ifstream *myfile, Frame *frame){
     
     vector<particle>::iterator i;
     for (i = frame->particles.begin(); i != frame->particles.end(); ++i){
-        frame->add_link(i->molid-1, i->id-1);
+        frame->add_link(i->mol_index(), i->index());
     }
     
     // Put all particles from molecule on same frame based on COM
@@ -173,6 +173,8 @@ int update(std::ifstream *myfile, Frame *frame){
 
     }
     delete p;
+    //frame->update_links();
+
     for (auto &m: frame->molecules){
         m.calc_COM();
         m.delete_neighbours();

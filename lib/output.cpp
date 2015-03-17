@@ -155,6 +155,7 @@ int print_frame(Frame * frame){
         for (int i = 0; i < m.atoms.size(); i++){
             p = m.atoms.at((i+2) % m.atoms.size());
             d = frame->cartesian(direction(m.COM(), p->pos_vect()));
+            //cout << mol_colour(&m,frame) << endl;
             gnuplot << com + d << " " << p->radius << " " << mol_colour(&m,frame) << " " << m.id << endl;
         }
         gnuplot << endl;

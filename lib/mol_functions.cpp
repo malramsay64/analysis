@@ -38,8 +38,9 @@ vect wrap(vect v){
     return atan2(sin(v),cos(v))+PI;
 }
 
-int mol_colour(molecule * m, Frame * frame){
-    return circle_colour(m);
+double mol_colour(molecule * m, Frame * frame){
+    //return circle_colour(m);
+    return my_mod(angle(m, frame),PI)/PI;
 }
 
 
@@ -84,9 +85,8 @@ double hexatic(int n, molecule* m1, Frame *frame){
     complex<double> i = complex<double>(0,1);
     for (auto &m2: m1->my_neighbours){
         theta = frame->direction(m2->COM(), m1->COM()).angle();
-        sum += (1/6.)*exp(6*theta*i);
+        sum += (1./m1->num_neighbours())*exp(6*theta*i);
     }
-    //cout << abs(sum) << endl;
     return abs(sum);
 }
 

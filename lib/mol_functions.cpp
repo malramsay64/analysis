@@ -43,6 +43,10 @@ int mol_colour(molecule * m, Frame * frame){
 }
 
 
+double com_colour(molecule * m, Frame * frame){
+    return hexatic(6, m, frame);
+}
+
 int circle_colour(molecule * m){
     int colour = 0;
     for (auto &p: m->atoms){

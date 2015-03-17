@@ -18,6 +18,7 @@ molecule::molecule (){
     colour = 0;
     type = 0;
     com = vect();
+    rotation = 0;
 }
 
 void molecule::add_neighbour(molecule *m){
@@ -41,6 +42,7 @@ void molecule::delete_neighbours(){
     for (auto &p: atoms){
         p->delete_neighbours();
     }
+    //atoms = vector<particle*>();
 }
 
 double molecule::mass(){
@@ -79,8 +81,31 @@ vect molecule::calc_COM(){
     return out;
 }
 
+double molecule::update_orientation(double angle){
+    double delta;
+    delta = (angle-PI) - orientation;
+    delta = atan2(sin(delta),cos(delta));
+    orientation += delta;
+    rotation += delta;
+    return delta;
+}
+
+int molecule::set_orientation(double angle){
+    orientation = angle - PI;
+    rotation = 0;
+    return 0;
+}
+
+double molecule::get_orientation(){
+    return orientation;
+}
+
+double molecule::get_rotation(){
+    return rotation;
+}
+
 vect molecule::atom_pos(int i){
-    return atoms[i]->pos_vect();
+    return atoms.at(i)->pos_vect();
 }
 
 int molecule::nump(){

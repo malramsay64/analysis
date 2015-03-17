@@ -12,6 +12,20 @@ Frame::Frame(){
     neighbours = false;
 }
 
+Frame::Frame(Frame const &frame){
+    num_molecules = frame.num_molecules;
+    atoms = frame.atoms;
+    molecules = frame.molecules;
+    particles = frame.particles;
+    coloured = frame.coloured;
+    neighbours = frame.neighbours;
+    a = frame.a;
+    b = frame.b;
+    theta = frame.theta;
+    timestep = frame.timestep;
+    update_links();
+}
+
 double Frame::dist(vect v1, vect v2){
     return direction(v1,v2).length();
 }
@@ -54,6 +68,20 @@ void Frame::add_link(int molpos, int ppos, bool b_sort=true){
     }
 }
 
+void Frame::update_links(){
+    for (auto &m: molecules){
+        // Links to particles
+        for (int i = 0; i < m.nump(); i++){
+            m.atoms.at(i) = &particles.at(m.atoms.at(i)->index());
+        }
+        // Links to neighbours
+    }
+}
+
+molecule Frame::at(int i){
+    return molecules.at(i);
+}
+
 void Frame::set_timestep(int t){
     timestep = t;
 }
@@ -61,7 +89,6 @@ void Frame::set_timestep(int t){
 int Frame::get_timestep(){
     return timestep;
 }
-
 
 // Crystal Coordinates
 int Frame::set_crys(double a, double b, double theta){

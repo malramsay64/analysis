@@ -81,11 +81,35 @@ int print_relax_time(string s, int t){
 
 string print_relax_time(int t){
     if (t){
-        return to_string(t);
+        stringstream ss;
+        ss << setprecision(5) << scientific << double (t);
+        return ss.str();
+        //return to_string(double (t));
     }
     return "NAN";
 }
 
+int print_rot_diff(vector<Frame *> key_frames, Frame * frame){
+    ofstream rot_diff;
+    rot_diff.open("rot_diff.csv");
+    rot_diff << "Molecule,rotation,diffusion" << endl;
+    double rot, diff, total_rot;
+    //Frame * prev = key_frames.front();
+    int i;
+    for (auto m: frame->molecules){
+        total_rot = 0;
+        i = m.index();
+        for (auto key: key_frames){
+            rot = key->at(i).get_rotation();
+            diff = frame->dist(key->at(i).COM(),key_frames.front()->at(i).COM());
+            rot_diff << m.id << "," << fabs(rot) << "," << diff << endl;
+        }
+        rot = m.get_rotation();
+        diff = frame->dist(m.COM(), key_frames.front()->at(i).COM());
+        rot_diff << m.id << "," << fabs(rot) << "," << diff << endl;
+    }
+    return 0;
+}
 
 
 int print_moved(Frame * init, Frame * final){
@@ -125,7 +149,7 @@ int print_frame(Frame * frame){
         com = wrap_x(com, frame->get_a());
         
         particle * p;
-        complot << com << endl;
+        complot << com << " " << com_colour(&m, frame) << endl;
         for (int i = 0; i < m.atoms.size(); i++){
             p = m.atoms.at((i+2) % m.atoms.size());
             d = frame->cartesian(direction(m.COM(), p->pos_vect()));

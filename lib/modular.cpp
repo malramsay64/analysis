@@ -9,23 +9,39 @@
 #include "modular.h"
 
 using namespace std;
-
+// Neighbour List
 vector<vector<int>> mod_neigh_list;
 
 map<int, my_mean> collate_MSD, collate_MFD, collate_c1, collate_c2, collate_struct;
+vector<map<int,my_mean>> collate_regio_c1, collate_regio_c2, collate_regio_MSD;
 
 ofstream MSD_file, rotations_file, movie_file, short_order_file, struct_file, regio_file, order_file;
-
-vector<map<int,my_mean>> collate_regio_c1, collate_regio_c2, collate_regio_MSD;
 
 static double radial_plot = 15;
 static double radial_cutoff = 20;
 static int short_order_types = 7;
 static int regio_res = 50;
 
-
-int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int regio, int print, int movie,\
-                int dist){
+int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int dist){
+    
+    // Initialise Variables
+    int num_key_frames = (int) key_frames.size();
+    
+    vector<my_mean> MSD(num_key_frames), MFD(num_key_frames), c1(num_key_frames),\
+    c2(num_key_frames), struct_func(num_key_frames);
+    
+    vector<vector<my_mean>> regio_c1, regio_c2, regio_MSD;
+    
+    distribution<int> num_neigh, num_contact, pairing, radial;
+    distribution<my_mean> pair_contact, pair_neigh;
+    distribution<double> short_order;
+    
+    my_mean neigh_frac;
+    my_mean hexatic_order;
+    my_mean circle_order;
+    
+    ofstream gnuplot;
+    ofstream short_range;
     
     if (key_frames.size() == 0){
         mod_neigh_list = vector<vector<int>>(frame->num_mol(), vector<int>());
@@ -35,16 +51,10 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int regio, int p
         rotations_file.open("rotation.csv");
         struct_file.open("struct.csv");
         
-        if (movie){
-            movie_file.open("trj/movie.lammpstrj");
-            print_movie(&movie_file, frame);
-        }
-        
         if (time_structure){
             // Short Order
             short_order_file.open("short_order_hist.csv");
             short_order_file << "Timestep,No Colour,None,Parallel,Anti Parallel 1,Anti Parallel 2,Chiral,Perpendicular" << endl;
-        
         
             // Hexatic Ordering
             order_file.open("order.csv");
@@ -57,16 +67,13 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int regio, int p
             collate_regio_c2 = vector<map<int,my_mean>>(regio_res);
             collate_regio_MSD = vector<map<int,my_mean>>(regio_res);
         }
+        
+        if (movie){
+            movie_file.open("trj/movie.lammpstrj");
+            print_movie(&movie_file, frame);
+        }
     }
     
-    distribution<int> num_neigh, num_contact, pairing, radial;
-    distribution<my_mean> pair_contact, pair_neigh;
-    
-    my_mean neigh_frac;
-    my_mean hexatic_order;
-    my_mean circle_order;
-    //my_mean struct_func;
-
     if (time_structure || print){
         num_neigh = distribution<int>(MAX_MOL_CONTACTS);
         num_contact = distribution<int>(MAX_MOL_CONTACTS);
@@ -78,23 +85,11 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int regio, int p
 
     }
     
-    int num_key_frames = (int) key_frames.size();
-    vector<my_mean> MSD(num_key_frames), MFD(num_key_frames), c1(num_key_frames),\
-    c2(num_key_frames), struct_func(num_key_frames);
-    
-
-    vector<vector<my_mean>> regio_c1, regio_c2, regio_MSD;
     if (regio){
         regio_c1 = vector<vector<my_mean>>(regio_res, vector<my_mean>(num_key_frames));
         regio_c2 = vector<vector<my_mean>>(regio_res, vector<my_mean>(num_key_frames));
         regio_MSD = vector<vector<my_mean>>(regio_res, vector<my_mean>(num_key_frames));
     }
-    
-    // Short order histogram
-    distribution<double> short_order;
-    
-    ofstream gnuplot;
-    ofstream short_range;
     
     if (time_structure || print){
         short_order = distribution<double>(short_order_types);
@@ -217,8 +212,6 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int regio, int p
             }
         }
     }
-
-    
     
     if (time_structure){
         print_time_distribution(&short_order, frame->timestep, &short_order_file);
@@ -242,6 +235,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int regio, int p
         // Print radial distribution
         print_radial_distribution(&radial, "radial_dist.dat", frame->num_mol(), frame->get_area());
         
+        cout << "Structure-factor: " << setprecision(5) << scientific << max_structure_factor(get_radial_distribution(&radial, frame->num_mol(), frame->get_area()), frame->get_density(), 0.015) << endl;
         
         
         // Order Parameters
@@ -251,7 +245,6 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int regio, int p
         ordering << "Hexatic: " << hexatic_order.get_mean() << endl;
         ordering << "Circle-order: " << circle_order.get_mean() << endl;
         ordering << "Frac-6-fold: " << num_neigh.fraction_at(6) << endl;
-        ordering << "Structure-factor: " << max_structure_factor(get_radial_distribution(&radial, frame->num_mol(), frame->get_area()), frame->get_density(), 0.015) << endl;
         ordering.close();
 
         // Print short range order
@@ -294,7 +287,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int regio, int p
             }
         }
         print_relax_time("Struct-relax: ", ts);
-        cout << "Diffusion-constant: " << \
+        cout << "Diffusion-constant: " << setprecision(5) << scientific <<\
         collate_MSD.at(frame->timestep).get_mean()/(4*frame->timestep*STEP_SIZE)  \
         << endl;
         
@@ -334,6 +327,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int regio, int p
                 regio_relax << i*delta << "," << print_relax_time(regio_t1) << "," << print_relax_time(regio_t2) << endl;
             }
         }
+        print_rot_diff(key_frames, frame);
         
         print_distribution(&pair_contact, "stats/pair_contact.dat");
         print_distribution(&pair_neigh, "stats/pair_neigh.dat");

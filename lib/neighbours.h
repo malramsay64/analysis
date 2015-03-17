@@ -20,6 +20,8 @@
 #include "dyn_queue.h"
 #include "constants.h"
 
+//extern static int short_order_types;
+
 int short_range_order(Frame * frame);
 bool find_mol_neighbours(molecule * mol, Frame * frame, std::vector<std::vector<int>> *neigh_list);
 int check_particles(molecule * mol1, molecule * mol2, Frame * frame);

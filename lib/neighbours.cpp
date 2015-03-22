@@ -212,8 +212,11 @@ int short_range_order(Frame * frame){
 }
 
 int order_type(molecule * m1, molecule * m2, Frame * frame){
-    double Rb = (*m1).atoms[0]->radius;
-    double Rh = (*m1).atoms[1]->radius;
+    if (m1->nump() == 1){
+        return 0;
+    }
+    double Rb = m1->atoms[0]->radius;
+    double Rh = m1->atoms[1]->radius;
     // Theta
     double theta = angle(m1, frame) - angle(m2, frame);
     // Body-Body Dist (body = atoms[0])

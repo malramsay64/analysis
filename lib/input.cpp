@@ -163,22 +163,25 @@ int update(std::ifstream *myfile, Frame *frame){
     getline(*myfile, line);
     particle *p;
     p = new particle();
+    vect old_p, new_p, delta_p;
     double pos[2] = {0,0};
     for (int i=0; i < frame->num_atoms(); i++){
         getline(*myfile, line);
         stringstream sp(line);
         sp >> p->id >> p->molid >> p->type >> p->radius >> pos[0] >> pos[1] >> zp;
         // Update coordinates
-        frame->particles.at(p->index()).set_pos(frame->fractional(vect(pos[0], pos[1]) - vect(x[0], y[0])));
+        old_p = frame->particles.at(p->index()).pos_vect();
+        new_p = frame->fractional(vect(pos[0], pos[1])-vect(x[0],y[0]));
+        delta_p = direction(old_p, new_p);
+
+        frame->particles.at(p->index()).set_pos(old_p + delta_p);
 
     }
     delete p;
-    //frame->update_links();
 
     for (auto &m: frame->molecules){
         m.calc_COM();
         m.delete_neighbours();
-        m.same_period();
         m.update_orientation(angle(&m,frame));
     }
     return 0;

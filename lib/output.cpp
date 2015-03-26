@@ -79,6 +79,13 @@ int print_relax_time(string s, int t){
     return 0;
 }
 
+int relax_time(int t){
+    if (t == 0){
+        return INFINITY;
+    }
+    return 0;
+}
+
 string print_relax_time(int t){
     if (t){
         stringstream ss;
@@ -123,7 +130,7 @@ int print_moved(Frame * init, Frame * final){
     for (auto &m: init->molecules){
         com1 = m.COM();
         com2 = final->molecules.at(m.index()).COM();
-        rotation = dist(angle(&m,init), angle(&final->molecules.at(m.index()), final))/(4*PI);
+        rotation = final->molecules.at(m.index()).get_rotation();
         
         file << init->cartesian(com1) << " " << 0 << endl;
         file << init->cartesian(com1)+init->direction(com1, com2) << " " << rotation << endl;
@@ -146,15 +153,15 @@ int print_frame(Frame * frame){
     for (auto &m: frame->molecules){
         vect d, com;
         com = frame->cartesian(m.COM());
-        com = wrap_x(com, frame->get_a());
         
         particle * p;
         complot << com << " " << com_colour(&m, frame) << endl;
         for (int i = 0; i < m.atoms.size(); i++){
             p = m.atoms.at((i+2) % m.atoms.size());
             d = frame->cartesian(direction(m.COM(), p->pos_vect()));
-            //cout << mol_colour(&m,frame) << endl;
-            gnuplot << com + d << " " << p->radius << " " << mol_colour(&m,frame) << " " << m.id << endl;
+            gnuplot << com + d << " " << p->radius << " " << \
+            m.get_orientation() << " " << m.num_neighbours() << " " << circle_ordering(&m) \
+            << " " << short_ordering(&m,frame) << " " << m.id << endl;
         }
         gnuplot << endl;
     }

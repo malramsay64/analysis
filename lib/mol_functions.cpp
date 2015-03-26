@@ -104,3 +104,22 @@ double circle_ordering(molecule *m){
     }
     return order.get_mean();
 }
+
+double orient_ordering(molecule *m){
+    my_mean mean;
+    for (auto m2: m->my_neighbours){
+        mean.add(fabs(dot_product(m->get_orient_vect(), m2->get_orient_vect())));
+    }
+    return mean.get_mean();
+}
+
+int short_ordering(molecule *mol, Frame * frame){
+    int type = 0;
+    for (auto mol2: mol->my_neighbours){
+        type = order_type(mol, mol2, frame);
+        if (type == 2 || type == 3 || type == 4 || type == 5){
+            return type;
+        }
+    }
+    return type;
+}

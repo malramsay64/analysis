@@ -67,11 +67,11 @@ vect molecule::COM(){
 vect molecule::calc_COM(){
     double total = 0;
     vect theta, xi, zeta, out;
-    for ( int i = 0; i < nump(); ++i){
-        theta = atoms[i]->pos_vect();
-        xi += atoms[i]->mass*cos(theta);
-        zeta += atoms[i]->mass*sin(theta);
-        total += atoms[i]->mass;
+    for (auto p: atoms){
+        theta = p->pos_vect();
+        xi += p->mass*cos(theta);
+        zeta += p->mass*sin(theta);
+        total += p->mass;
     }
     xi /= total;
     zeta /= total;
@@ -98,6 +98,10 @@ int molecule::set_orientation(double angle){
 
 double molecule::get_orientation(){
     return orientation;
+}
+
+vect molecule::get_orient_vect(){
+    return vect(sin(get_orientation()), cos(get_orientation()));
 }
 
 double molecule::get_rotation(){

@@ -22,6 +22,7 @@ int print_mol(std::ostream *os, molecule *mol, Frame *frame);
 int print_frame(Frame * frame);
 int print_radial_distribution(distribution<int> *, std::string, int, double);
 int print_relax_time(std::string s, int t);
+int relax_time(int t);
 std::string print_relax_time(int t);
 int print_moved(Frame * init, Frame * final);
 std::vector<double> get_radial_distribution(distribution<int> *, int, double);

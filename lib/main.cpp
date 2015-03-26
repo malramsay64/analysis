@@ -22,7 +22,7 @@ int key_rate = 100;
 int main(int argc, char *argv[]){
     string in_fname, out_fname;
     bool quench=false, fast=false;
-    int step_size = 1, print, key_rate = 10;
+    int step_size = 1, print, key_rate = 20;
     //int reference = BOX;
     
     /* Read arguments

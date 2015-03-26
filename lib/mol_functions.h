@@ -28,5 +28,7 @@ double hexatic(int n, molecule* m1, Frame *frame);
 double circle_ordering(molecule *m);
 int circle_colour(molecule * m);
 int neighbour_colour(molecule * m, Frame *frame);
+double orient_ordering(molecule *m);
+int short_ordering(molecule *m, Frame * frame);
 
 #endif /* defined(MY_MOL_FUNCTIONS) */

@@ -62,22 +62,6 @@ int print_radial_distribution(distribution<int> *d, string filename, int nmol, d
     return 0;
 }
 
-int print_radial2d_distribution(vector<distribution<int>> *d, string filename, int nmol, double frame_area){
-    ofstream file;
-    file.open(filename.c_str());
-    double area;
-    double density = 2*nmol/frame_area;
-    int theta_count = 0;
-    for (auto dist: *d){
-        for (int i = 0; i < dist.get_size(); i++){
-            area = dtheta*(i*dist.get_delta_r())*dist.get_delta_r();
-            file << dtheta*theta_count << " " << i*dist.get_delta_r() << " " << dist.at(i)/(area*nmol*density) << endl;
-        }
-        theta_count++;
-    }
-    return 0;
-}
-
 vector<double> get_radial_distribution(distribution<int> *d, int nmol, double frame_area){
     double area;
     double density = 2*nmol/frame_area;
@@ -99,7 +83,14 @@ int relax_time(int t){
     if (t == 0){
         return INFINITY;
     }
-    return 0;
+    return t;
+}
+
+double relax_time(double t){
+    if (t == 0){
+        return INFINITY;
+    }
+    return t;
 }
 
 string print_relax_time(int t){
@@ -107,7 +98,15 @@ string print_relax_time(int t){
         stringstream ss;
         ss << setprecision(5) << scientific << double (t);
         return ss.str();
-        //return to_string(double (t));
+    }
+    return "NAN";
+}
+
+string print_relax_time(double t){
+    if (t != 0){
+        stringstream ss;
+        ss << setprecision(5) << scientific << double (t);
+        return ss.str();
     }
     return "NAN";
 }
@@ -117,7 +116,6 @@ int print_rot_diff(vector<Frame *> key_frames, Frame * frame){
     rot_diff.open("rot_diff.csv");
     rot_diff << "Molecule,rotation,diffusion" << endl;
     double rot, diff, total_rot;
-    //Frame * prev = key_frames.front();
     int i;
     for (auto m: frame->molecules){
         total_rot = 0;
@@ -138,7 +136,6 @@ int print_rot_diff(vector<Frame *> key_frames, Frame * frame){
 int print_moved(Frame * init, Frame * final){
     ofstream file;
     file.open("moved.dat");
-    
     file << init->get_a() << " " << init->get_height() << endl << endl;
     
     vect com1, com2;
@@ -148,9 +145,7 @@ int print_moved(Frame * init, Frame * final){
         com2 = final->molecules.at(m.index()).COM();
         rotation = final->molecules.at(m.index()).get_rotation();
         
-        file << init->cartesian(com1) << " " << 0 << endl;
-        file << init->cartesian(com1)+init->direction(com1, com2) << " " << rotation << endl;
-        file << endl;
+        file << init->cartesian(com1) << " " << init->direction(com1, com2) << " " << rotation << endl;
     }
     file.close();
     return 0;
@@ -183,5 +178,22 @@ int print_frame(Frame * frame){
     }
     gnuplot.close();
     complot.close();
+    return 0;
+}
+
+int print_motion(vector<Frame *> key_frames){
+    Frame * last;
+    vect com1,com2;
+    vect orient1, orient2;
+    for (auto key: key_frames){
+        if (last){
+            for (auto m1: key->molecules){
+                com1 = m1.COM();
+                com2 = last->molecules.at(m1.index()).COM();
+                orient1 = m1.get_orient_vect();
+                orient2 = last->molecules.at(m1.index()).get_orient_vect();
+            }
+        }
+    }
     return 0;
 }

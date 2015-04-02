@@ -23,10 +23,6 @@ static double radial_plot = 15;
 static double radial_cutoff = 20;
 static int short_order_types = 7;
 static int regio_res = 50;
-static int radial_res = 1000;
-static int num_theta = 360;
-double dtheta = 2*PI/360;
-
 
 int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int dist){
     
@@ -42,7 +38,6 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
     distribution<int> num_neigh, num_contact, pairing, radial;
     distribution<my_mean> pair_contact, pair_neigh;
     distribution<double> short_order;
-    vector<distribution<int>> radial2d;
     
     my_mean neigh_frac;
     my_mean hexatic_order;
@@ -89,8 +84,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         num_neigh = distribution<int>(MAX_MOL_CONTACTS);
         num_contact = distribution<int>(MAX_MOL_CONTACTS);
         pairing = distribution<int>(MAX_MOL_CONTACTS);
-        radial = distribution<int>(radial_res, radial_plot);
-        radial2d = vector<distribution<int>>(num_theta, distribution<int>(radial_res, radial_plot));
+        radial = distribution<int>(1000, radial_plot);
     
         pair_contact = distribution<my_mean>(MAX_MOL_CONTACTS);
         pair_neigh = distribution<my_mean>(MAX_MOL_CONTACTS);
@@ -204,13 +198,12 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         if (time_structure || print){
             dyn_queue r = dyn_queue(&mol);
             molecule *mol2 = r.pop();
-            vect direction;
+            double distance = 0;
         
             // All molecules within cutoff
-            while ( mol2 && direction.length() < radial_cutoff){
-                direction = frame->direction(mol.COM(), mol2->COM());
-                radial.add(direction.length());
-                radial2d.at(int((direction.angle())/dtheta)%num_theta).add(direction.length());
+            while ( mol2 && distance < radial_cutoff){
+                distance = frame->dist(mol.COM(), mol2->COM());
+                radial.add(distance);
 
                 mol2 = r.pop();
             }
@@ -258,7 +251,6 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         
         // Print radial distribution
         print_radial_distribution(&radial, "radial_dist.dat", frame->num_mol(), frame->get_area());
-        
         
         //cout << "Structure-factor: " << setprecision(5) << scientific << max_structure_factor(get_radial_distribution(&radial, frame->num_mol(), frame->get_area()), frame->get_density(), 0.015) << endl;
         
@@ -319,13 +311,16 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         for (auto m1: collate_MSD){
             for (auto m2: collate_MSD){
                 if (m1.first > relax_time(ts) && m1.first < m2.first){
-                    diff_const.add((m2.second.get_mean() - m1.second.get_mean())/(4*(m2.first -m1.first)*STEP_SIZE ));
+                    if (m2.second.get_mean() - m1.second.get_mean() < 0){
+                        //cout << m2.second.get_mean() - m1.second.get_mean()<< " " << m2.first -m1.first << endl;
+                        //cout << m2.second.get_mean() << " " << m1.second.get_mean() << endl;
+                        //cout << m2.first << " " << m1.first << endl;
+                    }
+                    diff_const.add((m2.second.get_mean() - m1.second.get_mean())/(4*(m2.first -m1.first)*STEP_SIZE), m2.first-m1.first);
                 }
             }
         }
-        cout << "Diffusion-constant: " << setprecision(5) << scientific << \
-        print_relax_time(diff_const.get_mean()) << endl;
-        
+        cout << "Diffusion-constant: " << print_relax_time(diff_const.get_mean()) << endl;
         if (regio){
             // Regio relaxations
             regio_file.open("regio.csv");

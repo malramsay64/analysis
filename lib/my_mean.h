@@ -15,9 +15,11 @@ class my_mean{
     int n;
     double mean;
     double M2;
+    double weight;
 public:
     my_mean();
     double add(double);
+    double add(double, double);
     double add(my_mean);
     double get_mean();
     double get_stdev();

@@ -28,4 +28,6 @@ int print_moved(Frame * init, Frame * final);
 std::vector<double> get_radial_distribution(distribution<int> *, int, double);
 int print_rot_diff(std::vector<Frame *> key_frames, Frame * frame);
 
+extern double dtheta;
+
 #endif /* defined(__analysis__output__) */

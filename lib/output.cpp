@@ -62,6 +62,22 @@ int print_radial_distribution(distribution<int> *d, string filename, int nmol, d
     return 0;
 }
 
+int print_radial2d_distribution(vector<distribution<int>> *d, string filename, int nmol, double frame_area){
+    ofstream file;
+    file.open(filename.c_str());
+    double area;
+    double density = 2*nmol/frame_area;
+    int theta_count = 0;
+    for (auto dist: *d){
+        for (int i = 0; i < dist.get_size(); i++){
+            area = dtheta*(i*dist.get_delta_r())*dist.get_delta_r();
+            file << dtheta*theta_count << " " << i*dist.get_delta_r() << " " << dist.at(i)/(area*nmol*density) << endl;
+        }
+        theta_count++;
+    }
+    return 0;
+}
+
 vector<double> get_radial_distribution(distribution<int> *d, int nmol, double frame_area){
     double area;
     double density = 2*nmol/frame_area;

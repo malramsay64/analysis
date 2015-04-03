@@ -62,18 +62,28 @@ int print_radial_distribution(distribution<int> *d, string filename, int nmol, d
     return 0;
 }
 
-int print_radial2d_distribution(vector<distribution<int>> *d, string filename, int nmol, double frame_area){
+int print_radial2d_distribution(vector<distribution<int>> *d, string filename, int nmol, double frame_area, molecule m){
     ofstream file;
     file.open(filename.c_str());
+    // Plot atoms in molecule
+    for (auto p: m.atoms){
+        file << p->pos_vect() << " " << p->radius << endl;
+    }
+    file << endl;
     double area;
+    double r,theta;
     double density = 2*nmol/frame_area;
-    int theta_count = 0;
-    for (auto dist: *d){
+    distribution<int> dist;
+    for (int t = 0; t < d->size()+1; t++){
+        dist = d->at(t%d->size());
         for (int i = 0; i < dist.get_size(); i++){
             area = dtheta*(i*dist.get_delta_r())*dist.get_delta_r();
-            file << dtheta*theta_count << " " << i*dist.get_delta_r() << " " << dist.at(i)/(area*nmol*density) << endl;
+            theta = dtheta*t-PI;
+            r = i*dist.get_delta_r();
+            file << d << " " << theta << " " << r*sin(theta) << " " << r*cos(theta) << " " << dist.at(i)/(area*nmol*density) << endl;
+            
         }
-        theta_count++;
+        file << endl;
     }
     return 0;
 }

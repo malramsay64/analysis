@@ -52,6 +52,12 @@ double my_mod(double a, double b){
     return ret;
 }
 
+int pos_def_mod(int a, int n){
+    int res = a - (n * int(double(a)/n));
+    while (res < 0) res+=n;
+    return res;
+}
+
 double max_structure_factor(std::vector<double> g, double rho, double dr){
     double max_val = 0, max = 0, res;
     for (int i = 0; i < g.size(); i++){

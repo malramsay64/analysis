@@ -123,3 +123,14 @@ int short_ordering(molecule *mol, Frame * frame){
     }
     return type;
 }
+
+molecule reorient(molecule *m, Frame* frame){
+    vect d;
+    double delta_t = m->get_orientation();
+    molecule n = molecule(*m);
+    for (auto p: n.atoms){
+        d = frame->direction(p->pos_vect(), n.COM());
+        p->set_pos(vect(d.length()*sin(d.angle() - delta_t), d.length()*cos(d.angle()-delta_t)));
+    }
+    return n;
+}

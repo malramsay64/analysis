@@ -30,5 +30,6 @@ double dist(double, double);
 double my_mod(double, double);
 double structure_factor(double q, std::vector<double> g, double rho, double dr);
 double max_structure_factor(std::vector<double> g, double rho, double dr);
+int pos_def_mod(int, int);
 
 #endif /* defined(FUNCTIONS_H) */

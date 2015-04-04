@@ -41,7 +41,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
     distribution<int> num_neigh, num_contact, pairing, radial;
     distribution<my_mean> pair_contact, pair_neigh;
     distribution<double> short_order;
-    vector<distribution<int>> radial2d_rel, radial2d_abs;
+    vector<distribution<int>> radial2d_rel, radial2d_abs, radial2d_large, radial2d_small;
     
     my_mean neigh_frac;
     my_mean hexatic_order;
@@ -91,6 +91,8 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         radial = distribution<int>(radial_res, radial_plot);
         radial2d_rel = vector<distribution<int>>(theta_res, distribution<int>(theta_res, radial_plot));
         radial2d_abs = vector<distribution<int>>(theta_res, distribution<int>(theta_res, radial_plot));
+        radial2d_large = vector<distribution<int>>(theta_res, distribution<int>(theta_res, radial_plot));
+        radial2d_small = vector<distribution<int>>(theta_res, distribution<int>(theta_res, radial_plot));
     
         pair_contact = distribution<my_mean>(MAX_MOL_CONTACTS);
         pair_neigh = distribution<my_mean>(MAX_MOL_CONTACTS);
@@ -129,10 +131,12 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         }
     }
 
+    
     /*
      * Analysis
      */
     for (auto &mol: frame->molecules){
+        
         if (time_structure || print){
             num_neigh.add(mol.num_neighbours());
             num_contact.add(mol.num_contacts());
@@ -213,6 +217,15 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
                     radial.add(direction.length());
                     radial2d_rel.at(pos_def_mod(int((direction.angle()-mol.get_orientation())/dtheta), theta_res)).add(direction.length());
                     radial2d_abs.at(pos_def_mod(int((direction.angle())/dtheta), theta_res)).add(direction.length());
+                    for (auto p: mol2->atoms){
+                        direction = frame->direction(mol.COM(), p->pos_vect());
+                        if (p->type == 1){
+                            radial2d_large.at(pos_def_mod(int((direction.angle()-mol.get_orientation())/dtheta), theta_res)).add(direction.length());
+                        }
+                        else if (p->type == 2){
+                            radial2d_small.at(pos_def_mod(int((direction.angle()-mol.get_orientation())/dtheta), theta_res)).add(direction.length());
+                        }
+                    }
                 }
                 mol2 = r.pop();
             }
@@ -223,6 +236,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         if (print){
             print_short_order(&short_range, &mol, frame);
         }
+        
     }
     
     for (int k = 0; k < key_frames.size(); k++){
@@ -260,8 +274,9 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         
         // Print radial distribution
         print_radial_distribution(&radial, "radial_dist.dat", frame->num_mol(), frame->get_area());
-        print_radial2d_distribution(&radial2d_rel, "radial2d_rel.dat", frame->num_mol(), frame->get_area(), reorient(&frame->molecules.front(), frame));
-        print_radial2d_distribution(&radial2d_abs, "radial2d_abs.dat", frame->num_mol(), frame->get_area(), reorient(&frame->molecules.front(), frame));
+        print_radial2d_distribution(&radial2d_rel, "radial2d_rel.dat", frame->num_mol(), frame->get_area(), frame);
+        print_radial2d_distribution(&radial2d_abs, "radial2d_abs.dat", frame->num_mol(), frame->get_area(), frame);
+        print_radial2d_distributions("radial2d.dat", frame->num_mol(), frame->get_area(), frame, &radial2d_abs, {&radial2d_rel, &radial2d_small, &radial2d_large});
         
         // Order Parameters
         
@@ -381,5 +396,6 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         print_frame(frame);
         
     }
+
     return 0;
 }

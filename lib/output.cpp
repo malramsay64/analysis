@@ -62,12 +62,16 @@ int print_radial_distribution(distribution<int> *d, string filename, int nmol, d
     return 0;
 }
 
-int print_radial2d_distribution(vector<distribution<int>> *d, string filename, int nmol, double frame_area, molecule m){
+int print_radial2d_distribution(vector<distribution<int>> *d, string filename, int nmol, double frame_area, Frame *frame){
     ofstream file;
     file.open(filename.c_str());
     // Plot atoms in molecule
-    for (auto p: m.atoms){
-        file << p->pos_vect() << " " << p->radius << endl;
+    molecule * m = &frame->molecules.front();
+    double delta_t = m->get_orientation();
+    vect direct;
+    for (auto p: m->atoms){
+        direct = frame->direction(p->pos_vect(), m->COM());
+        file  << vect(direct.length()*sin(direct.angle() - delta_t), direct.length()*cos(direct.angle()-delta_t)) << " " << p->radius << endl;
     }
     file << endl;
     double area;
@@ -80,13 +84,48 @@ int print_radial2d_distribution(vector<distribution<int>> *d, string filename, i
             area = dtheta*(i*dist.get_delta_r())*dist.get_delta_r();
             theta = dtheta*t-PI;
             r = i*dist.get_delta_r();
-            file << d << " " << theta << " " << r*sin(theta) << " " << r*cos(theta) << " " << dist.at(i)/(area*nmol*density) << endl;
+            file << r << " " << theta << " " << r*sin(theta) << " " << r*cos(theta) << " " << dist.at(i)/(area*nmol*density) << endl;
             
         }
         file << endl;
     }
     return 0;
 }
+
+int print_radial2d_distributions(string filename, int nmol, double frame_area, Frame *frame, vector<distribution<int>> *first, initializer_list<vector<distribution<int>>*> list){
+    ofstream file;
+    file.open(filename.c_str());
+    // Plot atoms in molecule
+    molecule * m = &frame->molecules.front();
+    double delta_t = m->get_orientation();
+    vect direct;
+    for (auto p: m->atoms){
+        direct = frame->direction(p->pos_vect(), m->COM());
+        file  << vect(direct.length()*sin(direct.angle() - delta_t), direct.length()*cos(direct.angle()-delta_t)) << " " << p->radius << endl;
+    }
+    file << endl;
+    double area;
+    double r,theta;
+    double density = 2*nmol/frame_area;
+    distribution<int> dist;
+    for (int t = 0; t < first->size()+1; t++){
+        dist = first->at(t%first->size());
+        for (int i = 0; i < dist.get_size(); i++){
+            area = dtheta*(i*dist.get_delta_r())*dist.get_delta_r();
+            theta = dtheta*t-PI;
+            r = i*dist.get_delta_r();
+            file << r << " " << theta << " " << r*sin(theta) << " " << r*cos(theta) << " " << dist.at(i)/(area*nmol*density);
+            for (auto l: list){
+                file << " " << l->at(t%first->size()).at(i)/(area*nmol*density);
+            }
+            file << endl;
+            
+        }
+        file << endl;
+    }
+    return 0;
+}
+
 
 vector<double> get_radial_distribution(distribution<int> *d, int nmol, double frame_area){
     double area;
@@ -199,6 +238,7 @@ int print_frame(Frame * frame){
             gnuplot << com + d << " " << p->radius << " " << \
             m.get_orientation() << " " << m.num_neighbours() << " " << circle_ordering(&m) \
             << " " << short_ordering(&m,frame) << " " << m.id << endl;
+
         }
         gnuplot << endl;
     }

@@ -126,6 +126,7 @@ int short_ordering(molecule *mol, Frame * frame){
 
 molecule reorient(molecule *m, Frame* frame){
     vect d;
+    
     double delta_t = m->get_orientation();
     molecule n = molecule(*m);
     for (auto p: n.atoms){

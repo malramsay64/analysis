@@ -12,5 +12,5 @@ analysis.xcodeproj/*
 *.pdf
 *.dat
 
-# Large files
-work/out.lammpstrj
+# Testing directory
+work/*

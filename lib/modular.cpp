@@ -274,8 +274,6 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         
         // Print radial distribution
         print_radial_distribution(&radial, "radial_dist.dat", frame->num_mol(), frame->get_area());
-        print_radial2d_distribution(&radial2d_rel, "radial2d_rel.dat", frame->num_mol(), frame->get_area(), frame);
-        print_radial2d_distribution(&radial2d_abs, "radial2d_abs.dat", frame->num_mol(), frame->get_area(), frame);
         print_radial2d_distributions("radial2d.dat", frame->num_mol(), frame->get_area(), frame, &radial2d_abs, {&radial2d_rel, &radial2d_small, &radial2d_large});
         
         // Order Parameters
@@ -320,10 +318,11 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         
         // Structure
         int ts = 0;
-        struct_file << "Timestep,F(t),\\xi(t)"  << endl;
+        struct_file << "Timestep,F,chi"  << endl;
         for (auto c: collate_struct){
             struct_file << c.first << "," << c.second.get_mean() \
-            << "," << c.second.get_variance() << endl;
+            << "," << relax_time(c.second.get_variance()) << endl;
+            //cout << c.second.get_mean() << " " << c.second.get_variance() << " " << c.second.get_count() << endl;
             if (c.second.get_mean() < 1/CONST_E && ts == 0){
                 ts = c.first;
             }

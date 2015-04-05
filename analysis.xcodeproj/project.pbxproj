@@ -15,6 +15,7 @@
 		D458CADB1A44128A001EFFC5 /* analysis in CopyFiles */ = {isa = PBXBuildFile; fileRef = D44E43811A33DCB70095271F /* analysis */; };
 		D47260B51ACE41EF0007DA51 /* functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43F21A341D4C0095271F /* functions.cpp */; };
 		D47260B61ACE42020007DA51 /* vect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E44091A341D4C0095271F /* vect.cpp */; };
+		D47260B71ACFDF8D0007DA51 /* my_mean.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4E6D7AC1A3598C600A9D7F6 /* my_mean.cpp */; };
 		D4E6D7991A35987500A9D7F6 /* frame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43F01A341D4C0095271F /* frame.cpp */; };
 		D4E6D79A1A35987900A9D7F6 /* functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43F21A341D4C0095271F /* functions.cpp */; };
 		D4E6D79B1A35987D00A9D7F6 /* input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43F41A341D4C0095271F /* input.cpp */; };
@@ -397,6 +398,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D47260B71ACFDF8D0007DA51 /* my_mean.cpp in Sources */,
 				D47260B61ACE42020007DA51 /* vect.cpp in Sources */,
 				D47260B51ACE41EF0007DA51 /* functions.cpp in Sources */,
 				D4F9F6FC1A4241BF00CF2521 /* main.cpp in Sources */,

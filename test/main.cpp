@@ -16,6 +16,7 @@
 #include <assert.h>
 #include "output.h"
 #include <iomanip>
+#include "my_mean.h"
 
 using namespace std;
 
@@ -89,14 +90,28 @@ int main(int argc, const char * argv[]) {
     */
     //cout << structure_factor(3.2, dist, 1, 0.015) << endl;
     //cout << max_structure_factor(dist, 1, 0.015) << endl;
+    // Testing pos_def_mod
+    cout << "pos_def_mod" << endl;
+    cout << "1%3 " << pos_def_mod(1, 3) << endl;
+    cout << "-1%3 " << pos_def_mod(-1, 3) << endl;
+    cout << "2%3 " << pos_def_mod(2, 3) << endl;
+    cout << "-2%3 " << pos_def_mod(-2, 3) << endl;
     
-    vector<int> integers = {1,2,3,4};
-    vector<int> i_2 = integers;
-    integers.at(1) = 5;
+    // Testing my_mean
+    cout << "my_mean" << endl;
+    my_mean m;
+    m.add(1);
+    m.add(2);
+    m.add(3);
+    cout << m.get_mean() << " " << m.get_stdev() << endl;
     
-    for (int i = 0; i < i_2.size(); i++){
-        cout << i_2.at(i) << " ";
-    }
+    //vector<int> integers = {1,2,3,4};
+    //vector<int> i_2 = integers;
+    //integers.at(1) = 5;
+    
+    //for (int i = 0; i < i_2.size(); i++){
+    //    cout << i_2.at(i) << " ";
+    //}
     
     return 0;
 }

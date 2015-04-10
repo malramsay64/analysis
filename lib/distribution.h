@@ -45,7 +45,7 @@ class distribution{
 
 template <class type>
 distribution<type>::distribution(){
-    dist = std::vector<type>();
+    dist = std::vector<type>(0);
     elements = 0;
 }
 

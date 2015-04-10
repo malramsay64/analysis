@@ -170,19 +170,21 @@ int update(std::ifstream *myfile, Frame *frame){
         stringstream sp(line);
         sp >> p->id >> p->molid >> p->type >> p->radius >> pos[0] >> pos[1] >> zp;
         // Update coordinates
+        
         old_p = frame->particles.at(p->index()).pos_vect();
         new_p = frame->fractional(vect(pos[0], pos[1])-vect(x[0],y[0]));
         delta_p = direction(old_p, new_p);
-
         frame->particles.at(p->index()).set_pos(old_p + delta_p);
 
     }
     delete p;
 
     for (auto &m: frame->molecules){
+        
         m.calc_COM();
         m.delete_neighbours();
         m.update_orientation(angle(&m,frame));
+
     }
     return 0;
 }

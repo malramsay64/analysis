@@ -21,6 +21,8 @@ int print_short_order(std::ofstream * file, molecule * mol,  Frame * frame);
 int print_mol(std::ostream *os, molecule *mol, Frame *frame);
 int print_frame(Frame * frame);
 int print_radial_distribution(distribution<int> *, std::string, int, double);
+int print_radial2d_distribution(std::vector<distribution<int>> *, std::string, int, double, Frame*);
+int print_radial2d_distributions(std::string, int, double, Frame *, std::vector<distribution<int>>*, std::initializer_list<std::vector<distribution<int>>*>);
 int print_relax_time(std::string s, int t);
 int relax_time(int t);
 double relax_time(double t);
@@ -29,5 +31,7 @@ std::string print_relax_time(double t);
 int print_moved(Frame * init, Frame * final);
 std::vector<double> get_radial_distribution(distribution<int> *, int, double);
 int print_rot_diff(std::vector<Frame *> key_frames, Frame * frame);
+
+extern double dtheta;
 
 #endif /* defined(__analysis__output__) */

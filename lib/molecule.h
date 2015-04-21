@@ -34,6 +34,7 @@ public:
     double mass();
     vect COM();
     vect calc_COM();
+    vect update_COM();
     vect atom_pos(int);
     int num_contacts();
     int num_neighbours();

@@ -180,8 +180,7 @@ int update(std::ifstream *myfile, Frame *frame){
     delete p;
 
     for (auto &m: frame->molecules){
-        
-        m.calc_COM();
+        m.update_COM();
         m.delete_neighbours();
         m.update_orientation(angle(&m,frame));
 

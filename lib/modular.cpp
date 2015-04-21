@@ -136,7 +136,6 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
      * Analysis
      */
     for (auto &mol: frame->molecules){
-        
         if (time_structure || print){
             num_neigh.add(mol.num_neighbours());
             num_contact.add(mol.num_contacts());
@@ -175,7 +174,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         double displacement;
         for (auto key: key_frames) {
             molecule * mol2 = &key->molecules.at(mol.index());
-            displacement = frame->cartesian(direction(mol.COM(), mol2->COM())).length();
+            displacement = frame->cartesian(mol2->COM()-mol.COM()).length();
             // Displacement
             MSD.at(k).add(pow(displacement,2));
             MFD.at(k).add(pow(displacement,4));

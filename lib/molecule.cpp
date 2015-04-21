@@ -81,6 +81,12 @@ vect molecule::calc_COM(){
     return out;
 }
 
+vect molecule::update_COM(){
+    vect old = vect(com);
+    com = vect(old+direction(old,calc_COM()));
+    return com;
+}
+
 double molecule::update_orientation(double angle){
     double delta;
     delta = (angle-PI) - orientation;

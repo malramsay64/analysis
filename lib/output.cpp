@@ -206,8 +206,8 @@ int print_moved(Frame * init, Frame * final){
     vect com1, com2;
     double rotation;
     for (auto &m: init->molecules){
-        com1 = m.COM();
-        com2 = final->molecules.at(m.index()).COM();
+        com1 = m.moved_COM();
+        com2 = final->molecules.at(m.index()).moved_COM();
         rotation = final->molecules.at(m.index()).get_rotation();
         
         file << init->cartesian(com1) << " " << init->direction(com1, com2) << " " << rotation << endl;

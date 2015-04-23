@@ -33,6 +33,7 @@ public:
     int nump();
     double mass();
     vect COM();
+    vect moved_COM();
     vect calc_COM();
     vect update_COM();
     vect atom_pos(int);

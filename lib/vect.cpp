@@ -154,6 +154,10 @@ vect atan2(vect vx, vect vy){
     return vect(atan2(vx.x, vy.x), atan2(vx.y,vy.y));
 }
 
+vect pos_def_mod(vect v, double b){
+    return vect(my_mod(v.x,b), my_mod(v.y, b));
+}
+
 double atan2(vect v){
     return atan2(v.x,v.y);
 }

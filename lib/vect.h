@@ -59,6 +59,7 @@ double dot_product(vect v1, vect v2);
 vect cos(vect v);
 vect sin(vect v);
 vect atan2(vect vx, vect vy);
+vect pos_def_mod(vect v, double b);
 double atan2(vect v);
 double map_angle(double x);
 

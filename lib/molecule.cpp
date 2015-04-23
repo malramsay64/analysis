@@ -56,12 +56,16 @@ double molecule::mass(){
 
 vect molecule::COM(){
     if (com != vect()){
-        return com;
+        return pos_def_mod(com,2*PI);
     }
     else{
         calc_COM();
         return com;
     }
+}
+
+vect molecule::moved_COM(){
+    return com;
 }
 
 vect molecule::calc_COM(){

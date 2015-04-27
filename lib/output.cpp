@@ -225,13 +225,16 @@ int print_frame(Frame * frame){
     complot.open("complot.dat");
     gnuplot << frame->get_a() << " " << frame->get_height() << endl << endl;
     complot << frame->get_a() << " " << frame->get_height() << endl << endl;
+    complot << "# x y comcolour  orientation num_neigh circle_order short_order id";
     
     for (auto &m: frame->molecules){
         vect d, com;
         com = frame->cartesian(m.COM());
         
         particle * p;
-        complot << com << " " << com_colour(&m, frame) << endl;
+        complot << com << " " << com_colour(&m, frame) << " " <<\
+        m.get_orientation() << " " << m.num_neighbours() << " " << circle_ordering(&m) \
+        << " " << short_ordering(&m,frame) << " " << m.id << endl;
         for (int i = 0; i < m.atoms.size(); i++){
             p = m.atoms.at((i+2) % m.atoms.size());
             d = frame->cartesian(direction(m.COM(), p->pos_vect()));

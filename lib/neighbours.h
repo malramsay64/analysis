@@ -31,6 +31,7 @@ int order_type(molecule * m1, molecule * m2, Frame * frame);
 int add_mol_neighbours(molecule * m1, molecule *m2);
 int add_part_neighbours(particle *p1, particle *p2);
 std::vector<int> short_neighbour_list(molecule * m, Frame * frame);
+int find_neighbours(Frame *frame, std::vector<std::vector<int>> *neigh_list);
 
 
 #endif /* endif(NEIGHBOURS_H) */

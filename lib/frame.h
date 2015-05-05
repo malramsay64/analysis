@@ -13,6 +13,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <cmath>
+#include <sstream>
 
 #include "particle.h"
 #include "molecule.h"

@@ -17,7 +17,7 @@ vect orientation(molecule *m, Frame *frame){
     }
     vect v = frame->direction(com, m->atom_pos(0));
     if (m->nump() == 2 || (v.length() < EPS)){
-        v = frame->direction(com, m->atoms.at(1)->pos_vect());
+        v = frame->direction(com, m->get_large()->pos_vect());
         v.orthogonalise();
     }
     v.normalise();

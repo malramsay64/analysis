@@ -32,6 +32,7 @@ public:
     int uniqc();
     int nump();
     double mass();
+    particle * get_large();
     vect COM();
     vect moved_COM();
     vect calc_COM();
@@ -54,6 +55,7 @@ public:
     void delete_mol_neighbours();
     
 } ;
+
 
 
 #endif /* defined(MY_MOLECULE) */

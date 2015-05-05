@@ -212,14 +212,14 @@
 				D44E440A1A341D4C0095271F /* vect.h */,
 				D44E44061A341D4C0095271F /* particle.cpp */,
 				D44E44071A341D4C0095271F /* particle.h */,
+				D451E6921A845B4200F89B60 /* distribution.cpp */,
+				D451E6931A845B4200F89B60 /* distribution.h */,
 				D4E6D7AA1A3598C600A9D7F6 /* molecule.cpp */,
 				D4E6D7AB1A3598C600A9D7F6 /* molecule.h */,
 				D44E43F01A341D4C0095271F /* frame.cpp */,
 				D44E43F11A341D4C0095271F /* frame.h */,
 				D4E6D7AC1A3598C600A9D7F6 /* my_mean.cpp */,
 				D4E6D7AD1A3598C600A9D7F6 /* my_mean.h */,
-				D451E6921A845B4200F89B60 /* distribution.cpp */,
-				D451E6931A845B4200F89B60 /* distribution.h */,
 				D4E6D7A51A3598C500A9D7F6 /* dyn_queue.cpp */,
 				D4E6D7A61A3598C500A9D7F6 /* dyn_queue.h */,
 				D4E6D7A31A3598C500A9D7F6 /* angle_list.h */,
@@ -633,6 +633,7 @@
 				D449C3F41AEE0BCE0058AA93 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D44E437C1A33DCB70095271F /* Build configuration list for PBXProject "analysis" */ = {
 			isa = XCConfigurationList;

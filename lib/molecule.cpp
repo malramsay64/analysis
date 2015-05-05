@@ -97,6 +97,15 @@ vect molecule::update_COM(){
     return com;
 }
 
+particle * molecule::get_large(){
+    for (auto p: atoms){
+        if (p->type == 1){
+            return p;
+        }
+    }
+    return 0;
+}
+
 double molecule::update_orientation(double angle){
     double delta;
     delta = (angle-PI) - orientation;

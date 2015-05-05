@@ -18,6 +18,9 @@ int main(int argc, const char * argv[]) {
     crys_file.open(crys_fname.c_str());
     Frame * crystal = new Frame;
     read_data(&crys_file,crystal);
+    vector<Frame *> frames;
+    frames.push_back(crystal);
+    print_lammpstrj(frames, "ordered.lammpstrj");
     vector<vector<int>> neigh_list = vector<vector<int>>(crystal->num_mol(), vector<int>());
     find_neighbours(crystal, &neigh_list);
     
@@ -26,10 +29,10 @@ int main(int argc, const char * argv[]) {
     srand(0);
     for (int i = 0; i < steps; i++){
         int r = rand() % crystal->num_mol();
-        //cout << r << endl;
         swaps += swap_neighbours(crystal, r);
     }
     print_frame(crystal);
+    print_lammpstrj(frames, "random.lammpstrj");
     cout << swaps << " " << steps << endl;
     return 0;
 }

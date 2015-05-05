@@ -92,9 +92,11 @@ int print_radial2d_distribution(vector<distribution<int>> *d, string filename, i
     return 0;
 }
 
-int print_radial2d_distributions(string filename, int nmol, double frame_area, Frame *frame, vector<distribution<int>> *first, initializer_list<vector<distribution<int>>*> list){
+int print_radial2d_distributions(string filename, Frame *frame, vector<distribution<int>> *first, initializer_list<vector<distribution<int>>*> list){
     ofstream file;
     file.open(filename.c_str());
+    int nmol = frame->num_atoms();
+    double frame_area = frame->get_area();
     // Plot atoms in molecule
     molecule * m = &frame->molecules.front();
     double delta_t = m->get_orientation();
@@ -233,13 +235,13 @@ int print_frame(Frame * frame){
         
         particle * p;
         complot << com << " " << com_colour(&m, frame) << " " <<\
-        m.get_orientation() << " " << m.num_neighbours() << " " << circle_ordering(&m) \
+        angle(&m,frame)+PI << " " << m.num_neighbours() << " " << circle_ordering(&m) \
         << " " << short_ordering(&m,frame) << " " << m.id << endl;
         for (int i = 0; i < m.atoms.size(); i++){
             p = m.atoms.at((i+2) % m.atoms.size());
             d = frame->cartesian(direction(m.COM(), p->pos_vect()));
             gnuplot << com + d << " " << p->radius << " " << \
-            m.get_orientation() << " " << m.num_neighbours() << " " << circle_ordering(&m) \
+            angle(&m,frame)  << " " << m.num_neighbours() << " " << circle_ordering(&m) \
             << " " << short_ordering(&m,frame) << " " << m.id << endl;
 
         }
@@ -262,6 +264,26 @@ int print_motion(vector<Frame *> key_frames){
                 orient1 = m1.get_orient_vect();
                 orient2 = last->molecules.at(m1.index()).get_orient_vect();
             }
+        }
+    }
+    return 0;
+}
+
+int print_lammpstrj(vector<Frame *> frames, string filename){
+    ofstream file;
+    file.open(filename.c_str());
+    for (auto frame: frames){
+        file << "ITEM: TIMESTEP" << endl << frame->get_timestep() << endl;
+        file << "ITEM: NUMBER OF ATOMS" << endl << frame->num_atoms() << endl;
+        file << "ITEM: BOX BOUNDS pp pp pp" << endl;
+        file << 0 << " " << frame->get_a() << endl;
+        file << 0 << " " << frame->get_height() << endl;
+        file << -0.5 << " " << 0.5 << endl;
+        file << "ITEM: ATOMS id mol type c_diam x y z" << endl;
+        for (auto particle: frame->particles){
+            file << particle.id << " " << particle.molid << " " << particle.type << " " \
+                 << particle.radius*2 << " " << frame->cartesian(particle.pos_vect()) \
+                 << " 0" << endl;
         }
     }
     return 0;

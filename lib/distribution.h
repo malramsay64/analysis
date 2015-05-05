@@ -6,13 +6,15 @@
 //  Copyright (c) 2015 Malcolm Ramsay. All rights reserved.
 //
 
-#ifndef MY_DISTRIBUTION
-#define MY_DISTRIBUTION
-
 #include <vector>
 #include <fstream>
 #include "constants.h"
 #include "my_mean.h"
+#include "output.h"
+
+#ifndef MY_DISTRIBUTION
+#define MY_DISTRIBUTION
+
 
 template <class type>
 class distribution{

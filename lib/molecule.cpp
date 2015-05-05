@@ -45,6 +45,12 @@ void molecule::delete_neighbours(){
     //atoms = vector<particle*>();
 }
 
+void molecule::delete_mol_neighbours(){
+    my_neighbours = vector<molecule*>(0,0);
+    nint = vector<int>(MAX_MOL_CONTACTS,0);
+    contacts = 0;   
+}
+
 double molecule::mass(){
     double mass = 0;
     std::vector<particle *>::iterator i;

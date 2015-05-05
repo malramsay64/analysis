@@ -51,6 +51,7 @@ public:
     int set_orientation(double);
     double get_rotation();
     vect get_orient_vect();
+    void delete_mol_neighbours();
     
 } ;
 

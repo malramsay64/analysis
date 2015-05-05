@@ -32,6 +32,13 @@ int check_particles(molecule * mol1, molecule * mol2, Frame * frame){
     return 0;
 }
 
+int find_neighbours(Frame *frame, vector<vector<int>> *neigh_list){
+    for (auto &mol: frame->molecules){
+        find_mol_neighbours(&mol, frame, neigh_list);
+    }
+    return 0;
+}
+
 bool find_mol_neighbours(molecule * mol, Frame * frame, vector<vector<int>> *neigh_list){
     vect com;
     vector<int> * neighbours = &neigh_list->at(mol->index());

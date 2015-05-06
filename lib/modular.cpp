@@ -20,7 +20,7 @@ vector<my_mean> regio_orientation, regio_circle;
 ofstream MSD_file, rotations_file, movie_file, short_order_file, struct_file, regio_file, order_file;
 
 static double radial_plot = 15;
-static double radial_cutoff = 20;
+static double radial_cutoff = 25;
 static int short_order_types = 7;
 static int regio_res = 50;
 static int radial_res = 180;

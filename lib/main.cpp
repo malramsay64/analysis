@@ -14,7 +14,7 @@
 
 using namespace std;
 
-bool time_structure=false, regio=false, movie=false, moved=false;
+bool time_structure=false, regio=false, movie=false, moved=false, m_orient=false;
 
 // Key frame every <n> frames
 int key_rate = 100;
@@ -36,6 +36,7 @@ int main(int argc, char *argv[]){
      * -k <n> key frame rate
      * -r regio data
      * -t time depedent structure
+     * -o orientation of motion
      */
     string arguments = "Valid Arguments are:\n -i <file>\t Input file\n -q\t\t Include quenched\n -s <n>\t\t Every nth frame\n -f \t\t Fast, only first and last frame\n";
     if (argc > 2){
@@ -59,6 +60,9 @@ int main(int argc, char *argv[]){
             }
             else if (strcmp(argv[i],"-m") == 0){
                 movie = true;
+            }
+            else if (strcmp(argv[i],"-o") == 0){
+                m_orient = true;
             }
             else if (strcmp(argv[i],"-d") == 0){
                 moved = true;

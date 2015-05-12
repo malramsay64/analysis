@@ -17,7 +17,7 @@
 #include "output.h"
 
 
-extern bool time_structure, regio, movie, moved;
+extern bool time_structure, regio, movie, moved, m_orient;
 
 int mod_analyse(Frame *, std::vector<Frame *>, int print = 0, int dist = 0);
 

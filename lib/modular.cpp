@@ -23,8 +23,8 @@ static double radial_plot = 15;
 static double radial_cutoff = 25;
 static int short_order_types = 7;
 static int regio_res = 50;
-static int radial_res = 180;
-static int theta_res = 180;
+static int radial_res = 360;
+static int theta_res = 360;
 double dtheta = 2*PI/theta_res;
 
 int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int dist){
@@ -38,7 +38,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
     vector<vector<my_mean>> regio_c1, regio_c2, regio_MSD;
     //vector<my_mean> regio_orientation, regio_circle;
     
-    distribution<int> num_neigh, num_contact, pairing, radial;
+    distribution<int> num_neigh, num_contact, pairing, radial, radial_part;
     distribution<my_mean> pair_contact, pair_neigh;
     distribution<double> short_order;
     vector<distribution<int>> radial2d_rel, radial2d_abs, radial2d_large, radial2d_small, radial2d_part;
@@ -89,6 +89,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         num_contact = distribution<int>(MAX_MOL_CONTACTS);
         pairing = distribution<int>(MAX_MOL_CONTACTS);
         radial = distribution<int>(radial_res, radial_plot);
+        radial_part = distribution<int>(radial_res, radial_plot);
         radial2d_rel = vector<distribution<int>>(theta_res, distribution<int>(theta_res, radial_plot));
         radial2d_abs = vector<distribution<int>>(theta_res, distribution<int>(theta_res, radial_plot));
         radial2d_large = vector<distribution<int>>(theta_res, distribution<int>(theta_res, radial_plot));
@@ -227,6 +228,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
                         }
                         for (auto p1: mol.atoms){
                             direction = frame->direction(p1->pos_vect(), p->pos_vect());
+                            radial_part.add(direction.length());
                             radial2d_part.at(pos_def_mod(int(direction.angle()/dtheta), theta_res)).add(direction.length());
                         }
                     }
@@ -278,6 +280,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         
         // Print radial distribution
         print_radial_distribution(&radial, "radial_dist.dat", frame->num_mol(), frame->get_area());
+        print_radial_distribution(&radial_part, "radial_part.dat", frame->num_atoms(), frame->get_area());
         print_radial2d_distributions("radial2d.dat", frame, &radial2d_abs, {&radial2d_rel, &radial2d_small, &radial2d_large, &radial2d_part});
         
         // Order Parameters

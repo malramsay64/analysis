@@ -15,6 +15,7 @@
 #include "distribution.h"
 #include "movie.h"
 #include "output.h"
+#include "functions.h"
 
 
 extern bool time_structure, regio, movie, moved;

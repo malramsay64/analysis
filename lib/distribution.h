@@ -85,7 +85,7 @@ void distribution<type>::add(int i){
 template <class type>
 void distribution<type>::add(double d){
     if (d < dist.size()*delta_r){
-        dist.at(int(d/delta_r))++;
+        dist.at(pos_def_mod(int(d/delta_r),get_size()))++;
         sum += int(d/delta_r);
         elements++;
     }

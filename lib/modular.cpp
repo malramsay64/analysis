@@ -15,12 +15,14 @@ vector<vector<int>> mod_neigh_list;
 map<int, my_mean> collate_MSD, collate_MFD, collate_c1, collate_c2, collate_struct;
 vector<map<int,my_mean>> collate_regio_c1, collate_regio_c2, collate_regio_MSD;
 
-vector<my_mean> regio_orientation, regio_circle;
+vector<my_mean> regio_orientation, regio_circle, velocity;
 
 ofstream MSD_file, rotations_file, movie_file, short_order_file, struct_file, regio_file, order_file;
 
+
+
 static double radial_plot = 15;
-static double radial_cutoff = 25;
+static double radial_cutoff = 20;
 static int short_order_types = 7;
 static int regio_res = 50;
 static int radial_res = 360;
@@ -41,7 +43,6 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
     vector<vector<my_mean>> regio_c1, regio_c2, regio_MSD;
     //vector<my_mean> regio_orientation, regio_circle;
     distribution<int> num_neigh, num_contact, pairing, radial, radial_part, num_neigh_mob[4], num_contact_mob[4];
-    
     distribution<my_mean> pair_contact, pair_neigh;
     distribution<double> short_order;
     vector<distribution<int>> radial2d_rel, radial2d_abs, radial2d_large, radial2d_small, radial2d_part;
@@ -84,6 +85,10 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         if (movie){
             movie_file.open("trj/movie.lammpstrj");
             print_movie(&movie_file, frame);
+        }
+        
+        if (m_orient){
+            velocity = vector<my_mean>(radial_res);
         }
     }
     
@@ -217,6 +222,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
                     num_contact_mob[3].add(mol.num_contacts());
                 }
             }
+            
             // Regio
             if (regio){
                 int index;
@@ -260,6 +266,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
                             direction = frame->direction(p1->pos_vect(), p->pos_vect());
                             radial_part.add(direction.length());
                             radial2d_part.at(pos_def_mod(int(direction.angle()/dtheta), theta_res)).add(direction.length());
+                            radial_part.add(direction.length());
                         }
                     }
                 }
@@ -314,6 +321,17 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         print_radial_distribution(&radial, "radial_dist.dat", frame->num_mol(), frame->get_area());
         print_radial_distribution(&radial_part, "radial_part.dat", frame->num_atoms(), frame->get_area());
         print_radial2d_distributions("radial2d.dat", frame, &radial2d_abs, {&radial2d_rel, &radial2d_small, &radial2d_large, &radial2d_part});
+        
+        if (m_orient){
+            ofstream orient;
+            orient.open("velocity.dat");
+            int i = 0;
+            for (auto v: velocity){
+                orient << dtheta*i << " " << v.get_mean() << endl;
+                i++;
+            }
+            orient.close();
+        }
         
         // Order Parameters
         

@@ -288,3 +288,16 @@ int print_lammpstrj(vector<Frame *> frames, string filename){
     }
     return 0;
 }
+
+int print_distributions(string fname, int elements, initializer_list<distribution<int>*> list){
+    std::ofstream file;
+    file.open(fname.c_str());
+    for (int i = 0; i < elements ; i++){
+        file << i;
+        for (auto item: list){
+            file << " " << item->at(i);
+        }
+        file << endl;
+    }
+    return 0;
+}

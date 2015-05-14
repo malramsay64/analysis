@@ -27,6 +27,9 @@ static int radial_res = 360;
 static int theta_res = 360;
 double dtheta = 2*PI/theta_res;
 
+double rot_cut = 0.5;
+double dif_cut = 0.3;
+
 int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int dist){
     
     // Initialise Variables
@@ -37,8 +40,8 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
     
     vector<vector<my_mean>> regio_c1, regio_c2, regio_MSD;
     //vector<my_mean> regio_orientation, regio_circle;
+    distribution<int> num_neigh, num_contact, pairing, radial, radial_part, num_neigh_mob[4], num_contact_mob[4];
     
-    distribution<int> num_neigh, num_contact, pairing, radial, radial_part;
     distribution<my_mean> pair_contact, pair_neigh;
     distribution<double> short_order;
     vector<distribution<int>> radial2d_rel, radial2d_abs, radial2d_large, radial2d_small, radial2d_part;
@@ -88,6 +91,10 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         num_neigh = distribution<int>(MAX_MOL_CONTACTS);
         num_contact = distribution<int>(MAX_MOL_CONTACTS);
         pairing = distribution<int>(MAX_MOL_CONTACTS);
+        for (int i = 0; i < 4; i ++){
+            num_contact_mob[i] = distribution<int>(MAX_MOL_CONTACTS);
+            num_neigh_mob[i] = distribution<int>(MAX_MOL_CONTACTS);
+        }
         radial = distribution<int>(radial_res, radial_plot);
         radial_part = distribution<int>(radial_res, radial_plot);
         radial2d_rel = vector<distribution<int>>(theta_res, distribution<int>(theta_res, radial_plot));
@@ -142,7 +149,8 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
             num_neigh.add(mol.num_neighbours());
             num_contact.add(mol.num_contacts());
             pairing.add(mol.pairing());
-        
+            
+            
             pair_contact.add(mol.max_pairing(), mol.num_contacts());
             pair_neigh.add(mol.max_pairing(), mol.num_neighbours());
         
@@ -187,6 +195,28 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
             // Structural Relaxation
             struct_func.at(k).add(struct_relax(&mol, key));
             
+            
+            if (time_structure || print){
+                // Contact distributions
+                if (displacement > dif_cut){
+                    num_neigh_mob[1].add(mol.num_neighbours());
+                    num_contact_mob[1].add(mol.num_contacts());
+                }
+                else {
+                    num_neigh_mob[0].add(mol.num_neighbours());
+                    num_contact_mob[0].add(mol.num_contacts());
+                    
+                }
+                
+                if (fabs(angle(mol2, frame) - angle(&mol, frame)) > rot_cut){
+                    num_neigh_mob[2].add(mol.num_neighbours());
+                    num_contact_mob[2].add(mol.num_contacts());
+                }
+                else {
+                    num_neigh_mob[3].add(mol.num_neighbours());
+                    num_contact_mob[3].add(mol.num_contacts());
+                }
+            }
             // Regio
             if (regio){
                 int index;
@@ -268,6 +298,8 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
                 << "," << orientational_order.get_mean() << endl;
     }
     
+    double max_alpha = 0;
+    int max_alpha_time = 0;
     if (print && key_frames.size() > 0){
         // num neighbours
         print_distribution<int>(&num_neigh, "stats/neighbours.dat");
@@ -302,6 +334,10 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         MSD_file << "Timestep,MSD,MFD,\\alpha" << endl;
         for (auto d: collate_MSD){
             alpha = collate_MFD.at(d.first).get_mean() / (2*pow(d.second.get_mean(),2)) - 1;
+            if (alpha > max_alpha){
+                max_alpha = alpha;
+                max_alpha_time = d.first;
+            }
             MSD_file << d.first << "," << d.second.get_mean() << "," << collate_MFD.at(d.first).get_mean() << "," << alpha << endl;
         }
         
@@ -395,8 +431,17 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         
         print_distribution(&pair_contact, "stats/pair_contact.dat");
         print_distribution(&pair_neigh, "stats/pair_neigh.dat");
+        print_distributions("stats/diff_contact.dat", MAX_MOL_CONTACTS, {&num_contact_mob[0],&num_contact_mob[1],&num_contact_mob[2],&num_contact_mob[3]});
+        print_distributions("stats/diff_neigh.dat", MAX_MOL_CONTACTS, {&num_neigh_mob[0],&num_neigh_mob[1],&num_neigh_mob[2],&num_neigh_mob[3]});
         
-        print_moved(key_frames.front(), frame);
+        int key = 0;
+        for (auto f: key_frames){
+            key  = f->timestep;
+            if (f->timestep > max_alpha_time){
+                break;
+            }
+        }
+        print_moved(key_frames.front(), key_frames.at(key));
     }
     if  (print){
         print_frame(frame);

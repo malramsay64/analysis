@@ -12,6 +12,7 @@ using namespace std;
 
 double movie_colour(molecule * mol, Frame * frame){
     double mol_colour = 0;
+    return mol->num_contacts();
     vector<int> order = short_neighbour_list(mol, frame);
     // Has Antiparallel ordering
     for (auto j: order){

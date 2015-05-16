@@ -13,7 +13,6 @@
 #include "neighbours.h"
 
 double movie_colour(molecule * mol, Frame *);
-int print_movie(std::ofstream * file, Frame * frame, molecule * mol = 0);
 int print_movie(std::ofstream * file, Frame * frame);
 
 #endif /* defined(__analysis__movie__) */

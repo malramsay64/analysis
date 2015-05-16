@@ -45,3 +45,24 @@ int print_movie(ofstream * file, Frame * frame, molecule * mol){
     }
     return 0;
 }
+
+int print_movie(ofstream * file, Frame * frame){
+        *file << "ITEM: TIMESTEP" << endl << frame->timestep << endl;
+        *file << "ITEM: NUMBER OF ATOMS" << endl << frame->num_atoms() << endl;
+        *file << "ITEM: BOX BOUNDS xy xz yz pp pp pp" << endl;
+        *file << 0 << " " << frame->get_a() << " " << frame->get_tilt() << endl;
+        *file << 0 << " " << frame->get_height() << " " << 0 << endl;
+        *file << "-0.5 0.5 0" << endl;
+        *file << "ITEM: ATOMS id mol type x y z vx vy vz" << endl;
+
+    for (auto mol:frame->molecules){
+        vect cart_com, d;
+        cart_com = frame->cartesian(mol.COM());
+        cart_com = wrap_x(cart_com, frame->get_a());
+        for (auto i: mol.atoms){
+            d = frame->cartesian(direction(mol.COM(), i->pos_vect()));
+            *file << i->id << " " << mol.id << " " << i->type << " " << cart_com + d << " 0 " << mol.num_contacts() << " 0 0" << endl;
+        }
+    }
+    return 0;
+}

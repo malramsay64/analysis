@@ -273,13 +273,14 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
                 mol2 = r.pop();
             }
         }
-        if (movie){
-            print_movie(&movie_file, frame, &mol);
-        }
         if (print){
             print_short_order(&short_range, &mol, frame);
         }
         
+    }
+    
+    if (movie){
+        print_movie(&movie_file, frame);
     }
     
     for (int k = 0; k < key_frames.size(); k++){

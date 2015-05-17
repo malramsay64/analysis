@@ -341,7 +341,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         
         ofstream ordering;
         ordering.open("order.log");
-        ordering << "Hexatic: " << hexatic_order.get_mean() << endl;
+        //ordering << "Hexatic: " << hexatic_order.get_mean() << endl;
         ordering << "Circle-order: " << circle_order.get_mean() << endl;
         ordering << "Frac-6-fold: " << num_neigh.fraction_at(6) << endl;
         ordering << "Orientational: " << orientational_order.get_mean() << endl;
@@ -353,8 +353,11 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         
         // Displacement
         double alpha;
-        MSD_file << "Timestep,MSD,MFD,\\alpha" << endl;
+        MSD_file << "Timestep,MSD,MFD,alpha" << endl;
         for (auto d: collate_MSD){
+            if (d.second.get_count() < 3){
+                break;
+            }
             alpha = collate_MFD.at(d.first).get_mean() / (2*pow(d.second.get_mean(),2)) - 1;
             if (alpha > max_alpha){
                 max_alpha = alpha;
@@ -365,11 +368,13 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         
         // Rotations
         int t1 = 0, t2 = 0;
-        rotations_file << "Timestep,P1(t),P2(t)" << endl;
+        rotations_file << "Timestep,C_1,C_2" << endl;
         for (auto c: collate_c1){
+            if (c.second.get_count() < 3){
+                break;
+            }
             rotations_file << c.first << "," << c.second.get_mean() << "," << \
             collate_c2.at(c.first).get_mean() << "," << endl;
-            
             if (c.second.get_mean() < 1/CONST_E && t1 == 0){
                 t1 = c.first;
             }
@@ -385,6 +390,9 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         int ts = 0;
         struct_file << "Timestep,F,chi"  << endl;
         for (auto c: collate_struct){
+            if (c.second.get_count() < 3){
+                break;
+            }
             struct_file << c.first << "," << c.second.get_mean() \
             << "," << relax_time(c.second.get_variance()) << endl;
             //cout << c.second.get_mean() << " " << c.second.get_variance() << " " << c.second.get_count() << endl;

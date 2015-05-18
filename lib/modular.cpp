@@ -346,6 +346,8 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         ordering << "Frac-6-fold: " << num_neigh.fraction_at(6) << endl;
         ordering << "Orientational: " << orientational_order.get_mean() << endl;
         ordering << "Structure-factor: " << max_structure_factor(get_radial_distribution(&radial, frame->num_mol(), frame->get_area()), frame->get_density(), 0.015) << endl;
+        ordering << "Structure-factor-part: " << max_structure_factor(get_radial_distribution(&radial_part, frame->num_atoms(), frame->get_area()), frame->get_density(), 0.015) << endl;
+
         ordering.close();
 
         // Print short range order

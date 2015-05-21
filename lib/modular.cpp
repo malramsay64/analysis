@@ -383,10 +383,10 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         for (auto d: collate_MSD){
             if (d.second.get_count() > min_points){
                 alpha = collate_MFD.at(d.first).get_mean() / (2*pow(d.second.get_mean(),2)) - 1;
-                dMSD = (d.second.get_mean() - prev_msd)/((d.first-prev_timestep)*STEP_SIZE);
+                dMSD = log(d.second.get_mean() - prev_msd)/log((d.first-prev_timestep)*STEP_SIZE);
                 prev_timestep = d.first;
                 if (dMSD < min_dMSD){
-                    min_dMSD = log((d.second.get_mean() - prev_msd))/log(STEP_SIZE);
+                    min_dMSD = dMSD;
                     min_dMSD_timestep = d.first;
                 }
                 if (alpha > max_alpha){

@@ -35,6 +35,7 @@ std::vector<double> get_radial_distribution(distribution<int> *, int, double);
 int print_rot_diff(std::vector<Frame *> key_frames, Frame * frame);
 int print_lammpstrj(std::vector<Frame *> frames, std::string filename="new.lammpstrj");
 int print_distributions(std::string fname, int elements, std::initializer_list<distribution<int>*> list);
+int print_radial_time_distribution(distribution<int> *d, std::ofstream *file, int time, int nmol, double frame_area);
 
 extern double dtheta;
 

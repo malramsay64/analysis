@@ -90,6 +90,10 @@ int Frame::get_timestep(){
     return timestep;
 }
 
+int Frame::get_time(){
+    return get_timestep()*STEP_SIZE;
+}
+
 // Crystal Coordinates
 int Frame::set_crys(double a, double b, double theta){
     this->a = a;

@@ -185,6 +185,18 @@ int print_distribution(distribution<type> *d, std::string filename){
     return 0;
 }
 
+template <class type> inline
+int print_frac_distribution(distribution<type> *d, std::string filename){
+    std::ofstream file;
+    file.open(filename.c_str());
+    for (int i = 0; i < d->get_size(); i++){
+        file << i << " " << d->fraction_at(i) << std::endl;
+    }
+    
+    return 0;
+}
+
+
 template <> inline
 int print_distribution(distribution<my_mean> *d, std::string filename){
     std::ofstream file;
@@ -197,8 +209,8 @@ int print_distribution(distribution<my_mean> *d, std::string filename){
 }
 
 template <class type>
-int print_time_distribution(distribution<type> *d, int timestep, std::ofstream *file){
-    *file << timestep;
+int print_time_distribution(distribution<type> *d, int time, std::ofstream *file){
+    *file << time;
     for (int i = 0; i < d->get_size(); i++){
         *file << "," << d->at(i);
     }

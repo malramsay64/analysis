@@ -62,6 +62,19 @@ int print_radial_distribution(distribution<int> *d, string filename, int nmol, d
     return 0;
 }
 
+
+int print_radial_time_distribution(distribution<int> *d, std::ofstream *file, int time, int nmol, double frame_area){
+    *file << time;
+    double area;
+    double density = 2*nmol/frame_area;
+    for (int i = 0; i < d->get_size(); i++){
+        area = PI*(i*d->get_delta_r())*d->get_delta_r();
+        *file << "," << d->at(i)/(area*nmol*density);
+    }
+    *file << std::endl;
+    return 0;
+}
+
 int print_radial2d_distribution(vector<distribution<int>> *d, string filename, int nmol, double frame_area, Frame *frame){
     ofstream file;
     file.open(filename.c_str());
@@ -222,7 +235,7 @@ int print_frame(Frame * frame){
     char fname[40];
     ofstream gnuplot;
     ofstream complot;
-    snprintf(fname,40, "trj_contact/%010i.dat", frame->timestep);
+    snprintf(fname,40, "trj_contact/%010i.dat", frame->get_time());
     gnuplot.open(fname);
     complot.open("complot.dat");
     gnuplot << frame->get_a() << " " << frame->get_height() << endl << endl;

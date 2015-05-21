@@ -24,7 +24,7 @@ double movie_colour(molecule * mol, Frame * frame){
 }
 
 int print_movie(ofstream * file, Frame * frame){
-        *file << "ITEM: TIMESTEP" << endl << frame->timestep << endl;
+        *file << "ITEM: TIMESTEP" << endl << frame->get_time() << endl;
         *file << "ITEM: NUMBER OF ATOMS" << endl << frame->num_atoms() << endl;
         *file << "ITEM: BOX BOUNDS xy xz yz pp pp pp" << endl;
         *file << 0 << " " << frame->get_a() << " " << frame->get_tilt() << endl;

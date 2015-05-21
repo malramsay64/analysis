@@ -41,6 +41,7 @@ public:
     Frame(Frame const &);
     void set_timestep(int);
     int get_timestep();
+    int get_time();
     void set_atoms(int);
     int num_atoms();
     void set_num_mol(int);

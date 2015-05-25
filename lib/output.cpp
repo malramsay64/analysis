@@ -159,6 +159,12 @@ int print_relax_time(string s, int t){
     return 0;
 }
 
+double print_relax_time(string s, double t){
+    cout << s << print_relax_time(t) << endl;
+    return 0;
+}
+
+
 int relax_time(int t){
     if (t == 0){
         return INFINITY;

@@ -383,7 +383,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         for (auto d: collate_MSD){
             if (d.second.get_count() > min_points){
                 alpha = collate_MFD.at(d.first).get_mean() / (2*pow(d.second.get_mean(),2)) - 1;
-                dMSD = log(d.second.get_mean() - prev_msd)/log((d.first-prev_timestep)*STEP_SIZE);
+                dMSD = log(d.second.get_mean() - prev_msd)/log((d.first/prev_timestep));
                 prev_timestep = d.first;
                 if (dMSD < min_dMSD){
                     min_dMSD = dMSD;
@@ -400,7 +400,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         
         
         // Rotations
-        int t1 = 0, t2 = 0;
+        double t1 = 0, t2 = 0;
         rotations_file << "Time,C_1,C_2" << endl;
         for (auto c: collate_c1){
             if (c.second.get_count() > min_points){
@@ -419,7 +419,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         
         
         // Structure
-        int ts = 0;
+        double ts = 0;
         struct_file << "Time,F,chi"  << endl;
         for (auto c: collate_struct){
             if (c.second.get_count() > min_points){
@@ -452,7 +452,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
             regio_relax.open("regio-relax.csv");
             regio_relax << "Pos,t1,t2,circle,orientation" << endl;
             
-            int regio_t1, regio_t2;
+            double regio_t1, regio_t2;
             double delta;
             int first = 0;
             if (frame->get_a() > frame->get_height()){

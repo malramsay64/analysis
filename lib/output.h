@@ -25,7 +25,7 @@ int print_frame(Frame * frame);
 int print_radial_distribution(distribution<int> *, std::string, int, double);
 int print_radial2d_distribution(std::vector<distribution<int>> *, std::string, int, double, Frame*);
 int print_radial2d_distributions(std::string, Frame *, std::vector<distribution<int>>*, std::initializer_list<std::vector<distribution<int>>*>);
-int print_relax_time(std::string s, int t);
+double print_relax_time(std::string s, double t);
 int relax_time(int t);
 double relax_time(double t);
 std::string print_relax_time(int t);

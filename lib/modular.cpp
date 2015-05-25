@@ -375,26 +375,36 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         // Displacement
         double alpha;
         double prev_msd = 0;
+        double this_msd = 0;
         double prev_timestep = 0;
+        double this_timestep = 0;
         double dMSD;
         double min_dMSD = log((*collate_MSD.begin()).second.get_mean())/log(STEP_SIZE);
         int min_dMSD_timestep = 0;
+        int max_points = (*collate_MSD.begin()).second.get_count();
         MSD_file << "Time,MSD,MFD,alpha" << endl;
         for (auto d: collate_MSD){
             if (d.second.get_count() > min_points){
                 alpha = collate_MFD.at(d.first).get_mean() / (2*pow(d.second.get_mean(),2)) - 1;
-                dMSD = log(d.second.get_mean() - prev_msd)/log((d.first-prev_timestep)*STEP_SIZE);
-                prev_timestep = d.first;
-                if (dMSD < min_dMSD){
-                    min_dMSD = dMSD;
-                    min_dMSD_timestep = d.first;
-                }
                 if (alpha > max_alpha){
                     max_alpha = alpha;
                     max_alpha_time = d.first*STEP_SIZE;
                 }
+                if  (d.second.get_count() == max_points){
+                    dMSD = (log(d.second.get_mean()/this_msd)/log(d.first/this_timestep)+log(this_msd/prev_msd)/log(this_timestep/prev_timestep))/2;
+                    if (dMSD < min_dMSD){
+                        min_dMSD = dMSD;
+                        min_dMSD_timestep = this_timestep;
+                    }
+                    prev_timestep = this_timestep;
+                    this_timestep = d.first;
+                    prev_msd = this_msd;
+                    this_msd = d.second.get_mean();
+                }
+                else {
+                    dMSD = NAN;
+                }
                 MSD_file << d.first*STEP_SIZE << "," << d.second.get_mean() << "," << collate_MFD.at(d.first).get_mean() << "," << alpha << "," << dMSD << endl;
-                prev_msd = d.second.get_mean();
             }
         }
         

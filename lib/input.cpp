@@ -23,15 +23,19 @@ int read_data(std::ifstream *myfile, Frame *frame){
     if (!getline(*myfile, line)){
         throw 20;
     }
-    *myfile >> timestep;
+    getline(*myfile, line);
+    stringstream st(line);
+    st >> timestep;
     frame->set_timestep(timestep);
     // NUMBER OF ATOMS
     getline(*myfile, line);
+    
     getline(*myfile, line);
-    *myfile >> num_atoms;
+    stringstream sa(line);
+    sa >> num_atoms;
     frame->set_atoms(num_atoms);
+    
     // BOX BOUNDS
-    getline(*myfile, line);
     getline(*myfile, line);
     
     // X
@@ -121,10 +125,11 @@ int update(std::ifstream *myfile, Frame *frame){
     if (!getline(*myfile, line)){
         throw 20;
     }
-    *myfile >> timestep;
+    getline(*myfile, line);
+    stringstream sp(line);
+    sp >> timestep;
     frame->set_timestep(timestep);
     // NUMBER OF ATOMS
-    getline(*myfile, line);
     getline(*myfile, line);
     //*myfile >> num_atoms;
     //frame->set_atoms(num_atoms);

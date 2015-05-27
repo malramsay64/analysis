@@ -64,14 +64,14 @@ int print_radial_distribution(distribution<int> *d, string filename, int nmol, d
 
 
 int print_radial_time_distribution(distribution<int> *d, std::ofstream *file, int time, int nmol, double frame_area){
-    *file << time;
     double area;
     double density = 2*nmol/frame_area;
+    *file << "# Time: " << time << endl;
     for (int i = 0; i < d->get_size(); i++){
         area = PI*(i*d->get_delta_r())*d->get_delta_r();
-        *file << "," << d->at(i)/(area*nmol*density);
+        *file << i*dtheta << "," << d->at(i)/(2*area*nmol*density) << endl;
     }
-    *file << std::endl;
+    *file << endl;
     return 0;
 }
 
@@ -246,23 +246,25 @@ int print_frame(Frame * frame){
     complot.open("complot.dat");
     gnuplot << frame->get_a() << " " << frame->get_height() << endl << endl;
     complot << frame->get_a() << " " << frame->get_height() << endl << endl;
-    complot << "# x y comcolour  orientation num_neigh circle_order short_order id";
+    complot << "# x y orientation orient_order circle_order max_pairing num_neigh short_order id" << endl;
+    gnuplot << "# x y radius orientation orient_order circle_order max_pairing num_neigh short_order id" << endl;
     
     for (auto &m: frame->molecules){
         vect d, com;
         com = frame->cartesian(m.COM());
         
         particle * p;
-        complot << com << " " << com_colour(&m, frame) << " " <<\
-        angle(&m,frame)+PI << " " << m.num_neighbours() << " " << circle_ordering(&m) \
-        << " " << short_ordering(&m,frame) << " " << m.id << endl;
+        complot << com + d << " " \
+        << angle(&m,frame)  << " " << orient_ordering(&m) << " " << circle_ordering(&m) << " "\
+        << m.max_pairing() << " " << m.num_neighbours() << " " << short_ordering(&m, frame) << " "\
+        << m.id << endl;
         for (int i = 0; i < m.atoms.size(); i++){
             p = m.atoms.at((i+2) % m.atoms.size());
             d = frame->cartesian(direction(m.COM(), p->pos_vect()));
-            gnuplot << com + d << " " << p->radius << " " << \
-            angle(&m,frame)  << " " << m.num_neighbours() << " " << circle_ordering(&m) \
-            << " " << short_ordering(&m,frame) << " " << m.id << endl;
-
+            gnuplot << com + d << " " << p->radius << " " \
+            << angle(&m,frame)  << " " << orient_ordering(&m) << " " << circle_ordering(&m) << " "\
+            << m.max_pairing() << " " << m.num_neighbours() << " " << short_ordering(&m, frame) << " "\
+            << m.id << endl;
         }
         gnuplot << endl;
     }

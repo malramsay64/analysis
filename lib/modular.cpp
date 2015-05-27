@@ -49,7 +49,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
     vector<distribution<int>> radial2d_rel, radial2d_abs, radial2d_large, radial2d_small, radial2d_part;
     
     //distribution<int> neigh_frac;
-    my_mean hexatic_order;
+    //my_mean hexatic_order;
     my_mean circle_order;
     my_mean orientational_order;
     
@@ -71,15 +71,10 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         
             // Hexatic Ordering
             order_file.open("order.csv");
-            order_file << "Time,Hexatic,Circle,Orientation" << endl;
+            order_file << "Time,Circle,Orientation" << endl;
             
             // Radial part
             radial_part_time.open("radial_time.csv");
-            radial_part_time << "Time";
-            for(int i = 0; i < radial_res; i++){
-                radial_part_time << "," << i*dtheta;
-            }
-            radial_part_time << endl;
         }
         
         if (regio){
@@ -174,7 +169,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
             short_order.add(short_neighbour_list(&mol, frame));
         
             // Order
-            hexatic_order.add(fabs(hexatic(6, &mol, frame)));
+            //hexatic_order.add(fabs(hexatic(6, &mol, frame)));
             circle_order.add(circle_ordering(&mol));
             orientational_order.add(orient_ordering(&mol));
             angular.add(orientation(&mol, frame).angle());
@@ -315,7 +310,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
     if (time_structure){
         print_time_distribution(&short_order, frame->get_time(), &short_order_file);
         print_radial_time_distribution(&radial_part, &radial_part_time, frame->get_time(), frame->num_atoms(), frame->get_area());
-        order_file << frame->get_time() << "," << hexatic_order.get_mean()\
+        order_file << frame->get_time()\
                 << "," << circle_order.get_mean() \
                 << "," << orientational_order.get_mean()\
                 << "," << max_structure_factor(get_radial_distribution(&radial, frame->num_mol(), frame->get_area()), frame->get_density(), 0.015)\
@@ -458,8 +453,14 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
             }
         }
         cout << "Diffusion-constant: " << print_relax_time(diff_const.get_mean()) << endl;
-        cout << "DW-Factor: " << collate_MSD.at(min_dMSD_timestep).get_mean() << endl;
-        if (regio){
+        
+        if (min_dMSD_timestep != 0){
+            cout << "DW-Factor: " << print_relax_time(collate_MSD.at(min_dMSD_timestep).get_mean()) << endl;
+        }
+        else{
+            cout << "DW-Factor: 0" << endl;
+        }
+            if (regio){
             // Regio relaxations
             regio_file.open("regio.csv");
             regio_file << "Time,Position,MSD,R1,R2,circle,orientation" << endl;

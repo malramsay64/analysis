@@ -10,7 +10,7 @@
 
 using namespace std;
 
-static float R_FACTOR = pow(2,1./6);
+static float R_FACTOR = 1.2; //jkpow(2,1./6);
 double deltaD = 0.30;
 double deltaT = 10*PI/180;
 static double neigh_cutoff = 7.0;

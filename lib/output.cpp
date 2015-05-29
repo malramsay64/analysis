@@ -241,13 +241,13 @@ int print_frame(Frame * frame){
     char fname[40];
     ofstream gnuplot;
     ofstream complot;
-    snprintf(fname,40, "trj_contact/%010i.dat", frame->get_time());
+    snprintf(fname,40, "trj_contact/%010i.dat", frame->get_timestep());
     gnuplot.open(fname);
     complot.open("complot.dat");
     gnuplot << frame->get_a() << " " << frame->get_height() << endl << endl;
     complot << frame->get_a() << " " << frame->get_height() << endl << endl;
-    complot << "# x y orientation orient_order circle_order max_pairing num_neigh short_order id" << endl;
-    gnuplot << "# x y radius orientation orient_order circle_order max_pairing num_neigh short_order id" << endl;
+    complot << "# x y orientation orient_order circle_order tri_order num_neigh short_order id" << endl;
+    gnuplot << "# x y radius orientation orient_order circle_order tri_order num_neigh short_order id" << endl;
     
     for (auto &m: frame->molecules){
         vect d, com;
@@ -263,7 +263,7 @@ int print_frame(Frame * frame){
             d = frame->cartesian(direction(m.COM(), p->pos_vect()));
             gnuplot << com + d << " " << p->radius << " " \
             << angle(&m,frame)  << " " << orient_ordering(&m) << " " << circle_ordering(&m) << " "\
-            << m.max_pairing() << " " << m.num_neighbours() << " " << short_ordering(&m, frame) << " "\
+            << tri_ordering(&m) << " " << m.num_neighbours() << " " << short_ordering(&m, frame) << " "\
             << m.id << endl;
         }
         gnuplot << endl;

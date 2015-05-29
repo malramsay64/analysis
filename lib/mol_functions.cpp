@@ -108,7 +108,7 @@ double circle_ordering(molecule *m){
 double orient_ordering(molecule *m){
     my_mean mean;
     for (auto m2: m->my_neighbours){
-        mean.add(fabs(dot_product(m->get_orient_vect(), m2->get_orient_vect())));
+        mean.add(pow(dot_product(m->get_orient_vect(), m2->get_orient_vect()),2));
     }
     return mean.get_mean();
 }
@@ -122,6 +122,19 @@ int short_ordering(molecule *mol, Frame * frame){
         }
     }
     return type;
+}
+
+int tri_ordering(molecule *mol){
+    if (mol->max_pairing() == 4){
+        for (int i = 0; i < mol->num_neighbours(); i++){
+            if (mol->nint.at(i) == 4){
+                if (fabs(fmod(mol->my_neighbours.at(i)->get_orientation() - mol->get_orientation(), PI)) < 0.1 ){
+                    return 1;
+                }
+            }
+        }
+    }
+    return 0;
 }
 
 molecule reorient(molecule *m, Frame* frame){

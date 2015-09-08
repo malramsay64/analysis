@@ -361,6 +361,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         ordering << "Orientational: " << orientational_order.get_mean() << endl;
         ordering << "Structure-factor: " << max_structure_factor(get_radial_distribution(&radial, frame->num_mol(), frame->get_area()), frame->get_density(), 0.015) << endl;
         ordering << "Structure-factor-part: " << max_structure_factor(get_radial_distribution(&radial_part, frame->num_atoms(), frame->get_area()), frame->get_density(), 0.015) << endl;
+        ordering << "Contacts: " << num_contact.get_mean() << endl;
 
         ordering.close();
 
@@ -455,6 +456,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         else{
             cout << "DW-Factor: 0" << endl;
         }
+        cout << "Contacts: " << num_contact.get_mean() << endl;
             if (regio){
             // Regio relaxations
             regio_file.open("regio.csv");

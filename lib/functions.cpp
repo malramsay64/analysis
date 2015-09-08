@@ -18,11 +18,15 @@ double dot_product(double *v1, double *v2, int len){
     }
     return sum;
 }
-
+/*
+ * Dist finds the periodic distance between two values, with the period being 2*pi.
+ * This only finds the absolute distance there is no directional information retained
+ */
 double dist(double x1, double x2){
     double x = x1 - x2;
     return acos(cos(x));
 }
+
 
 double legendre(int l, double x){
     switch (l){
@@ -35,12 +39,6 @@ double legendre(int l, double x){
         default:
             return 0;
             break;
-        //case 3:
-        //    return 0.5*(5*pow(x,3) - 3*x);
-        //case 4:
-        //    return (1./8)*(35*pow(x,4) - 30*pow(x,2) + 3);
-        //default:
-        //    return 0;
     }
 }
  

@@ -2,6 +2,9 @@
 //  functions.h
 //  analysis
 //
+//  This file defines the basic functions needed for analysis that are
+//  not part of the standard libraries
+//
 //  Created by Malcolm Ramsay on 7/12/2014.
 //  Copyright (c) 2014 Malcolm Ramsay. All rights reserved.
 //

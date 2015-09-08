@@ -2,6 +2,9 @@
 //  constants.h
 //  analysis
 //
+//  This file defines a number of constants, both physical (pi, e) as
+//  well as global constants 
+//
 //  Created by Malcolm Ramsay on 7/12/2014.
 //  Copyright (c) 2014 Malcolm Ramsay. All rights reserved.
 //

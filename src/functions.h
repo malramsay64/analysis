@@ -9,10 +9,23 @@
 //  Copyright (c) 2014 Malcolm Ramsay. All rights reserved.
 //
 
-#include <math.h>
+#include <cmath>
 #include <iostream>
 #include <string>
 #include <vector>
+
+
+
+#ifndef FUNCTIONS_H
+#define FUNCTIONS_H
+
+#define CONST_E 2.7182818284
+
+#define EPS 5e-2
+
+#define ORDER_LEN 15
+
+#define STEP_SIZE 0.005
 
 #ifndef XX
 #define XX 0
@@ -23,9 +36,6 @@
 #ifndef PI
 #define PI M_PI
 #endif
-
-#ifndef FUNCTIONS_H
-#define FUNCTIONS_H
 
 double dot_product(double *v1, double *v2, int len);
 double legendre(int l, double x);

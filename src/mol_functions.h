@@ -10,7 +10,7 @@
 #define MY_MOL_FUNCTIONS
 
 #include <complex>
-#include "particle.h"
+#include "Particle.h"
 #include "frame.h"
 #include "my_mean.h"
 #include "neighbours.h"

@@ -15,7 +15,7 @@
 #include <cmath>
 #include <sstream>
 
-#include "particle.h"
+#include "Particle.h"
 #include "molecule.h"
 
 #ifndef FRAME_H

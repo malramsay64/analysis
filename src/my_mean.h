@@ -10,6 +10,7 @@
 #define MY_MEAN
 
 #include "math.h"
+#include <Stats.h>
 
 class my_mean{
     int n;

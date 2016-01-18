@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Malcolm Ramsay. All rights reserved.
 //
 
-#include "particle.h"
+#include "Particle.h"
 #include "distribution.h"
 
 #ifndef MY_MOLECULE

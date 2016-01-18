@@ -51,4 +51,13 @@ TEST(Functions, PosDefMod){
     EXPECT_DOUBLE_EQ(3,pos_def_mod(-7,5));
 }
 
+TEST(Functions, Dist){
+    EXPECT_DOUBLE_EQ(0, dist(0,0));
+    EXPECT_DOUBLE_EQ(1, dist(0,1));
+    EXPECT_DOUBLE_EQ(PI, dist(0,PI));
+    EXPECT_DOUBLE_EQ(PI-0.1, dist(-0.1, PI));
+    EXPECT_DOUBLE_EQ(PI-0.5, dist(0.5, PI+1));
+    EXPECT_DOUBLE_EQ(1.5, dist(2*PI-1, 0.5));
+}
+
 #endif //ANALYSIS_TESTFUNCTIONS_H

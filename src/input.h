@@ -13,7 +13,7 @@
 #include <assert.h>
 #include <stdio.h>
 
-#include "particle.h"
+#include "Particle.h"
 #include "frame.h"
 #include "constants.h"
 #include "mol_functions.h"

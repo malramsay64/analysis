@@ -4,6 +4,7 @@
 
 #include "testFunctions.h"
 #include "testVector2d.h"
+#include "testParticle.h"
 
 int main(int argc, char **argv){
     testing::InitGoogleTest(&argc, argv);

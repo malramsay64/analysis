@@ -17,7 +17,7 @@ molecule::molecule (){
     contacts = 0;
     colour = 0;
     type = 0;
-    com = vect();
+    com = Vector2d();
     rotation = 0;
 }
 
@@ -60,8 +60,8 @@ double molecule::mass(){
     return mass;
 }
 
-vect molecule::COM(){
-    if (com != vect()){
+Vector2d molecule::COM(){
+    if (com != Vector2d()){
         return pos_def_mod(com,2*PI);
     }
     else{
@@ -70,13 +70,13 @@ vect molecule::COM(){
     }
 }
 
-vect molecule::moved_COM(){
+Vector2d molecule::moved_COM(){
     return com;
 }
 
-vect molecule::calc_COM(){
+Vector2d molecule::calc_COM(){
     double total = 0;
-    vect theta, xi, zeta, out;
+    Vector2d theta, xi, zeta, out;
     for (auto p: atoms){
         theta = p->pos_vect();
         xi += p->mass*cos(theta);
@@ -91,9 +91,9 @@ vect molecule::calc_COM(){
     return out;
 }
 
-vect molecule::update_COM(){
-    vect old = vect(com);
-    com = vect(old+direction(old,calc_COM()));
+Vector2d molecule::update_COM(){
+    Vector2d old = Vector2d(com);
+    com = Vector2d(old + direction(old, calc_COM()));
     return com;
 }
 
@@ -125,15 +125,15 @@ double molecule::get_orientation(){
     return orientation;
 }
 
-vect molecule::get_orient_vect(){
-    return vect(sin(get_orientation()), cos(get_orientation()));
+Vector2d molecule::get_orient_vect(){
+    return Vector2d(sin(get_orientation()), cos(get_orientation()));
 }
 
 double molecule::get_rotation(){
     return rotation;
 }
 
-vect molecule::atom_pos(int i){
+Vector2d molecule::atom_pos(int i){
     return atoms.at(i)->pos_vect();
 }
 
@@ -183,8 +183,8 @@ int molecule::set_colour(int i){
 }
 
 int molecule::same_period(){
-    vect com = COM();
-    vect d;
+    Vector2d com = COM();
+    Vector2d d;
     vector<particle *>::iterator i;
     for (i = atoms.begin(); i != atoms.end(); i++){
         d = direction(COM(), (*i)->pos_vect());

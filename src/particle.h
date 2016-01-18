@@ -17,13 +17,13 @@
 #include <fstream>
 #include "functions.h"
 #include <pthread.h>
-#include "vect.h"
+#include "Vector2d.h"
 #include "constants.h"
 
 // Particle class
 class particle {
 public:
-    vect pos;
+    Vector2d pos;
     int id;
     int molid;
     int type;
@@ -36,8 +36,8 @@ public:
     int numn();
     int set_xpos(double);
     int set_ypos(double);
-    int set_pos(vect);
-    vect pos_vect();
+    int set_pos(Vector2d);
+    Vector2d pos_vect();
     int index();
     int mol_index();
     int order();

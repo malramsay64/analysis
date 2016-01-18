@@ -252,7 +252,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         if (time_structure || print){
             dyn_queue r = dyn_queue(&mol);
             molecule *mol2 = r.pop();
-            vect direction;
+            Vector2d direction;
         
             // All molecules within cutoff
             while ( mol2 && direction.length() < radial_cutoff){

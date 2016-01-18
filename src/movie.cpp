@@ -33,7 +33,7 @@ int print_movie(ofstream * file, Frame * frame){
         *file << "ITEM: ATOMS id mol type x y z vx vy vz" << endl;
 
     for (auto mol:frame->molecules){
-        vect cart_com, d;
+        Vector2d cart_com, d;
         cart_com = frame->cartesian(mol.COM());
         cart_com = wrap_x(cart_com, frame->get_a());
         for (auto i: mol.atoms){

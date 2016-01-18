@@ -18,9 +18,9 @@
 
 static double STRUCT_DIST = 0.3;
 
-vect orientation(molecule *, Frame *);
+Vector2d orientation(molecule *, Frame *);
 double angle(molecule *, Frame *);
-vect wrap_x(vect v, double a);
+Vector2d wrap_x(Vector2d v, double a);
 double com_colour(molecule *, Frame *);
 double mol_colour(molecule * m, Frame * frame);
 double struct_relax(molecule * m, Frame * frame);

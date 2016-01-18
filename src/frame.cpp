@@ -26,11 +26,11 @@ Frame::Frame(Frame const &frame){
     update_links();
 }
 
-double Frame::dist(vect v1, vect v2){
+double Frame::dist(Vector2d v1, Vector2d v2){
     return direction(v1,v2).length();
 }
 
-vect Frame::direction(vect v1, vect v2){
+Vector2d Frame::direction(Vector2d v1, Vector2d v2){
     return cartesian(::direction(v1,v2));
 }
 
@@ -130,14 +130,14 @@ double Frame::get_density(){
     return num_atoms()/get_area();
 }
 
-vect Frame::cartesian(vect v){
+Vector2d Frame::cartesian(Vector2d v){
     v = v/(2*PI);
     v.x = v.x*a + v.y*b*cos(theta);
     v.y = v.y*b*sin(theta);
     return v;
 }
 
-vect Frame::fractional(vect v){
+Vector2d Frame::fractional(Vector2d v){
     v.x = v.x*(1/a) + v.y*(-cos(theta)/(a*sin(theta)));
     v.y = v.y/(b*sin(theta));
     v = v*2*PI;

@@ -76,7 +76,7 @@ int read_data(std::ifstream *myfile, Frame *frame){
         stringstream sp(line);
         sp >> p->id >> p->molid >> p->type >> p->radius >> pos[0] >> pos[1] >> zp;
         // Shift axes of box to 0
-        p->set_pos(vect(pos[0], pos[1]) - vect(x[0], y[0]));
+        p->set_pos(Vector2d(pos[0], pos[1]) - Vector2d(x[0], y[0]));
         
         // Convert to fractional coordinates
         p->set_pos(frame->fractional(p->pos_vect()));
@@ -168,7 +168,7 @@ int update(std::ifstream *myfile, Frame *frame){
     getline(*myfile, line);
     particle *p;
     p = new particle();
-    vect old_p, new_p, delta_p;
+    Vector2d old_p, new_p, delta_p;
     double pos[2] = {0,0};
     for (int i=0; i < frame->num_atoms(); i++){
         getline(*myfile, line);
@@ -177,7 +177,7 @@ int update(std::ifstream *myfile, Frame *frame){
         // Update coordinates
         
         old_p = frame->particles.at(p->index()).pos_vect();
-        new_p = frame->fractional(vect(pos[0], pos[1])-vect(x[0],y[0]));
+        new_p = frame->fractional(Vector2d(pos[0], pos[1]) - Vector2d(x[0], y[0]));
         delta_p = direction(old_p, new_p);
         frame->particles.at(p->index()).set_pos(old_p + delta_p);
 

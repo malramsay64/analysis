@@ -21,7 +21,7 @@
 #define YY 1
 #endif
 #ifndef PI
-#define PI 3.14159265358979
+#define PI M_PI
 #endif
 
 #ifndef FUNCTIONS_H

@@ -40,7 +40,7 @@ int find_neighbours(Frame *frame, vector<vector<int>> *neigh_list){
 }
 
 bool find_mol_neighbours(molecule * mol, Frame * frame, vector<vector<int>> *neigh_list){
-    vect com;
+    Vector2d com;
     vector<int> * neighbours = &neigh_list->at(mol->index());
     // mol properties
     com = mol->COM();
@@ -85,7 +85,7 @@ int recompute_neighbours(molecule * mol, Frame * frame, vector<vector<int>> *nei
     neigh_list->at(mol->index()) = vector<int>();
     vector<int> * neighbours;
     neighbours = &neigh_list->at(mol->index());
-    vect com = mol->COM();
+    Vector2d com = mol->COM();
     molecule *mol2;
     dyn_queue queue = dyn_queue(mol);
     mol2 = queue.pop();
@@ -174,8 +174,8 @@ int short_range_order(Frame * frame){
     // Print m1
     vector<molecule>::iterator m1;
     for (m1 = frame->molecules.begin(); m1 != frame->molecules.end(); m1++){
-        vect com1 = (*m1).COM();
-        vect d;
+        Vector2d com1 = (*m1).COM();
+        Vector2d d;
         double theta;
         double rot = angle(&(*m1), frame);
         for (int k = 0; k < (*m1).nump(); k++){
@@ -195,8 +195,8 @@ int short_range_order(Frame * frame){
                 total++;
                 if (colour){
                     // Order parameter data
-                    vect com1 = (*m1).COM();
-                    vect d;
+                    Vector2d com1 = (*m1).COM();
+                    Vector2d d;
                     double theta;
                     double rot = angle(&(*m1), frame);
                     for (int k = 0; k < m2->nump(); k++){

@@ -10,12 +10,12 @@
 
 using namespace std;
 
-vect orientation(molecule *m, Frame *frame){
-    vect com = m->COM();
+Vector2d orientation(molecule *m, Frame *frame){
+    Vector2d com = m->COM();
     if (m->nump() == 1){
-        return vect(0,0);
+        return Vector2d(0, 0);
     }
-    vect v = frame->direction(com, m->atom_pos(0));
+    Vector2d v = frame->direction(com, m->atom_pos(0));
     if (m->nump() == 2 || (v.length() < EPS)){
         v = frame->direction(com, m->get_large()->pos_vect());
         v.orthogonalise();
@@ -28,16 +28,16 @@ double angle(molecule *m, Frame * frame){
     return atan2(orientation(m, frame)) + PI;
 }
 
-vect wrap_x(vect v, double a){
+Vector2d wrap_x(Vector2d v, double a){
     double x = v.x/a;
     x = x*2*PI;
     x = atan2(sin(x),cos(x))+PI;
     x = x/(2*PI);
     x = x*a;
-    return vect(x,v.y);
+    return Vector2d(x, v.y);
 }
 
-vect wrap(vect v){
+Vector2d wrap(Vector2d v){
     return atan2(sin(v),cos(v))+PI;
 }
 
@@ -138,13 +138,13 @@ int tri_ordering(molecule *mol){
 }
 
 molecule reorient(molecule *m, Frame* frame){
-    vect d;
+    Vector2d d;
     
     double delta_t = m->get_orientation();
     molecule n = molecule(*m);
     for (auto p: n.atoms){
         d = frame->direction(p->pos_vect(), n.COM());
-        p->set_pos(vect(d.length()*sin(d.angle() - delta_t), d.length()*cos(d.angle()-delta_t)));
+        p->set_pos(Vector2d(d.length() * sin(d.angle() - delta_t), d.length() * cos(d.angle() - delta_t)));
     }
     return n;
 }

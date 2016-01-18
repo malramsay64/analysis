@@ -12,7 +12,7 @@
 		D449C3F81AEE1E350058AA93 /* molecule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4E6D7AA1A3598C600A9D7F6 /* molecule.cpp */; };
 		D449C3F91AEE1E3C0058AA93 /* frame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43F01A341D4C0095271F /* frame.cpp */; };
 		D449C3FA1AEE1E440058AA93 /* functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43F21A341D4C0095271F /* functions.cpp */; };
-		D449C3FB1AEE1E470058AA93 /* vect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E44091A341D4C0095271F /* vect.cpp */; };
+		D449C3FB1AEE1E470058AA93 /* Vector3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E44091A341D4C0095271F /* Vector3D.cpp */; };
 		D449C3FC1AEE1E500058AA93 /* neighbours.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43FE1A341D4C0095271F /* neighbours.cpp */; };
 		D449C3FD1AEE1EB30058AA93 /* particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E44061A341D4C0095271F /* particle.cpp */; };
 		D449C3FE1AEE1EC10058AA93 /* mol_functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43FB1A341D4C0095271F /* mol_functions.cpp */; };
@@ -28,7 +28,7 @@
 		D451E69F1A8868A300F89B60 /* output.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D451E69D1A8868A300F89B60 /* output.cpp */; };
 		D454B44A1A43D1EE005ACB79 /* angle_list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D454B4491A43D1EE005ACB79 /* angle_list.cpp */; };
 		D47260B51ACE41EF0007DA51 /* functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43F21A341D4C0095271F /* functions.cpp */; };
-		D47260B61ACE42020007DA51 /* vect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E44091A341D4C0095271F /* vect.cpp */; };
+		D47260B61ACE42020007DA51 /* Vector3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E44091A341D4C0095271F /* Vector3D.cpp */; };
 		D47260B71ACFDF8D0007DA51 /* my_mean.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4E6D7AC1A3598C600A9D7F6 /* my_mean.cpp */; };
 		D4E6D7991A35987500A9D7F6 /* frame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43F01A341D4C0095271F /* frame.cpp */; };
 		D4E6D79A1A35987900A9D7F6 /* functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43F21A341D4C0095271F /* functions.cpp */; };
@@ -36,7 +36,7 @@
 		D4E6D79C1A35988200A9D7F6 /* mol_functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43FB1A341D4C0095271F /* mol_functions.cpp */; };
 		D4E6D79D1A35988600A9D7F6 /* neighbours.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43FE1A341D4C0095271F /* neighbours.cpp */; };
 		D4E6D7A01A35989A00A9D7F6 /* particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E44061A341D4C0095271F /* particle.cpp */; };
-		D4E6D7A11A35989A00A9D7F6 /* vect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E44091A341D4C0095271F /* vect.cpp */; };
+		D4E6D7A11A35989A00A9D7F6 /* Vector3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E44091A341D4C0095271F /* Vector3D.cpp */; };
 		D4E6D7A21A35989A00A9D7F6 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44E43F81A341D4C0095271F /* main.cpp */; };
 		D4E6D7B01A3598C600A9D7F6 /* dyn_queue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4E6D7A51A3598C500A9D7F6 /* dyn_queue.cpp */; };
 		D4E6D7B21A3598C600A9D7F6 /* molecule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4E6D7AA1A3598C600A9D7F6 /* molecule.cpp */; };
@@ -86,8 +86,8 @@
 		D44E43FF1A341D4C0095271F /* neighbours.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = neighbours.h; path = lib/neighbours.h; sourceTree = SOURCE_ROOT; };
 		D44E44061A341D4C0095271F /* particle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = particle.cpp; path = lib/particle.cpp; sourceTree = SOURCE_ROOT; };
 		D44E44071A341D4C0095271F /* particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = particle.h; path = lib/particle.h; sourceTree = SOURCE_ROOT; };
-		D44E44091A341D4C0095271F /* vect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = vect.cpp; path = lib/vect.cpp; sourceTree = SOURCE_ROOT; };
-		D44E440A1A341D4C0095271F /* vect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = vect.h; path = lib/vect.h; sourceTree = SOURCE_ROOT; };
+		D44E44091A341D4C0095271F /* Vector3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Vector3D.cpp; path = lib/Vector3D.cpp; sourceTree = SOURCE_ROOT; };
+		D44E440A1A341D4C0095271F /* Vector3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Vector3D.h; path = lib/Vector3D.h; sourceTree = SOURCE_ROOT; };
 		D451E6771A844D4A00F89B60 /* modular.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = modular.cpp; path = lib/modular.cpp; sourceTree = SOURCE_ROOT; };
 		D451E6781A844D4A00F89B60 /* modular.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = modular.h; path = lib/modular.h; sourceTree = SOURCE_ROOT; };
 		D451E67A1A84513F00F89B60 /* diffusion.csv */ = {isa = PBXFileReference; lastKnownFileType = text; name = diffusion.csv; path = work/diffusion.csv; sourceTree = "<group>"; };
@@ -208,8 +208,8 @@
 				D4E6D7A41A3598C500A9D7F6 /* constants.h */,
 				D44E43F21A341D4C0095271F /* functions.cpp */,
 				D44E43F31A341D4C0095271F /* functions.h */,
-				D44E44091A341D4C0095271F /* vect.cpp */,
-				D44E440A1A341D4C0095271F /* vect.h */,
+				D44E44091A341D4C0095271F /* Vector3D.cpp */,
+				D44E440A1A341D4C0095271F /* Vector3D.h */,
 				D44E44061A341D4C0095271F /* particle.cpp */,
 				D44E44071A341D4C0095271F /* particle.h */,
 				D451E6921A845B4200F89B60 /* distribution.cpp */,
@@ -443,7 +443,7 @@
 				D449C3FF1AEE1ECC0058AA93 /* my_mean.cpp in Sources */,
 				D449C3F11AEE0BCE0058AA93 /* main.cpp in Sources */,
 				D449C3FE1AEE1EC10058AA93 /* mol_functions.cpp in Sources */,
-				D449C3FB1AEE1E470058AA93 /* vect.cpp in Sources */,
+				D449C3FB1AEE1E470058AA93 /* Vector3D.cpp in Sources */,
 				D449C4041AEE24950058AA93 /* angle_list.cpp in Sources */,
 				D449C4031AEE248E0058AA93 /* distribution.cpp in Sources */,
 			);
@@ -456,7 +456,7 @@
 				D4E6D7B21A3598C600A9D7F6 /* molecule.cpp in Sources */,
 				D4E6D7A01A35989A00A9D7F6 /* particle.cpp in Sources */,
 				D4E6D7B31A3598C600A9D7F6 /* my_mean.cpp in Sources */,
-				D4E6D7A11A35989A00A9D7F6 /* vect.cpp in Sources */,
+				D4E6D7A11A35989A00A9D7F6 /* Vector3D.cpp in Sources */,
 				D4E6D7B01A3598C600A9D7F6 /* dyn_queue.cpp in Sources */,
 				D4E6D7A21A35989A00A9D7F6 /* main.cpp in Sources */,
 				D4E6D79D1A35988600A9D7F6 /* neighbours.cpp in Sources */,
@@ -477,7 +477,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D47260B71ACFDF8D0007DA51 /* my_mean.cpp in Sources */,
-				D47260B61ACE42020007DA51 /* vect.cpp in Sources */,
+				D47260B61ACE42020007DA51 /* Vector3D.cpp in Sources */,
 				D47260B51ACE41EF0007DA51 /* functions.cpp in Sources */,
 				D4F9F6FC1A4241BF00CF2521 /* main.cpp in Sources */,
 			);

@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Malcolm Ramsay. All rights reserved.
 //
 
-#include <assert.h>
 #include "functions.h"
 
 
@@ -32,21 +31,17 @@ double legendre(int l, double x){
     switch (l){
         case 1:
             return x;
-            break;
         case 2:
             return 2*pow(x,2) - 1;
-            break;
         default:
             return 0;
-            break;
     }
 }
- 
+
+
 double my_mod(double a, double b){
     double ret = fmod(a, b);
-    if (ret < 0){
-        ret += b;
-    }
+    while (ret < 0) ret += b;
     return ret;
 }
 
@@ -69,6 +64,8 @@ double max_structure_factor(std::vector<double> g, double rho, double dr){
     return max_val;
 }
 
+/* Converts the radial distribution function into the structure factor
+ */
 double structure_factor(double q, std::vector<double> g, double rho, double dr){
     double s = 0;
     for (int i = 1; i < g.size(); i++){

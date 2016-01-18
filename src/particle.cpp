@@ -20,7 +20,7 @@ using namespace std;
 particle::particle (){
     my_neighbours.reserve(MAX_ATOM_CONTACTS);
     mass = 1;
-    pos = vect(0,0);
+    pos = Vector2d(0, 0);
 }
 
 
@@ -44,12 +44,12 @@ void particle::append(particle *p){
     my_neighbours.push_back(p);
 }
 
-int particle::set_pos(vect v){
-    pos = vect(v);
+int particle::set_pos(Vector2d v){
+    pos = Vector2d(v);
     return 0;
 }
 
-vect particle::pos_vect(){
+Vector2d particle::pos_vect(){
     return pos;
 }
 

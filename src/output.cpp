@@ -18,7 +18,7 @@ int print_map(std::map<int, my_mean> map, std::ofstream * file){
 }
 
 int print_mol(ostream *file, molecule *mol, Frame *frame){
-    vect d, com;
+    Vector2d d, com;
     
     com = frame->cartesian(mol->COM());
     com = wrap_x(com, frame->get_a());
@@ -37,7 +37,7 @@ int print_mol(ostream *file, molecule *mol, Frame *frame){
 
 int print_short_order(ofstream * file, molecule * mol,  Frame * frame){
     int type;
-    vect d;
+    Vector2d d;
     double theta;
     for (auto mol2: mol->my_neighbours){
         type = order_type(mol, mol2, frame);
@@ -81,10 +81,10 @@ int print_radial2d_distribution(vector<distribution<int>> *d, string filename, i
     // Plot atoms in molecule
     molecule * m = &frame->molecules.front();
     double delta_t = m->get_orientation();
-    vect direct;
+    Vector2d direct;
     for (auto p: m->atoms){
         direct = frame->direction(p->pos_vect(), m->COM());
-        file  << vect(direct.length()*sin(direct.angle() - delta_t), direct.length()*cos(direct.angle()-delta_t)) << " " << p->radius << endl;
+        file << Vector2d(direct.length() * sin(direct.angle() - delta_t), direct.length() * cos(direct.angle() - delta_t)) << " " << p->radius << endl;
     }
     file << endl;
     double area;
@@ -113,10 +113,10 @@ int print_radial2d_distributions(string filename, Frame *frame, vector<distribut
     // Plot atoms in molecule
     molecule * m = &frame->molecules.front();
     double delta_t = m->get_orientation();
-    vect direct;
+    Vector2d direct;
     for (auto p: m->atoms){
         direct = frame->direction(p->pos_vect(), m->COM());
-        file  << vect(direct.length()*sin(direct.angle() - delta_t), direct.length()*cos(direct.angle()-delta_t)) << " " << p->radius << endl;
+        file << Vector2d(direct.length() * sin(direct.angle() - delta_t), direct.length() * cos(direct.angle() - delta_t)) << " " << p->radius << endl;
     }
     file << endl;
     double area;
@@ -224,7 +224,7 @@ int print_moved(Frame * init, Frame * final){
     file.open("moved.dat");
     file << init->get_a() << " " << init->get_height() << endl << endl;
     
-    vect com1, com2;
+    Vector2d com1, com2;
     double rotation;
     for (auto &m: init->molecules){
         com1 = m.moved_COM();
@@ -250,7 +250,7 @@ int print_frame(Frame * frame){
     gnuplot << "# x y radius orientation orient_order circle_order tri_order num_neigh short_order id" << endl;
     
     for (auto &m: frame->molecules){
-        vect d, com;
+        Vector2d d, com;
         com = frame->cartesian(m.COM());
         
         particle * p;
@@ -275,8 +275,8 @@ int print_frame(Frame * frame){
 
 int print_motion(vector<Frame *> key_frames){
     Frame * last;
-    vect com1,com2;
-    vect orient1, orient2;
+    Vector2d com1,com2;
+    Vector2d orient1, orient2;
     for (auto key: key_frames){
         if (last){
             for (auto m1: key->molecules){

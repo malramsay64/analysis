@@ -5,6 +5,7 @@
 #ifndef ANALYSIS_TESTPARTICLE_H
 #define ANALYSIS_TESTPARTICLE_H
 
+#include <climits>
 #include <gtest/gtest.h>
 #include "../src/Particle.h"
 
@@ -85,6 +86,29 @@ TEST(Particle, OperatorsBoolean){
     EXPECT_TRUE(p3 >= p1);
     EXPECT_TRUE(p2 > p1);
     EXPECT_FALSE(p3 > p1);
+}
+
+TEST(Particle, Getters){
+    Particle p1{}, p2{}, p3{}, p4{};
+    EXPECT_EQ(0, p1.numn());
+    p1.append(&p2);
+    p1.append(&p3);
+    p1.append(&p4);
+    EXPECT_EQ(3, p1.numn());
+    size_t large{500};
+    p1.my_neighbours = std::vector<Particle *>(large, nullptr);
+    p1.append(&p2);
+    EXPECT_EQ(large+1, p1.numn());
+    Vector2d v = p2.pos_vect();
+    v.x = 1.0;
+    EXPECT_EQ(Vector2d(0,0), p2.pos_vect());
+    p3.id = 5;
+    p3.molid = 3;
+    EXPECT_EQ(4, p3.index());
+    EXPECT_EQ(2, p3.mol_index());
+    p1.delete_neighbours();
+    EXPECT_EQ(0, p1.numn());
+    EXPECT_EQ(std::vector<Particle *>(0, nullptr), p1.my_neighbours);
 }
 
 #endif //ANALYSIS_TESTPARTICLE_H

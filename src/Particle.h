@@ -43,8 +43,6 @@ public:
 
     void append(Particle *);
     size_t numn() const;
-    int set_xpos(double);
-    int set_ypos(double);
     int set_pos(Vector2d);
     Vector2d pos_vect() const;
     int index() const;

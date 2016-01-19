@@ -48,7 +48,7 @@ Particle::Particle(const particle_vars &p) {
 
 
 void Particle::delete_neighbours(){
-    my_neighbours = std::vector<Particle *>(0, 0);
+    my_neighbours = std::vector<Particle *>(0, nullptr);
 }
 
 int Particle::index() const{

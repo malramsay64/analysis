@@ -5,6 +5,7 @@
 #include "testFunctions.h"
 #include "testVector2d.h"
 #include "testParticle.h"
+#include "testMolecule.h"
 
 int main(int argc, char **argv){
     testing::InitGoogleTest(&argc, argv);

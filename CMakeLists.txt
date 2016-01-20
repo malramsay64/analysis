@@ -25,10 +25,15 @@ set(SOURCE_FILES
         src/Vector2d.h
         src/Particle.cpp
         src/Particle.h
+        src/Molecule.cpp
+        src/Molecule.h
         )
 
 set(TEST_FILES
-        test/testVector2d.h test/testFunctions.h test/testParticle.h)
+        test/testVector2d.h
+        test/testFunctions.h
+        test/testParticle.h
+        test/testMolecule.h)
 
 add_executable(analysis ${SOURCE_FILES})
 add_executable(runTests test/runTests.cpp ${SOURCE_FILES} ${TEST_FILES})

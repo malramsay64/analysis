@@ -18,7 +18,6 @@
 #include "frame.h"
 #include "mol_functions.h"
 #include "dyn_queue.h"
-#include "constants.h"
 
 //extern static int short_order_types;
 

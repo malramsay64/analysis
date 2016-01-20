@@ -12,7 +12,7 @@
 #include <list>
 #include <vector>
 #include <set>
-#include "molecule.h"
+#include "Molecule.h"
 
 class dyn_queue{
     std::list<molecule *> q;

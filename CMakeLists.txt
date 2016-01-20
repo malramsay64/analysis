@@ -8,16 +8,6 @@ if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release")
 endif()
 
-# Include google test
-add_subdirectory(test/lib/googletest)
-include_directories(test/lib/googletest/include)
-
-# Include stats
-include_directories($ENV{HOME}/.local/include)
-link_directories($ENV{HOME}/.local/lib)
-
-link_libraries(gtest pthread stats)
-
 set(SOURCE_FILES
         src/functions.cpp
         src/functions.h
@@ -35,5 +25,26 @@ set(TEST_FILES
         test/testParticle.h
         test/testMolecule.h)
 
+if (NOT CMAKE_BUILD_TYPE STREQUAL "Release")
+
+    # Include google test
+    add_subdirectory(test/lib/googletest)
+    include_directories(test/lib/googletest/include)
+    link_libraries(gtest pthread)
+
+    add_executable(runTests test/runTests.cpp ${SOURCE_FILES} ${TEST_FILES})
+
+endif()
+
+# Include stats
+include_directories($ENV{HOME}/.local/include)
+link_directories($ENV{HOME}/.local/lib)
+
+link_libraries(stats)
+
 add_executable(analysis ${SOURCE_FILES})
-add_executable(runTests test/runTests.cpp ${SOURCE_FILES} ${TEST_FILES})
+
+install(TARGETS analysis
+        CONFIGURATIONS Release
+        DESTINATION bin
+        )

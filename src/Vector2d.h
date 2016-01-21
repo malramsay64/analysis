@@ -25,9 +25,9 @@ public:
     Vector2d();
     Vector2d(double, double);
     Vector2d(double *v);
+    Vector2d(const Vector2d &);
     void normalise();
     double length() const;
-    double orientation();
     void orthogonalise();
     double angle() const;
     

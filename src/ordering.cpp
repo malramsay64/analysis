@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Malcolm Ramsay. All rights reserved.
 //
 
-#include "mol_functions.h"
+#include "ordering.h"
 
 using namespace std;
 

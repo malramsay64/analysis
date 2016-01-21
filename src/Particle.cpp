@@ -1,5 +1,5 @@
 //
-//  Particle.cpp
+//  particle.cpp
 //  analysis
 //
 //  Created by Malcolm Ramsay on 7/12/2014.
@@ -7,7 +7,7 @@
 //
 
 /*
- * Particle.cpp
+ * particle.cpp
  * Copyright (C) 2014 malcolm <malcolm@macbook.local>
  *
  * Distributed under terms of the MIT license.
@@ -87,7 +87,7 @@ int Particle::order(){
         }
     }
     // Ordering for d=1.637556 dimers
-    // Not including bonded Particle
+    // Not including bonded particle
     if (type == 1 && large == 3 && small == 3 ){
         return 1;
     }

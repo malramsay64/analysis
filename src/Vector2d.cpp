@@ -25,6 +25,12 @@ Vector2d::Vector2d(double *v){
     y = v[YY];
 }
 
+Vector2d::Vector2d(const Vector2d &v) {
+    x = v.x;
+    y = v.y;
+}
+
+
 /* Resizes the vector such that is has length 1 */
 void Vector2d::normalise(){
     double l = length();
@@ -72,19 +78,19 @@ double dist(const Vector2d &v1, const Vector2d &v2) {
 
 
 Vector2d Vector2d::operator+= (double i) {
-    this->x += i;
-    this->y += i;
+    x += i;
+    y += i;
     return *this;
 }
 
 Vector2d Vector2d::operator+= (int i){
-    this->x += i;
-    this->y += i;
+    x += i;
+    y += i;
     return *this;
 }
 
 Vector2d Vector2d::operator+ (const Vector2d &v) const{
-    return Vector2d(x + v.x, y + v.y);
+    return Vector2d{x + v.x, y + v.y};
 }
 
 Vector2d Vector2d::operator+= (const Vector2d &v){
@@ -94,81 +100,89 @@ Vector2d Vector2d::operator+= (const Vector2d &v){
 }
 
 Vector2d Vector2d::operator- () const{
-    return Vector2d(-x, -y);
+    return Vector2d{-x, -y};
 }
 
 Vector2d Vector2d::operator- (const Vector2d &v) const{
-    return Vector2d(x - v.x, y - v.y);
+    return Vector2d{x - v.x, y - v.y};
 }
 
 Vector2d Vector2d::operator- (double i) const{
-    return Vector2d(x - i, y - i);
+    return Vector2d{x - i, y - i};
 }
 
 Vector2d Vector2d::operator/= (double i){
-    return Vector2d(x / i, y / i);
+    x /= i;
+    y /= i;
+    return *this;
 }
 Vector2d Vector2d::operator*= (double i){
-    return Vector2d(x / i, y / i);
+    x *= i;
+    y *= i;
+    return *this;
 }
 
 Vector2d Vector2d::operator/= (const Vector2d &i){
-    return Vector2d(x / i.x, y / i.y);
+    x /= i.x;
+    y /= i.y;
+    return *this;
 }
 
 Vector2d Vector2d::operator*= (const Vector2d &i){
-    return Vector2d(x * i.x, y * i.y);
+    x *= i.x;
+    y *= i.y;
+    return *this;
 }
 
 Vector2d Vector2d::operator* (double i) const{
-    return Vector2d(x * i, y * i);
+    return Vector2d{x * i, y * i};
 }
 
 Vector2d Vector2d::operator* (const Vector2d &v) const{
-    return Vector2d(x * v.x, y * v.y);
+    return Vector2d{x * v.x, y * v.y};
 }
 
 Vector2d Vector2d::operator/ (const Vector2d &v) const{
-    return Vector2d(x / v.x, y / v.y);
+    return Vector2d{x / v.x, y / v.y};
 }
 
 Vector2d Vector2d::operator+ (double i) const{
-    return Vector2d(x + i, y + i);
+    return Vector2d{x + i, y + i};
 }
 
 Vector2d Vector2d::operator+ (int i) const{
-    return Vector2d(x + i, y + i);
+    return Vector2d{x + i, y + i};
 }
 
 
 Vector2d Vector2d::operator/ (double i) const{
-    return Vector2d(x / i, y / i);
+    return Vector2d{x / i, y / i};
 }
 
 bool Vector2d::operator== (const Vector2d &v) const{
     return x==v.x && y==v.y;
 }
 bool Vector2d::operator!= (const Vector2d &v) const{
-    return !(x==v.x && y==v.y);
+    return x!=v.x || y!=v.y;
 }
 
 Vector2d operator* (double i, const Vector2d &v){
-    return Vector2d(v.x * i, v.y * i);
+    return Vector2d{v.x * i, v.y * i};
 }
 
 Vector2d cos(const Vector2d &v){
-    return Vector2d(cos(v.x), cos(v.y));
+    return Vector2d{cos(v.x), cos(v.y)};
 }
 Vector2d sin(const Vector2d &v){
-    return Vector2d(sin(v.x), sin(v.y));
+    return Vector2d{sin(v.x), sin(v.y)};
 }
 
 Vector2d atan2(const Vector2d &vx, const Vector2d &vy){
-    return Vector2d(atan2(vx.x, vy.x), atan2(vx.y, vy.y));
+    return Vector2d{atan2(vx.x, vy.x), atan2(vx.y, vy.y)};
 }
 
 Vector2d pos_def_mod(const Vector2d &v, double b){
-    return Vector2d(my_mod(v.x, b), my_mod(v.y, b));
+    return Vector2d{my_mod(v.x, b), my_mod(v.y, b)};
 }
 
 double atan2(const Vector2d &v){
@@ -178,7 +192,6 @@ double atan2(const Vector2d &v){
 double map_angle(double x){
     return atan2(sin(x), cos(x))+PI;
 }
-
 
 
 

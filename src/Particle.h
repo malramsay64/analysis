@@ -1,5 +1,5 @@
 //
-//  Particle.h
+//  particle.h
 //  analysis
 //
 //  Created by Malcolm Ramsay on 7/12/2014.
@@ -26,7 +26,7 @@ struct particle_vars{
     double mass = 1;
 };
 
-// Particle class
+// particle class
 class Particle {
 public:
     Vector2d pos;
@@ -38,7 +38,7 @@ public:
     std::vector<Particle *> my_neighbours;
     
     Particle();
-    Particle(const Particle&);
+    Particle(const Particle &);
     Particle(const particle_vars&);
 
     void append(Particle *);

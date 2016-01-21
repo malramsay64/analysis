@@ -15,7 +15,7 @@
 #include <iomanip>
 #include "my_mean.h"
 #include "neighbours.h"
-#include "frame.h"
+#include "Frame.h"
 #include "distribution.h"
 
 int print_map(std::map<int, my_mean>, std::ofstream *);

@@ -30,7 +30,7 @@ int neighbour_colour(const Molecule &, const Frame &);
 double orient_ordering(const Molecule &);
 int short_ordering(const Molecule &, const Frame &);
 
-int tri_ordering(molecule *mol);
-molecule reorient(molecule *m, Frame *frame);
+int tri_ordering(const Molecule &);
+Molecule reorient(const Molecule &, const Frame &);
 
 #endif /* defined(MY_MOL_FUNCTIONS) */

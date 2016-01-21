@@ -9,8 +9,6 @@
 #include "../src/functions.h"
 
 TEST(Functions, Defs){
-    EXPECT_TRUE(XX == 0);
-    EXPECT_TRUE(YY == 1);
     EXPECT_DOUBLE_EQ(M_PI, PI);
 }
 
@@ -58,6 +56,21 @@ TEST(Functions, Dist){
     EXPECT_DOUBLE_EQ(PI-0.1, dist(-0.1, PI));
     EXPECT_DOUBLE_EQ(PI-0.5, dist(0.5, PI+1));
     EXPECT_DOUBLE_EQ(1.5, dist(2*PI-1, 0.5));
+}
+
+TEST(Functions, StuctureFunction){
+    /* TODO
+     * Structure function tests
+     */
+}
+
+TEST(Functions, MapAngle){
+    EXPECT_DOUBLE_EQ(0, map_angle(0));
+    EXPECT_DOUBLE_EQ(1, map_angle(1));
+    EXPECT_DOUBLE_EQ(2*PI, map_angle(2*PI));
+    EXPECT_NEAR(0.5, map_angle(2*PI+0.5), 1e-15);
+    EXPECT_NEAR(2*PI-0.5, map_angle(-0.5), 1e-15);
+    EXPECT_NEAR(1e-5, map_angle(1e-5+2*PI), 1e-15);
 }
 
 #endif //ANALYSIS_TESTFUNCTIONS_H

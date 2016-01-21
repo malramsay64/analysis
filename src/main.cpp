@@ -1,6 +1,6 @@
 
 #include "neighbours.h"
-#include "frame.h"
+#include "Frame.h"
 #include "input.h"
 //#include "analyse.h"
 #include "modular.h"

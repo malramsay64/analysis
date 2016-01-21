@@ -14,9 +14,9 @@
 #include <stdio.h>
 
 #include "Particle.h"
-#include "frame.h"
+#include "Frame.h"
 #include "constants.h"
-#include "mol_functions.h"
+#include "ordering.h"
 
 
 

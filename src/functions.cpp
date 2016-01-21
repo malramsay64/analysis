@@ -17,6 +17,7 @@ double dot_product(double *v1, double *v2, int len){
     }
     return sum;
 }
+
 /*
  * Dist finds the periodic distance between two values, with the period being 2*pi.
  * This only finds the absolute distance there is no directional information retained
@@ -76,3 +77,10 @@ double structure_factor(double q, std::vector<double> g, double rho, double dr){
     return s;
 }
 
+
+/* Maps a double onto the range [0,2PI)
+ */
+double map_angle(double x) {
+    double ang = std::atan2(std::sin(x), std::cos(x));
+    return ang >= 0 ? ang : ang + 2*PI;
+}

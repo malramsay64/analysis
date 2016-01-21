@@ -13,32 +13,31 @@ using namespace std;
 dyn_queue::dyn_queue(){
 }
 
-dyn_queue::dyn_queue(molecule * m){
+dyn_queue::dyn_queue(Molecule * m){
     push(m, 0);
 }
 
-int dyn_queue::push(molecule * t, int d){
+int dyn_queue::push(Molecule * t, int d){
     if (!traversed.count(t)){
         traversed.insert(t);
-        q.push_back(t);
-        depth.push_back(d);
+        q.push_back(pair<Molecule *, int>{t, d});
     }
     return 0;
 }
 
-molecule * dyn_queue::pop(){
+Molecule * dyn_queue::pop(){
     if (q.size()){
-        molecule *t = q.front();
+        Molecule *t = q.front().first;
+        int depth = q.front().second;
         for (auto &i: t->my_neighbours){
-            push(i, get_depth()+1);
+            push(i.first, depth+1);
         }
         q.pop_front();
-        depth.pop_front();
         return t;
     }
-    return 0;
+    return nullptr;
 }
 
 int dyn_queue::get_depth(){
-    return depth.front();
+    return q.front().second;
 }

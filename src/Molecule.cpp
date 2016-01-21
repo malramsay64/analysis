@@ -9,6 +9,7 @@
 #include "Molecule.h"
 
 using namespace std;
+using namespace LAlgebra;
 
 Molecule::Molecule(){
 }
@@ -39,6 +40,11 @@ double Molecule::get_mass() const {
     return mass;
 }
 
+
+Vector2d Molecule::get_COM() const {
+    return pos_def_mod(com, 2*PI);
+}
+
 Vector2d Molecule::get_COM(){
     if (com != Vector2d{}){
         return pos_def_mod(com,2*PI);
@@ -55,7 +61,7 @@ Vector2d Molecule::moved_COM() const{
 
 Vector2d Molecule::calc_COM(){
     double total = 0;
-    Vector2d theta, xi, zeta, out;
+    Vector2d theta, xi, zeta;
     for (auto p: atoms){
         theta = p->pos_vect();
         xi += p->mass*cos(theta);
@@ -75,13 +81,13 @@ Vector2d Molecule::update_COM(){
     return com;
 }
 
-Particle *Molecule::get_large(){
+Particle * Molecule::get_large() const{
     for (auto p: atoms){
         if (p->type == 1){
             return p;
         }
     }
-    return 0;
+    return nullptr;
 }
 
 double Molecule::update_orientation(double angle){
@@ -149,15 +155,6 @@ int Molecule::max_pairing() const{
     return max;
 }
 
-int Molecule::get_colour() const {
-    return colour;
-}
-
-int Molecule::set_colour(int i){
-    colour = i;
-    return 0;
-}
-
 int Molecule::same_period(){
     Vector2d com = get_COM();
     Vector2d d;
@@ -171,4 +168,28 @@ int Molecule::same_period(){
 
 int Molecule::index() const{
     return id-1;
+}
+
+bool Molecule::operator!=(const Molecule &b) const {
+    return id != b.id;
+}
+
+bool Molecule::operator==(const Molecule &b) const {
+    return id == b.id;
+}
+
+bool Molecule::operator<(const Molecule &b) const {
+    return id < b.id;
+}
+
+bool Molecule::operator<=(const Molecule &b) const {
+    return id <= b.id;
+}
+
+bool Molecule::operator>(const Molecule &b) const {
+    return id > b.id;
+}
+
+bool Molecule::operator>=(const Molecule &b) const {
+    return id >= b.id;
 }

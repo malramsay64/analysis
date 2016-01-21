@@ -19,20 +19,8 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
-#define MAX_MOL_CONTACTS 14
-#define MOL_SIZE 3
-#define CONST_E 2.7182818284
 #define EPS 5e-2
-#define ORDER_LEN 15
 
-#define STEP_SIZE 0.005
-
-#ifndef XX
-#define XX 0
-#endif
-#ifndef YY
-#define YY 1
-#endif
 #ifndef PI
 #define PI M_PI
 #endif
@@ -44,5 +32,6 @@ double my_mod(double, double);
 double structure_factor(double q, std::vector<double> g, double rho, double dr);
 double max_structure_factor(std::vector<double> g, double rho, double dr);
 int pos_def_mod(int, int);
+double map_angle(double x);
 
 #endif /* defined(FUNCTIONS_H) */

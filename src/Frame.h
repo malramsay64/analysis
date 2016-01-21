@@ -38,7 +38,8 @@ public:
     std::vector<Particle> particles;
     std::vector<Molecule> molecules;
     int timestep;
-    
+    // TODO particle/molecule binning
+
     Frame();
     Frame(Frame const &);
     void set_timestep(int);
@@ -65,9 +66,9 @@ public:
 
 };
 
-double dist(const Vector2d &, const Vector2d &, const Frame &) const;
-Vector2d direction(const Vector2d &, const Vector2d &) const;
-Vector2d cartesian(const Vector2d &) const;
-Vector2d fractional(const Vector2d &) const;
+double dist(const Vector2d &, const Vector2d &, const Frame &);
+Vector2d direction(const Vector2d &, const Vector2d &, const Frame&);
+Vector2d cartesian(const Vector2d &, const Frame&);
+Vector2d fractional(const Vector2d &, const Frame&);
 
 #endif /* defined(FRAME_H) */

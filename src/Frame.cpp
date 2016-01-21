@@ -123,7 +123,7 @@ double Frame::get_density() const{
 
 
 double dist(const Vector2d &v1, const Vector2d &v2, const Frame &f){
-    return direction(v1,v2, f).length();
+    return direction(v1,v2,f).length();
 }
 
 Vector2d direction(const Vector2d &v1, const Vector2d &v2, const Frame &f){

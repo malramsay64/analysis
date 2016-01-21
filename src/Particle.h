@@ -15,6 +15,7 @@
 #include <fstream>
 #include "functions.h"
 #include "Vector2d.h"
+using namespace LAlgebra;
 
 struct particle_vars{
     double xpos = 0;

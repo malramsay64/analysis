@@ -37,6 +37,7 @@ TEST(Vector2d, Length){
 
 TEST(Vector2d, Normalise){
     Vector2d v1{};
+    //v1.normalise();
     EXPECT_DOUBLE_EQ(0,v1.x);
     EXPECT_DOUBLE_EQ(0,v1.y);
     Vector2d v2{0.1, 0};

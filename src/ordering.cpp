@@ -8,8 +8,6 @@
 
 #include "ordering.h"
 
-using namespace std;
-
 Vector2d orientation(const Molecule &m, const Frame &frame){
     Vector2d com = m.get_COM();
     if (m.num_particles() == 1){
@@ -59,7 +57,7 @@ int circle_colour(const Molecule &m){
 }
 
 int neighbour_colour(const Molecule &m, const Frame &frame){
-    vector<int> list;
+    std::vector<int> list;
     list = short_neighbour_list(m, frame);
     int max = 0;
     for (auto i: list){
@@ -86,8 +84,8 @@ double struct_relax(const Molecule &m, Frame &init){
 
 double hexatic(int n, const Molecule &m1, const Frame &frame){
     double theta;
-    complex<double> sum = complex<double>(0,0);
-    complex<double> i = complex<double>(0,1);
+    std::complex<double> sum = std::complex<double>(0,0);
+    std::complex<double> i = std::complex<double>(0,1);
     for (auto &m2: m1.my_neighbours){
         theta = direction(m2.first->get_COM(), m1.get_COM(), frame).angle();
         sum += (1./m1.num_neighbours())*exp(6*theta*i);

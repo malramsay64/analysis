@@ -8,7 +8,6 @@
 
 #include "Molecule.h"
 
-using namespace std;
 using namespace LAlgebra;
 
 Molecule::Molecule(){
@@ -20,7 +19,7 @@ void Molecule::add_neighbour(Molecule *m){
 }
 
 void Molecule::delete_neighbours(){
-    my_neighbours = map<Molecule *,int>{};
+    my_neighbours = std::map<Molecule *,int>{};
     contacts = 0;
     for (auto &p: atoms){
         p->delete_neighbours();
@@ -28,7 +27,7 @@ void Molecule::delete_neighbours(){
 }
 
 void Molecule::delete_mol_neighbours(){
-    my_neighbours = map<Molecule *, int>{};
+    my_neighbours = std::map<Molecule *, int>{};
     contacts = 0;   
 }
 
@@ -137,8 +136,8 @@ int Molecule::num_neighbours() const{
     return uniqe_contacts();
 }
 
-map <int, int> Molecule::pairing() const {
-    map<int, int> d{};
+std::map <int, int> Molecule::pairing() const {
+    std::map<int, int> d{};
     for (auto &n: my_neighbours){
         d[n.second]++;
     }
@@ -158,7 +157,7 @@ int Molecule::max_pairing() const{
 int Molecule::same_period(){
     Vector2d com = get_COM();
     Vector2d d;
-    vector<Particle *>::iterator i;
+    std::vector<Particle *>::iterator i;
     for (auto &i: atoms){
         d = direction(get_COM(), i->pos_vect());
         i->set_pos(com + d);

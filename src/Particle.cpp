@@ -15,7 +15,6 @@
 
 #include "Particle.h"
 
-using namespace std;
 using namespace LAlgebra;
 
 Particle::Particle(){

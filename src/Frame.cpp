@@ -1,11 +1,8 @@
 #include "Frame.h"
 
-
-using namespace std;
-
 Frame::Frame(){
-    molecules = vector<Molecule>{};
-    particles = vector<Particle>{};
+    molecules = std::vector<Molecule>{};
+    particles = std::vector<Particle>{};
     coloured = false;
     neighbours = false;
 }

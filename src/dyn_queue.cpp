@@ -8,8 +8,6 @@
 
 #include "dyn_queue.h"
 
-using namespace std;
-
 dyn_queue::dyn_queue(){
 }
 
@@ -20,7 +18,7 @@ dyn_queue::dyn_queue(Molecule * m){
 int dyn_queue::push(Molecule * t, int d){
     if (!traversed.count(t)){
         traversed.insert(t);
-        q.push_back(pair<Molecule *, int>{t, d});
+        q.push_back(std::pair<Molecule *, int>{t, d});
     }
     return 0;
 }

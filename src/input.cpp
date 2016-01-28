@@ -10,8 +10,6 @@
 #include <algorithm>
 #include <sstream>
 
-using namespace std;
-
 int read_data(std::ifstream *myfile, Frame *frame){
     double x[3], y[3], z[3];
     double zp;

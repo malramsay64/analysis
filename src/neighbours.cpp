@@ -8,8 +8,6 @@
 
 #include "neighbours.h"
 
-using namespace std;
-
 static float R_FACTOR = 1.2; //pow(2,1./6);
 double deltaD = 0.30;
 double deltaT = 10*PI/180;
@@ -32,16 +30,16 @@ int check_particles(Molecule &mol1, Molecule &mol2, Frame &frame){
     return 0;
 }
 
-int find_neighbours(Frame &frame, vector<vector<int>> &neigh_list){
+int find_neighbours(Frame &frame, std::vector<std::vector<int>> &neigh_list){
     for (auto &mol: frame.molecules){
         find_mol_neighbours(mol, frame, neigh_list);
     }
     return 0;
 }
 
-bool find_mol_neighbours(Molecule &mol, Frame &frame, vector<vector<int>> &neigh_list){
+bool find_mol_neighbours(Molecule &mol, Frame &frame, std::vector<std::vector<int>> &neigh_list){
     Vector2d com;
-    vector<int> &neighbours = neigh_list.at(mol.index());
+    std::vector<int> &neighbours = neigh_list.at(mol.index());
     // mol properties
     com = mol.get_COM();
     bool recompute = false;
@@ -76,11 +74,11 @@ bool find_mol_neighbours(Molecule &mol, Frame &frame, vector<vector<int>> &neigh
     return recompute;
 }
 
-int recompute_neighbours(Molecule &mol, Frame &frame, vector<vector<int>> &neigh_list){
+int recompute_neighbours(Molecule &mol, Frame &frame, std::vector<std::vector<int>> &neigh_list){
     // Recompute local neighbour list
     // Reset particle neighbour list
-    neigh_list.at(mol.index()) = vector<int>();
-    vector<int> &neighbours = neigh_list.at(mol.index());
+    neigh_list.at(mol.index()) = std::vector<int>();
+    std::vector<int> &neighbours = neigh_list.at(mol.index());
     Vector2d com = mol.get_COM();
     Molecule *mol2;
     dyn_queue queue = dyn_queue(&mol);
@@ -99,7 +97,7 @@ int recompute_neighbours(Molecule &mol, Frame &frame, vector<vector<int>> &neigh
     // All neighbours
     for (auto &m: neighbours){
         Molecule &m1 = frame.molecules.at(m);
-        neigh_list.at(m1.index()) = vector<int>{};
+        neigh_list.at(m1.index()) = std::vector<int>{};
         neighbours = neigh_list.at(m1.index());
         dyn_queue queue = dyn_queue(&m1);
         mol2 = queue.pop();
@@ -114,13 +112,13 @@ int recompute_neighbours(Molecule &mol, Frame &frame, vector<vector<int>> &neigh
             }
         }
     }
-    cout << "Id: " << mol.id << " num neighbours " << mol.num_neighbours() << " contacts " << mol.num_contacts() << " neigh list " << neigh_list.at(mol.index()).size() << endl;
+    std::cout << "Id: " << mol.id << " num neighbours " << mol.num_neighbours() << " contacts " << mol.num_contacts() << " neigh list " << neigh_list.at(mol.index()).size() << std::endl;
     return 0;
 }
 
 
 bool check_mol_neighbours(const Molecule &m1, const Molecule &m2, const Frame &frame){
-    vector<Particle *>::iterator p1, p2;
+    std::vector<Particle *>::iterator p1, p2;
     double d;
     for (auto  p1: m1.atoms) {
         for (auto  p2: m2.atoms) {
@@ -144,8 +142,8 @@ void add_part_neighbours(Particle &p1, Particle &p2){
     p2.append(&p1);
 }
 
-vector<int> short_neighbour_list(const Molecule &m, const Frame &frame){
-    vector<int> dist = vector<int>{};
+std::vector<int> short_neighbour_list(const Molecule &m, const Frame &frame){
+    std::vector<int> dist = std::vector<int>{};
     int type;
     for (auto neigh: m.my_neighbours){
         type = order_type(m, *neigh.first, frame);
@@ -161,13 +159,13 @@ vector<int> short_neighbour_list(const Molecule &m, const Frame &frame){
 
 
 int short_range_order(const Frame &frame){
-    ofstream file;
-    file.open("short_order.csv", ios::out);
+    std::ofstream file;
+    file.open("short_order.csv", std::ios::out);
     int colour = 0;
-    vector<int> count(6,0);
+    std::vector<int> count(6,0);
     int total = 0;
     // Print m1
-    vector<Molecule>::iterator m1;
+    std::vector<Molecule>::iterator m1;
     for (auto m1: frame.molecules) {
         Vector2d com1 = m1.get_COM();
         Vector2d d;
@@ -177,7 +175,7 @@ int short_range_order(const Frame &frame){
             d = direction(p->pos_vect(),com1);
             theta = atan2(d) + PI - rot + PI/2;
             // In format for gnuplot: theta, dist, circle radius, colour
-            file << theta << "," << d.length() << "," << p->radius << "," << 1 << endl;
+            file << theta << "," << d.length() << "," << p->radius << "," << 1 << "\n";
         }
         for (auto neigh : m1.my_neighbours) {
             if (neigh.second > 1){
@@ -194,17 +192,17 @@ int short_range_order(const Frame &frame){
                     for (auto p2: neigh.first->atoms){
                         d = direction(p2->pos_vect(),com1);
                         theta = atan2(d) + PI - rot + PI/2;
-                        file << theta << "," << d.length() << "," << 0.04 << "," << colour << endl;
+                        file << theta << "," << d.length() << "," << 0.04 << "," << colour << "\n";
                     }
                 }
             }
         }
     }
     file.close();
-    ofstream dist;
-    dist.open("short_order_dist.csv", ios::out);
+    std::ofstream dist;
+    dist.open("short_order_dist.csv", std::ios::out);
     for (int i = 0; i < count.size(); i++){
-        dist << i << "," << count.at(i)/(double) total  << endl;
+        dist << i << "," << count.at(i)/(double) total  << "\n";
     }
     dist.close();
     return 0;
@@ -221,7 +219,7 @@ int order_type(const Molecule &m1, const Molecule &m2, const Frame &frame){
     // Body-Body Dist (body = atoms[0])
     double Dbb = dist(m1.atom_pos(0), m2.atom_pos(0), frame);
     // Body-Head Dist (head = atoms[1])
-    double Dbh = min( dist(m1.atom_pos(1), m2.atom_pos(0), frame), \
+    double Dbh = std::min( dist(m1.atom_pos(1), m2.atom_pos(0), frame), \
                      dist(m1.atom_pos(0), m2.atom_pos(1), frame) );
     // Head-Head Dist
     double Dhh = dist(m1.atom_pos(1), m2.atom_pos(1), frame);

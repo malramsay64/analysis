@@ -8,9 +8,8 @@
 
 #include "modular.h"
 
-using namespace std;
 // Neighbour List
-vector<vector<int>> mod_neigh_list;
+std::vector<std::vector<int>> mod_neigh_list;
 
 map<int, my_mean> collate_MSD, collate_MFD, collate_c1, collate_c2, collate_struct;
 vector<map<int,my_mean>> collate_regio_c1, collate_regio_c2, collate_regio_MSD;

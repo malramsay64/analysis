@@ -39,7 +39,6 @@ double Molecule::get_mass() const {
     return mass;
 }
 
-
 Vector<2> Molecule::get_COM() const {
     return pos_def_mod(com, 2*PI);
 }

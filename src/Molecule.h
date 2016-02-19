@@ -53,13 +53,10 @@ public:
     double get_rotation() const ;
     Vector<2> get_orient_vect() const;
 
-
     bool operator> (const Molecule &b) const;
     bool operator>= (const Molecule &b) const;
-
     bool operator< (const Molecule &b) const;
     bool operator<= (const Molecule &b) const;
-
     bool operator== (const Molecule &b) const;
     bool operator!= (const Molecule &b) const;
 } ;

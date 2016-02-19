@@ -4,7 +4,6 @@
 
 #include "Compute.h"
 
-
 void ComputeMol::compute_array() {
     for (auto const &m: frame.molecules){
         double val = compute_single(m);
@@ -25,7 +24,6 @@ double ComputeAngle::compute_single(const Molecule &m){
     return m.get_orientation();
 }
 
-
 double ComputeMolHexatic::compute_single(const Molecule &m) {
     double theta;
     std::complex<double> sum = std::complex<double>(0,0);
@@ -36,8 +34,6 @@ double ComputeMolHexatic::compute_single(const Molecule &m) {
     }
     return abs(sum);
 }
-
-
 
 double ComputeCoord::compute_single(const Particle &p) {
     // TODO actually check the distance against the cutoff distance

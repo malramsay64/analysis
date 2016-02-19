@@ -116,7 +116,6 @@ int recompute_neighbours(Molecule &mol, Frame &frame, std::vector<std::vector<in
     return 0;
 }
 
-
 bool check_mol_neighbours(const Molecule &m1, const Molecule &m2, const Frame &frame){
     std::vector<Particle *>::iterator p1, p2;
     double d;
@@ -156,7 +155,6 @@ std::vector<int> short_neighbour_list(const Molecule &m, const Frame &frame){
     }
     return dist;
 }
-
 
 int short_range_order(const Frame &frame){
     std::ofstream file;

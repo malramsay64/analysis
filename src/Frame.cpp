@@ -19,7 +19,6 @@ Frame::Frame(const Frame &frame){
     update_links();
 }
 
-
 void Frame::set_atoms(int a){
     particles.reserve(a);
 }
@@ -116,8 +115,6 @@ double Frame::get_area() const{
 double Frame::get_density() const{
     return num_atoms()/get_area();
 }
-
-
 
 double dist(const Vector<2> &v1, const Vector<2> &v2, const Frame &f){
     return direction(v1,v2,f).length();

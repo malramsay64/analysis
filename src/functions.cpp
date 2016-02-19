@@ -8,8 +8,6 @@
 
 #include "functions.h"
 
-
-
 double dot_product(double *v1, double *v2, int len){
     double sum = 0;
     for (int i = 0; i < len; ++i){
@@ -27,7 +25,6 @@ double dist(double x1, double x2){
     return acos(cos(x));
 }
 
-
 double legendre(int l, double x){
     switch (l){
         case 1:
@@ -38,7 +35,6 @@ double legendre(int l, double x){
             return 0;
     }
 }
-
 
 double my_mod(double a, double b){
     double ret = fmod(a, b);
@@ -76,7 +72,6 @@ double structure_factor(double q, std::vector<double> g, double rho, double dr){
     s += 1;
     return s;
 }
-
 
 /* Maps a double onto the range [0,2PI)
  */

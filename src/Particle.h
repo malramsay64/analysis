@@ -15,6 +15,7 @@
 #include <fstream>
 #include "functions.h"
 #include "Vector.h"
+
 using namespace LAlgebra;
 
 struct particle_vars{
@@ -53,15 +54,11 @@ public:
     
     bool operator> (const Particle &b) const;
     bool operator>= (const Particle &b) const;
-    
     bool operator< (const Particle &b) const;
     bool operator<= (const Particle &b) const;
-    
     bool operator== (const Particle &b) const;
     bool operator!= (const Particle &b) const;
 };
-
-
 
 #endif
 

@@ -159,7 +159,6 @@ namespace LAlgebra {
         return Vector<i>((v*2*PI/bounds).r.apply([](double val){return map_angle(val);})*(bounds.r/2*PI));
     };
 
-
     /* Vector Operators
      *
      * Implementations for

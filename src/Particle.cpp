@@ -6,13 +6,6 @@
 //  Copyright (c) 2014 Malcolm Ramsay. All rights reserved.
 //
 
-/*
- * particle.cpp
- * Copyright (C) 2014 malcolm <malcolm@macbook.local>
- *
- * Distributed under terms of the MIT license.
- */
-
 #include "Particle.h"
 
 using namespace LAlgebra;
@@ -45,7 +38,6 @@ Particle::Particle(const particle_vars &p) {
     id = p.id;
     radius = p.radius;
 }
-
 
 void Particle::delete_neighbours(){
     my_neighbours = std::vector<Particle *>(0, nullptr);

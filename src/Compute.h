@@ -33,7 +33,6 @@ public:
     virtual void compute_array() {};
 };
 
-
 /* ComputeMol
  *
  * A subclass of compute which implements compute_array for molecules.
@@ -55,7 +54,6 @@ public:
 
     void compute_array();
 };
-
 
 /*
  * ComputeAtom
@@ -85,7 +83,6 @@ public:
     double compute_single(const Molecule &m);
 };
 
-
 /*
  * ComptuteCoord
  *
@@ -102,8 +99,6 @@ public:
 
     double compute_single(const Particle &);
 };
-
-
 
 class ComputeMolHexatic : public ComputeMol {
 private:

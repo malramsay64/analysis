@@ -63,7 +63,6 @@ public:
     double get_theta() const;
     double get_height() const;
     double get_tilt() const;
-
 };
 
 double dist(const Vector<2> &, const Vector<2> &, const Frame &);

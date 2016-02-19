@@ -32,6 +32,5 @@ void add_part_neighbours(Particle &p1, Particle &p2);
 std::vector<int> short_neighbour_list(const Molecule &m, const Frame &frame);
 int find_neighbours(Frame &frame, std::vector<std::vector<int>> &neigh_list);
 
-
 #endif /* endif(NEIGHBOURS_H) */
 

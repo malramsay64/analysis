@@ -119,26 +119,26 @@ double Frame::get_density() const{
 
 
 
-double dist(const Vector2d &v1, const Vector2d &v2, const Frame &f){
+double dist(const Vector<2> &v1, const Vector<2> &v2, const Frame &f){
     return direction(v1,v2,f).length();
 }
 
-Vector2d direction(const Vector2d &v1, const Vector2d &v2, const Frame &f){
+Vector<2> direction(const Vector<2> &v1, const Vector<2> &v2, const Frame &f){
     return cartesian(direction(v1,v2), f);
 }
 
-Vector2d cartesian(const Vector2d &vi, const Frame &f){
-    Vector2d v{vi};
+Vector<2> cartesian(const Vector<2> &vi, const Frame &f){
+    Vector<2> v{vi};
     v /= (2*PI);
-    v.x = v.x*f.get_a() + v.y*f.get_b()*cos(f.get_theta());
-    v.y = v.y*f.get_b()*sin(f.get_theta());
+    v.r[0] = v.r[0]*f.get_a() + v.r[1]*f.get_b()*cos(f.get_theta());
+    v.r[1] = v.r[1]*f.get_b()*sin(f.get_theta());
     return v;
 }
 
-Vector2d fractional(const Vector2d &vi, const Frame &f){
-    Vector2d v{};
-    v.x = vi.x*(1/f.get_a()) + vi.y*(-cos(f.get_theta())/(f.get_a()*sin(f.get_theta())));
-    v.y = vi.y/(f.get_b()*sin(f.get_theta()));
+Vector<2> fractional(const Vector<2> &vi, const Frame &f){
+    Vector<2> v{};
+    v.r[0] = vi.r[0]*(1/f.get_a()) + vi.r[1]*(-cos(f.get_theta())/(f.get_a()*sin(f.get_theta())));
+    v.r[1] = vi.r[1]/(f.get_b()*sin(f.get_theta()));
     v *= 2*PI;
     return v;
     

@@ -24,7 +24,7 @@ Particle::Particle(){
     id = 0;
     radius = 0;
     my_neighbours = std::vector<Particle *>{};
-    pos = Vector2d(0, 0);
+    pos = Vector<2>{};
 }
 
 Particle::Particle(const Particle &p){
@@ -39,7 +39,7 @@ Particle::Particle(const Particle &p){
 
 Particle::Particle(const particle_vars &p) {
     mass = p.mass;
-    pos = Vector2d{p.xpos, p.ypos};
+    pos.r = {p.xpos, p.ypos};
     molid = p.molid;
     type = p.type;
     id = p.id;
@@ -67,12 +67,11 @@ void Particle::append(Particle *p){
     my_neighbours.push_back(p);
 }
 
-int Particle::set_pos(Vector2d v){
-    pos = Vector2d(v);
-    return 0;
+void Particle::set_pos(const Vector<2> &v){
+    pos = v;
 }
 
-Vector2d Particle::pos_vect() const{
+Vector<2> Particle::pos_vect() const{
     return pos;
 }
 

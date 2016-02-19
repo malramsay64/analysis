@@ -14,7 +14,7 @@
 #include <algorithm>
 #include <fstream>
 #include "functions.h"
-#include "Vector2d.h"
+#include "Vector.h"
 using namespace LAlgebra;
 
 struct particle_vars{
@@ -30,7 +30,7 @@ struct particle_vars{
 // particle class
 class Particle {
 public:
-    Vector2d pos;
+    Vector<2> pos;
     int id;
     int molid;
     int type;
@@ -44,8 +44,8 @@ public:
 
     void append(Particle *);
     size_t numn() const;
-    int set_pos(Vector2d);
-    Vector2d pos_vect() const;
+    void set_pos(const Vector<2> &);
+    Vector<2> pos_vect() const;
     int index() const;
     int mol_index() const;
     int order();

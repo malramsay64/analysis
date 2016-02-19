@@ -12,7 +12,6 @@
 #define MOL 1
 
 
-using namespace std;
 
 bool time_structure=false, regio=false, movie=false, moved=false, m_orient=false;
 

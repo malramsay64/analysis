@@ -20,8 +20,6 @@ public:
 };
 template <size_t N> const size_t TypeValue<N>::value;
 
-
-
 template <typename T>
 class VectorTest : public testing::Test {
 public:
@@ -63,6 +61,18 @@ public:
         return sum;
     }
 
+    virtual void expect_near(const Vector<N> &expected, const Vector<N> &actual, double abs_error){
+        for (auto i=0; i<N; i++){
+            EXPECT_NEAR(expected[i], actual[i], abs_error);
+        }
+    }
+
+    virtual void expect_double_eq(const Vector<N> &expected, const Vector<N> &actual){
+        for (auto i=0; i<N; i++){
+            EXPECT_DOUBLE_EQ(expected[i], actual[i]);
+        }
+    }
+
     Vector<N> v0, v1, v2, v3, v4, v5;
 };
 
@@ -81,6 +91,23 @@ TYPED_TEST(VectorTest, Initialisation){
     EXPECT_DOUBLE_EQ(sum, this->v3.sum());
     EXPECT_DOUBLE_EQ(sum*2, this->v4.sum());
     EXPECT_DOUBLE_EQ(sum*2+this->size()*0.1, this->v5.sum());
+}
+
+TYPED_TEST(VectorTest, Size){
+    EXPECT_EQ(this->size(), this->v0.size());
+    EXPECT_EQ(this->size(), this->v1.size());
+    EXPECT_EQ(this->size(), this->v2.size());
+    EXPECT_EQ(this->size(), this->v3.size());
+    EXPECT_EQ(this->size(), this->v4.size());
+    EXPECT_EQ(this->size(), this->v5.size());
+}
+
+TYPED_TEST(VectorTest, SelectOperator){
+    EXPECT_EQ(0, this->v0[0]);
+    EXPECT_NO_THROW(this->v0[this->size()+1]);
+    EXPECT_EQ(0, this->v0[this->size()-1]);
+    EXPECT_EQ(this->size(), this->v3[this->size()-1]);
+    EXPECT_EQ(1, this->v1[0]);
 }
 
 TYPED_TEST(VectorTest, Length){
@@ -109,8 +136,78 @@ TYPED_TEST(VectorTest, Normalise){
     EXPECT_DOUBLE_EQ(1, this->v5.length());
 }
 
-TYPED_TEST(VectorTest, ){
+TYPED_TEST(VectorTest, Orthogonalise){
+    Vector<this->N> vo0 = this->v0.orthogonal();
+    EXPECT_DOUBLE_EQ(0, (this->v0*vo0).sum());
+    Vector<this->N> vo1 = this->v1.orthogonal();
+    EXPECT_DOUBLE_EQ(0, (this->v1*vo1).sum());
+    Vector<this->N> vo2 = this->v2.orthogonal();
+    EXPECT_DOUBLE_EQ(0, (this->v2*vo2).sum());
+    Vector<this->N> vo3 = this->v3.orthogonal();
+    EXPECT_DOUBLE_EQ(0, (this->v3*vo3).sum());
+    Vector<this->N> vo4 = this->v4.orthogonal();
+    EXPECT_DOUBLE_EQ(0, (this->v4*vo4).sum());
+    Vector<this->N> vo5 = this->v5.orthogonal();
+    EXPECT_DOUBLE_EQ(0, (this->v5*vo5).sum());
+}
 
+TYPED_TEST(VectorTest, Wrap) {
+    //TODO test wrap function
+    Vector<this->N> v1 = this->v1 * 2 * PI + 0.1;
+    this->expect_near(this->v1 * 0.1, wrap(v1), 1e-15);
+
+}
+
+TYPED_TEST(VectorTest, Sum){
+    // TODO
+}
+
+TYPED_TEST(VectorTest, Angular){
+    // TODO
+}
+
+TYPED_TEST(VectorTest, Distance){
+    // TODO distance between two vectors
+}
+
+TYPED_TEST(VectorTest, Direction){
+    // TODO direction between two vectors
+}
+
+TYPED_TEST(VectorTest, DotProduct){
+    // TODO
+}
+
+TYPED_TEST(VectorTest, MathFunctions){
+    /* TODO
+     * sin
+     * cos
+     * atan2
+     */
+}
+
+TYPED_TEST(VectorTest, MathOperators){
+    /* TODO
+     * +, +=
+     * -, -=
+     * *, *=
+     * /, /=
+     */
+}
+
+TYPED_TEST(VectorTest, BoolOperators){
+    EXPECT_EQ(this->v0, this->v0);
+    EXPECT_EQ(Vector<this->N>(), this->v0);
+    EXPECT_EQ(this->v1, Vector<this->N>(this->v1));
+    EXPECT_EQ(this->v5,this->v5);
+    EXPECT_NE(this->v4, this->v5);
+    EXPECT_NE(this->v1, this->v0);
+    EXPECT_NE(this->v1, this->v5);
+}
+
+TYPED_TEST(VectorTest, FstreamOperators){
+    /* TODO
+     */
 }
 
 #endif //ANALYSIS_TESTVECTOR_H

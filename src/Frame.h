@@ -66,9 +66,9 @@ public:
 
 };
 
-double dist(const Vector2d &, const Vector2d &, const Frame &);
-Vector2d direction(const Vector2d &, const Vector2d &, const Frame&);
-Vector2d cartesian(const Vector2d &, const Frame&);
-Vector2d fractional(const Vector2d &, const Frame&);
+double dist(const Vector<2> &, const Vector<2> &, const Frame &);
+Vector<2> direction(const Vector<2> &, const Vector<2> &, const Frame&);
+Vector<2> cartesian(const Vector<2> &, const Frame&);
+Vector<2> fractional(const Vector<2> &, const Frame&);
 
 #endif /* defined(FRAME_H) */

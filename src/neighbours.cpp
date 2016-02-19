@@ -38,7 +38,7 @@ int find_neighbours(Frame &frame, std::vector<std::vector<int>> &neigh_list){
 }
 
 bool find_mol_neighbours(Molecule &mol, Frame &frame, std::vector<std::vector<int>> &neigh_list){
-    Vector2d com;
+    Vector<2> com;
     std::vector<int> &neighbours = neigh_list.at(mol.index());
     // mol properties
     com = mol.get_COM();
@@ -79,7 +79,7 @@ int recompute_neighbours(Molecule &mol, Frame &frame, std::vector<std::vector<in
     // Reset particle neighbour list
     neigh_list.at(mol.index()) = std::vector<int>();
     std::vector<int> &neighbours = neigh_list.at(mol.index());
-    Vector2d com = mol.get_COM();
+    Vector<2> com = mol.get_COM();
     Molecule *mol2;
     dyn_queue queue = dyn_queue(&mol);
     mol2 = queue.pop();
@@ -167,8 +167,8 @@ int short_range_order(const Frame &frame){
     // Print m1
     std::vector<Molecule>::iterator m1;
     for (auto m1: frame.molecules) {
-        Vector2d com1 = m1.get_COM();
-        Vector2d d;
+        Vector<2> com1 = m1.get_COM();
+        Vector<2> d;
         double theta;
         double rot = angle(m1, frame);
         for (auto p: m1.atoms ) {
@@ -185,13 +185,13 @@ int short_range_order(const Frame &frame){
                 total++;
                 if (colour){
                     // Order parameter data
-                    Vector2d com1 = m1.get_COM();
-                    Vector2d d;
+                    Vector<2> com1 = m1.get_COM();
+                    Vector<2> d;
                     double theta;
                     double rot = angle(m1, frame);
                     for (auto p2: neigh.first->atoms){
                         d = direction(p2->pos_vect(),com1);
-                        theta = atan2(d) + PI - rot + PI/2;
+                        theta = atan2(d[1], d[0]) - rot + PI/2;
                         file << theta << "," << d.length() << "," << 0.04 << "," << colour << "\n";
                     }
                 }

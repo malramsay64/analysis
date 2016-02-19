@@ -40,12 +40,12 @@ double Molecule::get_mass() const {
 }
 
 
-Vector2d Molecule::get_COM() const {
+Vector<2> Molecule::get_COM() const {
     return pos_def_mod(com, 2*PI);
 }
 
-Vector2d Molecule::get_COM(){
-    if (com != Vector2d{}){
+Vector<2> Molecule::get_COM(){
+    if (com != Vector<2>{}){
         return pos_def_mod(com,2*PI);
     }
     else{
@@ -54,13 +54,13 @@ Vector2d Molecule::get_COM(){
     }
 }
 
-Vector2d Molecule::moved_COM() const{
+Vector<2> Molecule::moved_COM() const{
     return com;
 }
 
-Vector2d Molecule::calc_COM(){
+Vector<2> Molecule::calc_COM(){
     double total = 0;
-    Vector2d theta, xi, zeta;
+    Vector<2> theta, xi, zeta;
     for (auto p: atoms){
         theta = p->pos_vect();
         xi += p->mass*cos(theta);
@@ -69,14 +69,13 @@ Vector2d Molecule::calc_COM(){
     }
     xi /= total;
     zeta /= total;
-    theta = atan2(-zeta,-xi) + PI;
-    com = theta;
+    com = atan2(-zeta,-xi) + PI;
     return com;
 }
 
-Vector2d Molecule::update_COM(){
-    Vector2d old = Vector2d(com);
-    com = Vector2d(old + direction(old, calc_COM()));
+Vector<2> Molecule::update_COM(){
+    Vector<2> old = Vector<2>(com);
+    com = Vector<2>(old + direction(old, calc_COM()));
     return com;
 }
 
@@ -108,15 +107,15 @@ double Molecule::get_orientation() const{
     return orientation;
 }
 
-Vector2d Molecule::get_orient_vect() const{
-    return Vector2d(sin(get_orientation()), cos(get_orientation()));
+Vector<2> Molecule::get_orient_vect() const{
+    return Vector<2>(std::valarray<double>{std::sin(get_orientation()), std::cos(get_orientation())});
 }
 
 double Molecule::get_rotation() const{
     return rotation;
 }
 
-Vector2d Molecule::atom_pos(int i) const{
+Vector<2> Molecule::atom_pos(int i) const{
     return atoms.at(i)->pos_vect();
 }
 
@@ -155,8 +154,8 @@ int Molecule::max_pairing() const{
 }
 
 int Molecule::same_period(){
-    Vector2d com = get_COM();
-    Vector2d d;
+    Vector<2> com = get_COM();
+    Vector<2> d;
     std::vector<Particle *>::iterator i;
     for (auto &i: atoms){
         d = direction(get_COM(), i->pos_vect());

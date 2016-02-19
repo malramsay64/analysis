@@ -23,13 +23,13 @@ protected:
         p1 = new Particle{};
         p2 = new Particle{};
         p3 = new Particle{};
-        p1->set_pos(Vector2d{2, 1});
+        p1->set_pos(Vector<2>{2, 1});
         p1->id = 1;
         p1->type = 2;
-        p2->set_pos(Vector2d{1, 1});
+        p2->set_pos(Vector<2>{1, 1});
         p2->id = 2;
         p2->type = 1;
-        p3->set_pos(Vector2d{0, 1});
+        p3->set_pos(Vector<2>{0, 1});
         p3->id = 3;
         p3->type = 2;
         m1.atoms.push_back(p1);
@@ -51,9 +51,9 @@ protected:
 
     void rot_particles() {
         for (auto  &atom: m1.atoms){
-            Vector2d r = (atom->pos - m1.get_COM());
+            Vector<2> r = (atom->pos - m1.get_COM());
             double theta = atan2(r)+0.1;
-            atom -> pos = Vector2d{std::sin(theta), std::cos(theta)};
+            atom -> pos = Vector<2>{std::sin(theta), std::cos(theta)};
         }
     }
 };
@@ -91,25 +91,25 @@ TEST_F(MoleculeTest, Mass){
 }
 
 TEST_F(MoleculeTest, COM){
-    EXPECT_DOUBLE_EQ(1, m1.get_COM().x);
-    EXPECT_DOUBLE_EQ(1, m1.get_COM().y);
+    EXPECT_DOUBLE_EQ(1, m1.get_COM()[0]);
+    EXPECT_DOUBLE_EQ(1, m1.get_COM()[1]);
     double pi2 = PI*2;
     double x,y, x_m, y_m;
     for (int i=1; i<32; i++){
         move_particles();
         x = y = fmod(1.+i/10.,pi2);
         x_m = y_m = 1+i/10.;
-        EXPECT_NEAR(x, m1.get_COM().x, 1e-14);
-        EXPECT_NEAR(y, m1.get_COM().y, 1e-14);
-        EXPECT_NEAR(x_m, m1.moved_COM().x, 1e-14);
-        EXPECT_NEAR(y_m, m1.moved_COM().y, 1e-14);
+        EXPECT_NEAR(x, m1.get_COM()[0], 1e-14);
+        EXPECT_NEAR(y, m1.get_COM()[1], 1e-14);
+        EXPECT_NEAR(x_m, m1.moved_COM()[0], 1e-14);
+        EXPECT_NEAR(y_m, m1.moved_COM()[1], 1e-14);
     }
 }
 
 TEST_F(MoleculeTest, CopyConstructor){
     Molecule m2{m1};
     move_particles();
-    EXPECT_EQ(Vector2d(1.1, 1.1), m2.get_COM());
+    EXPECT_EQ(Vector<2>({1.1, 1.1}), m2.get_COM());
     m1.id = 1;
     m2.id = 2;
     EXPECT_EQ(1,m1.id);

@@ -8,15 +8,15 @@
 
 #include "ordering.h"
 
-Vector2d orientation(const Molecule &m, const Frame &frame){
-    Vector2d com = m.get_COM();
+Vector<2> orientation(const Molecule &m, const Frame &frame){
+    Vector<2> com = m.get_COM();
     if (m.num_particles() == 1){
-        return Vector2d{0, 0};
+        return Vector<2>{0, 0};
     }
-    Vector2d v = direction(com, m.atom_pos(0), frame);
+    Vector<2> v = direction(com, m.atom_pos(0), frame);
     if (m.num_particles() == 2 || (v.length() < EPS)){
         v = direction(com, m.get_large()->pos_vect(), frame);
-        v.orthogonalise();
+        v = v.orthogonal();
     }
     v.normalise();
     return v;
@@ -24,28 +24,6 @@ Vector2d orientation(const Molecule &m, const Frame &frame){
 
 double angle(const Molecule &m, const Frame &frame){
     return atan2(orientation(m, frame)) + PI;
-}
-
-Vector2d wrap_x(const Vector2d &v, double a){
-    double x = v.x/a;
-    x = x*2*PI;
-    x = atan2(sin(x),cos(x))+PI;
-    x = x/(2*PI);
-    x = x*a;
-    return Vector2d(x, v.y);
-}
-
-Vector2d wrap(const Vector2d &v){
-    return atan2(sin(v),cos(v))+PI;
-}
-
-double mol_colour(const Molecule &m, const Frame &frame){
-    return my_mod(angle(m, frame),PI)/PI;
-}
-
-
-double com_colour(const Molecule &m, const Frame &frame){
-    return hexatic(6, m, frame);
 }
 
 int circle_colour(const Molecule &m){
@@ -87,7 +65,7 @@ double hexatic(int n, const Molecule &m1, const Frame &frame){
     std::complex<double> sum = std::complex<double>(0,0);
     std::complex<double> i = std::complex<double>(0,1);
     for (auto &m2: m1.my_neighbours){
-        theta = direction(m2.first->get_COM(), m1.get_COM(), frame).angle();
+        theta = direction(m2.first->get_COM(), m1.get_COM(), frame).angular()[1];
         sum += (1./m1.num_neighbours())*exp(6*theta*i);
     }
     return abs(sum);
@@ -134,12 +112,12 @@ int tri_ordering(const Molecule &mol){
 }
 
 Molecule reorient(const Molecule &m, const Frame &frame){
-    Vector2d d{};
+    Vector<2> d{};
     double delta_t = m.get_orientation();
     Molecule n{m};
     for (auto p: n.atoms){
-        d = direction(p->pos_vect(), n.get_COM(), frame);
-        p->set_pos(Vector2d(d.length() * sin(d.angle() - delta_t), d.length() * cos(d.angle() - delta_t)));
+        d = direction(p->pos_vect(), n.get_COM(), frame).angular();
+        p->set_pos(Vector<2>{d[0] * sin(d[1] - delta_t), d[0] * cos(d[1] - delta_t)});
     }
     return n;
 }

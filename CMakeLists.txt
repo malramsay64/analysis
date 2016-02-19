@@ -18,7 +18,7 @@ set(SOURCE_FILES
         src/ordering.cpp    src/ordering.h
         src/neighbours.cpp  src/neighbours.h
         src/dyn_queue.cpp   src/dyn_queue.h
-        src/Vector.cpp      src/Vector.h)
+        src/Vector.cpp      src/Vector.h src/Compute.cpp src/Compute.h)
 
 set(TEST_FILES
         test/testVector3d.h
@@ -27,7 +27,7 @@ set(TEST_FILES
         test/testParticle.h
         test/testMolecule.h
         test/testFrame.h
-        test/testVector.h)
+        test/testVector.h src/Compute.cpp src/Compute.h test/testCompute.h)
 
 
 

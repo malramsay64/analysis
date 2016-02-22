@@ -17,7 +17,7 @@ Particle default_p(){
     p.molid = 5;
     p.type = 2;
     p.radius = 1.2;
-    p.pos = Vector<2>{0.1, 0.2};
+    p.pos = Vector{0.1, 0.2};
     p.my_neighbours = std::vector<Particle *>{&p};
     return p;
 }
@@ -40,7 +40,7 @@ TEST(Particle, Initialising){
     EXPECT_EQ(5, p.molid);
     EXPECT_EQ(2, p.type);
     EXPECT_DOUBLE_EQ(1.2, p.radius);
-    EXPECT_EQ(p.pos, Vector<2>({0.1, 0.2}));
+    EXPECT_EQ(p.pos, Vector({0.1, 0.2}));
 }
 
 TEST(Particle, CopyConstructor){
@@ -51,8 +51,8 @@ TEST(Particle, CopyConstructor){
     p1.radius = 0.5;
     EXPECT_DOUBLE_EQ(1, p1.mass);
     EXPECT_DOUBLE_EQ(0.8, p2.mass);
-    EXPECT_EQ(p1.pos, Vector<2>({3, 0.2}));
-    EXPECT_EQ(p2.pos, Vector<2>({0.1, 0.2}));
+    EXPECT_EQ(p1.pos, Vector({3, 0.2}));
+    EXPECT_EQ(p2.pos, Vector({0.1, 0.2}));
     EXPECT_DOUBLE_EQ(0.5, p1.radius);
     EXPECT_DOUBLE_EQ(1.2, p2.radius);
 }
@@ -64,7 +64,7 @@ TEST(Particle, StructConstructor){
     EXPECT_EQ(0, p.molid);
     EXPECT_EQ(0, p.type);
     EXPECT_DOUBLE_EQ(1, p.radius);
-    EXPECT_EQ(p.pos, Vector<2>());
+    EXPECT_EQ(p.pos, Vector());
 }
 
 TEST(Particle, OperatorsBoolean){
@@ -99,9 +99,9 @@ TEST(Particle, Getters){
     p1.my_neighbours = std::vector<Particle *>(large, nullptr);
     p1.append(&p2);
     EXPECT_EQ(large+1, p1.numn());
-    Vector<2> v = p2.pos_vect();
+    Vector v = p2.pos_vect();
     v[0] = 1.0;
-    EXPECT_EQ(Vector<2>(), p2.pos_vect());
+    EXPECT_EQ(Vector(), p2.pos_vect());
     p3.id = 5;
     p3.molid = 3;
     EXPECT_EQ(4, p3.index());

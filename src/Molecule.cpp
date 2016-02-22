@@ -10,9 +10,6 @@
 
 using namespace LAlgebra;
 
-Molecule::Molecule(){
-}
-
 void Molecule::add_neighbour(Molecule *m){
     my_neighbours[m]++;
     contacts++;
@@ -39,12 +36,12 @@ double Molecule::get_mass() const {
     return mass;
 }
 
-Vector<2> Molecule::get_COM() const {
+Vector Molecule::get_COM() const {
     return pos_def_mod(com, 2*PI);
 }
 
-Vector<2> Molecule::get_COM(){
-    if (com != Vector<2>{}){
+Vector Molecule::get_COM(){
+    if (com != Vector{}){
         return pos_def_mod(com,2*PI);
     }
     else{
@@ -53,13 +50,13 @@ Vector<2> Molecule::get_COM(){
     }
 }
 
-Vector<2> Molecule::moved_COM() const{
+Vector Molecule::moved_COM() const{
     return com;
 }
 
-Vector<2> Molecule::calc_COM(){
+Vector Molecule::calc_COM(){
     double total = 0;
-    Vector<2> theta, xi, zeta;
+    Vector theta, xi, zeta;
     for (auto p: atoms){
         theta = p->pos_vect();
         xi += p->mass*cos(theta);
@@ -72,9 +69,9 @@ Vector<2> Molecule::calc_COM(){
     return com;
 }
 
-Vector<2> Molecule::update_COM(){
-    Vector<2> old = Vector<2>(com);
-    com = Vector<2>(old + direction(old, calc_COM()));
+Vector Molecule::update_COM(){
+    Vector old{com};
+    com = Vector{old + direction(old, calc_COM())};
     return com;
 }
 
@@ -106,15 +103,15 @@ double Molecule::get_orientation() const{
     return orientation;
 }
 
-Vector<2> Molecule::get_orient_vect() const{
-    return Vector<2>(std::valarray<double>{std::sin(get_orientation()), std::cos(get_orientation())});
+Vector Molecule::get_orient_vect() const{
+    return Vector(std::valarray<double>{std::sin(get_orientation()), std::cos(get_orientation())});
 }
 
 double Molecule::get_rotation() const{
     return rotation;
 }
 
-Vector<2> Molecule::atom_pos(int i) const{
+Vector Molecule::atom_pos(int i) const{
     return atoms.at(i)->pos_vect();
 }
 
@@ -153,8 +150,8 @@ int Molecule::max_pairing() const{
 }
 
 int Molecule::same_period(){
-    Vector<2> com = get_COM();
-    Vector<2> d;
+    Vector com = get_COM();
+    Vector d;
     std::vector<Particle *>::iterator i;
     for (auto &i: atoms){
         d = direction(get_COM(), i->pos_vect());
@@ -167,26 +164,10 @@ int Molecule::index() const{
     return id-1;
 }
 
-bool Molecule::operator!=(const Molecule &b) const {
-    return id != b.id;
-}
-
-bool Molecule::operator==(const Molecule &b) const {
-    return id == b.id;
-}
-
-bool Molecule::operator<(const Molecule &b) const {
-    return id < b.id;
-}
-
-bool Molecule::operator<=(const Molecule &b) const {
-    return id <= b.id;
-}
-
-bool Molecule::operator>(const Molecule &b) const {
-    return id > b.id;
-}
-
-bool Molecule::operator>=(const Molecule &b) const {
-    return id >= b.id;
+std::vector<Molecule *> Molecule::get_neighbours() {
+    std::vector<Molecule *> ret{};
+    for (auto i: my_neighbours){
+        ret.push_back(i.first);
+    }
+    return ret;
 }

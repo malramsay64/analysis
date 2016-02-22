@@ -7,6 +7,7 @@
 #include "testMolecule.h"
 #include "testFrame.h"
 #include "testVector.h"
+#include "testSearch.h"
 
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);

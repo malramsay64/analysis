@@ -8,12 +8,12 @@
 
 #include "ordering.h"
 
-Vector<2> orientation(const Molecule &m, const Frame &frame){
-    Vector<2> com = m.get_COM();
+Vector orientation(const Molecule &m, const Frame &frame){
+    Vector com = m.get_COM();
     if (m.num_particles() == 1){
-        return Vector<2>{0, 0};
+        return Vector{};
     }
-    Vector<2> v = direction(com, m.atom_pos(0), frame);
+    Vector v = direction(com, m.atom_pos(0), frame);
     if (m.num_particles() == 2 || (v.length() < EPS)){
         v = direction(com, m.get_large()->pos_vect(), frame);
         v = v.orthogonal();
@@ -112,12 +112,12 @@ int tri_ordering(const Molecule &mol){
 }
 
 Molecule reorient(const Molecule &m, const Frame &frame){
-    Vector<2> d{};
+    Vector d{};
     double delta_t = m.get_orientation();
     Molecule n{m};
     for (auto p: n.atoms){
         d = direction(p->pos_vect(), n.get_COM(), frame).angular();
-        p->set_pos(Vector<2>{d[0] * sin(d[1] - delta_t), d[0] * cos(d[1] - delta_t)});
+        p->set_pos(Vector{d[0] * sin(d[1] - delta_t), d[0] * cos(d[1] - delta_t)});
     }
     return n;
 }

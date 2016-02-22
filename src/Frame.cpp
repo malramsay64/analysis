@@ -116,24 +116,24 @@ double Frame::get_density() const{
     return num_atoms()/get_area();
 }
 
-double dist(const Vector<2> &v1, const Vector<2> &v2, const Frame &f){
+double dist(const Vector &v1, const Vector &v2, const Frame &f){
     return direction(v1,v2,f).length();
 }
 
-Vector<2> direction(const Vector<2> &v1, const Vector<2> &v2, const Frame &f){
+Vector direction(const Vector &v1, const Vector &v2, const Frame &f){
     return cartesian(direction(v1,v2), f);
 }
 
-Vector<2> cartesian(const Vector<2> &vi, const Frame &f){
-    Vector<2> v{vi};
+Vector cartesian(const Vector &vi, const Frame &f){
+    Vector v{vi};
     v /= (2*PI);
     v.r[0] = v.r[0]*f.get_a() + v.r[1]*f.get_b()*cos(f.get_theta());
     v.r[1] = v.r[1]*f.get_b()*sin(f.get_theta());
     return v;
 }
 
-Vector<2> fractional(const Vector<2> &vi, const Frame &f){
-    Vector<2> v{};
+Vector fractional(const Vector &vi, const Frame &f){
+    Vector v{};
     v.r[0] = vi.r[0]*(1/f.get_a()) + vi.r[1]*(-cos(f.get_theta())/(f.get_a()*sin(f.get_theta())));
     v.r[1] = vi.r[1]/(f.get_b()*sin(f.get_theta()));
     v *= 2*PI;

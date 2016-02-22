@@ -65,9 +65,9 @@ public:
     double get_tilt() const;
 };
 
-double dist(const Vector<2> &, const Vector<2> &, const Frame &);
-Vector<2> direction(const Vector<2> &, const Vector<2> &, const Frame&);
-Vector<2> cartesian(const Vector<2> &, const Frame&);
-Vector<2> fractional(const Vector<2> &, const Frame&);
+double dist(const Vector &, const Vector &, const Frame &);
+Vector direction(const Vector &, const Vector &, const Frame&);
+Vector cartesian(const Vector &, const Frame&);
+Vector fractional(const Vector &, const Frame&);
 
 #endif /* defined(FRAME_H) */

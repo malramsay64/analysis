@@ -10,26 +10,23 @@ endif()
 
 set(SOURCE_FILES
         src/functions.cpp   src/functions.h
-        src/Vector2d.cpp    src/Vector2d.h
         src/Particle.cpp    src/Particle.h
         src/Molecule.cpp    src/Molecule.h
         src/Frame.cpp       src/Frame.h
-        src/vector3d.cpp    src/vector3d.h
         src/ordering.cpp    src/ordering.h
         src/neighbours.cpp  src/neighbours.h
-        src/dyn_queue.cpp   src/dyn_queue.h
-        src/Vector.cpp      src/Vector.h src/Compute.cpp src/Compute.h)
+        src/Vector.cpp      src/Vector.h
+        src/Compute.cpp     src/Compute.h
+        src/Search.cpp      src/Search.h)
 
 set(TEST_FILES
-        test/testVector3d.h
-        test/testVector2d.h
         test/testFunctions.h
         test/testParticle.h
         test/testMolecule.h
         test/testFrame.h
-        test/testVector.h src/Compute.cpp src/Compute.h test/testCompute.h)
-
-
+        test/testVector.h
+        test/testCompute.h
+        test/testSearch.h)
 
 # Include stats
 include_directories($ENV{HOME}/.local/include)

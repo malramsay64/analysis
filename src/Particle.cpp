@@ -17,7 +17,7 @@ Particle::Particle(){
     id = 0;
     radius = 0;
     my_neighbours = std::vector<Particle *>{};
-    pos = Vector<2>{};
+    pos = Vector{};
 }
 
 Particle::Particle(const Particle &p){
@@ -59,11 +59,15 @@ void Particle::append(Particle *p){
     my_neighbours.push_back(p);
 }
 
-void Particle::set_pos(const Vector<2> &v){
+void Particle::add_neighbour(Particle *p) {
+    append(p);
+}
+
+void Particle::set_pos(const Vector &v){
     pos = v;
 }
 
-Vector<2> Particle::pos_vect() const{
+Vector Particle::pos_vect() const{
     return pos;
 }
 
@@ -86,28 +90,4 @@ int Particle::order(){
         return 1;
     }
     return 0;
-}
-
-bool Particle::operator> (const Particle &b) const {
-    return id > b.id;
-}
-
-bool Particle::operator>= (const Particle &b)const {
-    return id >= b.id;
-}
-
-bool Particle::operator< (const Particle &b) const{
-    return id < b.id;
-}
-
-bool Particle::operator<= (const Particle &b) const{
-    return id <= b.id;
-}
-
-bool Particle::operator== (const Particle &b) const{
-    return id == b.id;
-}
-
-bool Particle::operator!= (const Particle &b) const {
-    return id != b.id;
 }

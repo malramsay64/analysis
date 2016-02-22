@@ -31,7 +31,7 @@ struct particle_vars{
 // particle class
 class Particle {
 public:
-    Vector<2> pos;
+    Vector pos;
     int id;
     int molid;
     int type;
@@ -44,21 +44,23 @@ public:
     Particle(const particle_vars&);
 
     void append(Particle *);
+    void add_neighbour(Particle *);
     size_t numn() const;
-    void set_pos(const Vector<2> &);
-    Vector<2> pos_vect() const;
+    void set_pos(const Vector &);
+    Vector pos_vect() const;
     int index() const;
     int mol_index() const;
     int order();
     void delete_neighbours();
-    
-    bool operator> (const Particle &b) const;
-    bool operator>= (const Particle &b) const;
-    bool operator< (const Particle &b) const;
-    bool operator<= (const Particle &b) const;
-    bool operator== (const Particle &b) const;
-    bool operator!= (const Particle &b) const;
+    std::vector<Particle *> get_neighbours() { return my_neighbours; };
 };
+
+inline bool operator> (const Particle &lhs, const Particle &rhs) { return lhs.id > rhs.id; };
+inline bool operator>= (const Particle &lhs, const Particle &rhs) { return lhs.id >= rhs.id; };
+inline bool operator< (const Particle &lhs, const Particle &rhs) { return lhs.id < rhs.id; };
+inline bool operator<= (const Particle &lhs, const Particle &rhs) { return lhs.id <= rhs.id; };
+inline bool operator== (const Particle &lhs, const Particle &rhs) { return lhs.id == rhs.id; };
+inline bool operator!= (const Particle &lhs, const Particle &rhs) { return lhs.id != rhs.id; };
 
 #endif
 

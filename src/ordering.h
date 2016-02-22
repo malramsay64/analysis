@@ -13,13 +13,13 @@
 #include "Particle.h"
 #include "Frame.h"
 #include "neighbours.h"
-#include "dyn_queue.h"
+#include "Search.h"
 
 static double STRUCT_DIST = 0.3;
 
-Vector<2> orientation(const Molecule &, const Frame &);
+Vector orientation(const Molecule &, const Frame &);
 double angle(const Molecule &, const Frame &);
-Vector<2> wrap_x(const Vector<2> &v, double a);
+Vector wrap_x(const Vector &v, double a);
 double com_colour(const Molecule &, const Frame &);
 double mol_colour(const Molecule &, const Frame &);
 double struct_relax(const Molecule &, const Frame &);

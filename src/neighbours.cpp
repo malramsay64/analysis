@@ -38,7 +38,7 @@ int find_neighbours(Frame &frame, std::vector<std::vector<int>> &neigh_list){
 }
 
 bool find_mol_neighbours(Molecule &mol, Frame &frame, std::vector<std::vector<int>> &neigh_list){
-    Vector<2> com;
+    Vector com;
     std::vector<int> &neighbours = neigh_list.at(mol.index());
     // mol properties
     com = mol.get_COM();
@@ -79,9 +79,9 @@ int recompute_neighbours(Molecule &mol, Frame &frame, std::vector<std::vector<in
     // Reset particle neighbour list
     neigh_list.at(mol.index()) = std::vector<int>();
     std::vector<int> &neighbours = neigh_list.at(mol.index());
-    Vector<2> com = mol.get_COM();
+    Vector com = mol.get_COM();
     Molecule *mol2;
-    dyn_queue queue = dyn_queue(&mol);
+    BFS<Molecule> queue = BFS<Molecule>(&mol);
     mol2 = queue.pop();
     //mol->my_neighbours = vector<molecule *>();
     while (queue.get_depth() < 2 && mol2){
@@ -99,7 +99,7 @@ int recompute_neighbours(Molecule &mol, Frame &frame, std::vector<std::vector<in
         Molecule &m1 = frame.molecules.at(m);
         neigh_list.at(m1.index()) = std::vector<int>{};
         neighbours = neigh_list.at(m1.index());
-        dyn_queue queue = dyn_queue(&m1);
+        BFS<Molecule> queue = BFS<Molecule>(&m1);
         mol2 = queue.pop();
         while (queue.get_depth() < 2 && mol2){
             mol2 = queue.pop();
@@ -165,8 +165,8 @@ int short_range_order(const Frame &frame){
     // Print m1
     std::vector<Molecule>::iterator m1;
     for (auto m1: frame.molecules) {
-        Vector<2> com1 = m1.get_COM();
-        Vector<2> d;
+        Vector com1 = m1.get_COM();
+        Vector d;
         double theta;
         double rot = angle(m1, frame);
         for (auto p: m1.atoms ) {
@@ -183,8 +183,8 @@ int short_range_order(const Frame &frame){
                 total++;
                 if (colour){
                     // Order parameter data
-                    Vector<2> com1 = m1.get_COM();
-                    Vector<2> d;
+                    Vector com1 = m1.get_COM();
+                    Vector d;
                     double theta;
                     double rot = angle(m1, frame);
                     for (auto p2: neigh.first->atoms){

@@ -19,7 +19,7 @@ class Molecule {
     double rotation{0};
     double orientation{0};
     int colour{0};
-    Vector<2> com{};
+    Vector com{};
 public:
     int type{0};
     int id{0};
@@ -27,7 +27,7 @@ public:
     std::map<Molecule *, int> my_neighbours{};
     int contacts{0};
     
-    Molecule();
+    Molecule() {};
     void add_neighbour(Molecule *);
     void delete_neighbours();
     void delete_mol_neighbours();
@@ -37,12 +37,12 @@ public:
     int num_neighbours() const ;
     double get_mass() const;
     Particle * get_large() const;
-    Vector<2> get_COM();
-    Vector<2> get_COM() const;
-    Vector<2> moved_COM() const ;
-    Vector<2> calc_COM();
-    Vector<2> update_COM();
-    Vector<2> atom_pos(int) const ;
+    Vector get_COM();
+    Vector get_COM() const;
+    Vector moved_COM() const ;
+    Vector calc_COM();
+    Vector update_COM();
+    Vector atom_pos(int) const ;
     std::map<int, int> pairing() const ;
     int max_pairing() const ;
     int same_period();
@@ -51,15 +51,15 @@ public:
     double get_orientation() const ;
     int set_orientation(double);
     double get_rotation() const ;
-    Vector<2> get_orient_vect() const;
-
-    bool operator> (const Molecule &b) const;
-    bool operator>= (const Molecule &b) const;
-    bool operator< (const Molecule &b) const;
-    bool operator<= (const Molecule &b) const;
-    bool operator== (const Molecule &b) const;
-    bool operator!= (const Molecule &b) const;
+    Vector get_orient_vect() const;
+    std::vector<Molecule *> get_neighbours();
 } ;
 
+inline bool operator> (const Molecule &lhs, const Molecule &rhs) { return lhs.id > rhs.id; };
+inline bool operator>= (const Molecule &lhs, const Molecule &rhs) { return lhs.id >= rhs.id; };
+inline bool operator< (const Molecule &lhs, const Molecule &rhs) { return lhs.id < rhs.id; };
+inline bool operator<= (const Molecule &lhs, const Molecule &rhs) { return lhs.id <= rhs.id; };
+inline bool operator== (const Molecule &lhs, const Molecule &rhs) { return lhs.id == rhs.id; }
+inline bool operator!= (const Molecule &lhs, const Molecule &rhs) { return lhs.id != rhs.id; };
 
 #endif /* defined(MY_MOLECULE) */

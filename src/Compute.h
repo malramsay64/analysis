@@ -30,6 +30,7 @@ public:
 
     Compute() : frame(Frame{}) {};
     Compute(const Frame &inFrame) : frame(inFrame) {};
+    Compute(const Frame &inFrame, size_t array_size): frame(inFrame), array(std::vector<double>(array_size, 0.)) {};
     virtual void compute_array() {};
 };
 
@@ -50,7 +51,7 @@ class ComputeMol : public Compute {
 protected:
     virtual double compute_single(const Molecule &m) {};
 public:
-    ComputeMol(const Frame &inFrame) : Compute(inFrame), array(std::vector<double>(frame.num_mol(), 0.)){};
+    ComputeMol(const Frame &inFrame) : Compute(inFrame, frame.num_mol()) {};
 
     void compute_array();
 };
@@ -65,7 +66,7 @@ class ComputeAtom : public Compute {
 protected:
     virtual double compute_single(const Particle &m) {};
 public:
-    ComputeAtom(const Frame &inFrame) : Compute(inFrame), array(std::vector<double>(frame.num_atoms(), 0.)){};
+    ComputeAtom(const Frame &inFrame) : Compute(inFrame, frame.num_atoms()) {};
 
     void compute_array();
 };
@@ -95,7 +96,7 @@ class ComputeCoord : public ComputeAtom {
 private:
     const double cutoff;
 public:
-    ComputeCoord::ComputeCoord(const Frame &inFrame, double cutoff = 1.12) : ComputeAtom(inFrame), cutoff(cutoff){}
+    ComputeCoord(const Frame &inFrame, double cutoff = 1.12) : ComputeAtom(inFrame), cutoff(cutoff){}
 
     double compute_single(const Particle &);
 };
@@ -104,7 +105,7 @@ class ComputeMolHexatic : public ComputeMol {
 private:
     const int degree;
 public:
-    ComputeMolHexatic::ComputeMolHexatic(const Frame &inFrame, int d) : ComputeMol(inFrame), degree(d) { }
+    ComputeMolHexatic(const Frame &inFrame, int d) : ComputeMol(inFrame), degree(d) { }
 
     double compute_single(const Molecule &m);
 };

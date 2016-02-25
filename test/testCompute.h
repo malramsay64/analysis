@@ -5,6 +5,7 @@
 #ifndef ANALYSIS_TESTCOMPUTE_H
 #define ANALYSIS_TESTCOMPUTE_H
 
+#include <gtest/gtest.h>
 #include "../src/Compute.h"
 
 /* TODO
@@ -18,6 +19,29 @@
  *  This class will then test all the compute styles, checking they get sensible results.
  */
 
+TEST(Compute, ComputeAngle){
+    /* TODO
+     */
+}
 
+TEST(Compute, ComputeCoord){
+    /* TODO
+     */
+}
+
+TEST(Compute, ComputeMolHexatic){
+    /* TODO
+     */
+}
+
+TEST(Compute, ComputeCircleOrder){
+    /* TODO
+     */
+}
+
+TEST(Cmpute, ComputeOrientationOrder){
+    /* TODO
+     */
+}
 
 #endif //ANALYSIS_TESTCOMPUTE_H

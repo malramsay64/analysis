@@ -38,7 +38,7 @@ public:
     double radius;
     double mass;
     std::vector<Particle *> my_neighbours;
-    
+
     Particle();
     Particle(const Particle &);
     Particle(const particle_vars&);
@@ -50,9 +50,11 @@ public:
     Vector pos_vect() const;
     int index() const;
     int mol_index() const;
-    int order();
     void delete_neighbours();
     std::vector<Particle *> get_neighbours() { return my_neighbours; };
+
+    friend std::ostream& operator<< (std::ostream &os, const Particle &p);
+    friend std::istream& operator>> (std::istream &os, Particle &p);
 };
 
 inline bool operator> (const Particle &lhs, const Particle &rhs) { return lhs.id > rhs.id; };

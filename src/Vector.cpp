@@ -45,10 +45,6 @@ namespace LAlgebra {
     }
 
     double Vector::length() const {
-        auto sq = r*r;
-        double s = sq.sum();
-        double sr = sqrt(s);
-        return sr;
         return sqrt((r*r).sum());
     }
 
@@ -84,18 +80,11 @@ namespace LAlgebra {
      */
     Vector Vector::angular() const {
         Vector vo{};
-        for (auto i = 0; i < vo.r.size(); i++) {
-            if (i == 0) {
-                vo[i] = length();
-            }
-            else {
-                double sum_sq{0};
-                for (int j = size() - 1; j >= i; --j) {
-                    sum_sq += r[j] * r[j];
-                }
-                vo[i] = r[i] / sqrt(sum_sq);
-            }
-        }
+        vo[0] = length();
+        if (vo[0] == 0) return vo;
+        vo[1] = acos(r[2]/vo[0]);
+        if (r[0] == 0 && r[1] == 0) return vo;
+        vo[2] = atan(r[1]/r[0]);
         return vo;
     }
 
@@ -104,11 +93,19 @@ namespace LAlgebra {
     };
 
     Vector wrap(const Vector &v, double d) {
-        return Vector((v*2.*PI/d).r.apply([](double val){return map_angle(val);})*(d/2.*PI));
+        Vector vo{v};
+        vo *= (2*PI/d);
+        vo = wrap(vo);
+        vo *= (d/(2*PI));
+        return vo;
     };
 
     Vector wrap(const Vector &v, const Vector &bounds) {
-        return Vector((v*2.*PI/bounds).r.apply([](double val){return map_angle(val);})*(bounds.r/2.*PI));
+        Vector vo{v};
+        vo *= ((2*PI)/bounds);
+        vo = wrap(vo);
+        vo *= (bounds/(2*PI));
+        return vo;
     };
 
     /* Vector Operators
@@ -245,5 +242,10 @@ namespace LAlgebra {
             j < v.size() - 1 ? os << " " : os << "";
         }
         return os;
+    }
+
+    std::istream& operator>>(std::istream &is, Vector &v){
+        is >> v[0] >> v[1] >> v[2];
+        return is;
     }
 }

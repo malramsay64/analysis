@@ -21,4 +21,40 @@ TEST(Frame, StructInitialiser){
      */
 }
 
+TEST(Frame, Getters){
+    /* TODO
+     *
+     * get_timestep()
+     * get_stepsize()
+     * get_time()
+     * get_area()
+     * get_density()
+     * get_a()
+     * get_b()
+     * get_theta()
+     * get_height()
+     * get_tilt()
+     */
+}
+
+TEST(Frame, Linking){
+    /* TODO
+     *
+     * add_link(int, int)
+     * add_link(int, int, bool)
+     * update_links()
+     */
+}
+
+TEST(Frame, Conversions){
+    /* TODO
+     *
+     * cartesian
+     * fractional
+     * dist
+     * direction
+     * angle
+     */
+}
+
 #endif //ANALYSIS_TESTFRAME_H

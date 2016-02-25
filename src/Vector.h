@@ -91,6 +91,7 @@ namespace LAlgebra {
 
     std::ostream& operator<< (std::ostream &os, const Vector& v);
     std::ostream& operator<< (std::ostream &os, Vector& v);
+    std::istream& operator>> (std::istream &is, Vector& v);
 };
 
 #endif //ANALYSIS_VECTOR_H

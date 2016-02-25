@@ -42,3 +42,32 @@ double ComputeCoord::compute_single(const Particle &p) {
      */
     return p.numn();
 }
+
+double ComputeCircleOrder::compute_single(const Particle &p) {
+    int small = 0, large = 0;
+    for (auto &neigh: p.my_neighbours){
+        if (neigh->type == 1){
+            large++;
+        }
+        else{
+            small++;
+        }
+    }
+    // Ordering for d=1.637556 dimers
+    // Not including bonded particle
+    if (p.type == 1 && large == 3 && small == 3 ){
+        return 1;
+    }
+    else if (p.type == 2 && large == 3 && small == 1 ){
+        return 1;
+    }
+    return 0;
+}
+
+double ComputeOrientationOrder::compute_single(const Molecule &m) {
+    Stats::Stats mean;
+    for (auto m2: m.my_neighbours){
+        mean.push(pow(dot_product(m.get_orient_vect(), m2.first->get_orient_vect()),2));
+    }
+    return mean.getMean();
+}

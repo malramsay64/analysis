@@ -24,7 +24,18 @@
 /* TODO
  * Create intialiser stuct for Frame
  * Struct collated input data to create the frame
+ * Generalise to 3D
  */
+
+struct FrameVars {
+    double a{0};
+    double b{0};
+    double theta{0};
+    double step_size = 0.005;
+    size_t num_atoms{0};
+    size_t num_mols{0};
+    int timestep{0};
+};
 
 class Frame {
     bool coloured;
@@ -41,6 +52,7 @@ public:
     // TODO particle/molecule binning
 
     Frame();
+    Frame(const FrameVars &f);
     Frame(Frame const &);
     void set_timestep(int);
     int get_timestep() const;
@@ -67,6 +79,7 @@ public:
 
 double dist(const Vector &, const Vector &, const Frame &);
 Vector direction(const Vector &, const Vector &, const Frame&);
+double angle(const Vector &, const Frame&);
 Vector cartesian(const Vector &, const Frame&);
 Vector fractional(const Vector &, const Frame&);
 

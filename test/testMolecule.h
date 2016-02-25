@@ -124,6 +124,46 @@ TEST_F(MoleculeTest, CopyConstructor){
     EXPECT_EQ(0, m2.num_particles());
 }
 
+TEST(Molecule, DeleteNeighbours){
+    /* TODO
+     *
+     * delete_neighbours()
+     * delete_mol_neighbours()
+     */
+
+}
+
+TEST(Molecule, Getters){
+    /* TODO
+     *
+     * uniqe_contacts()
+     * num_particles()
+     * num_contacts()
+     * num_neighbours()
+     * get_mass()
+     * get_large()
+     * get_COM()
+     * atom_pos(int)
+     * max_pairing()
+     * index()
+     * get_rotation()
+     * get_orient_vect()
+     * get_neighbours()
+     */
+}
+
+
+TEST(Molecule, BoolOperators){
+    /* TODO
+     *
+     * ==
+     * !=
+     * <
+     * <=
+     * >
+     * >=
+     */
+}
 
 
 

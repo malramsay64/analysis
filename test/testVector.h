@@ -14,6 +14,7 @@ using namespace LAlgebra;
 class VectorTest : public testing::Test {
 public:
     static const size_t N = 3;
+    const double accuracy{1e-14};
     virtual void SetUp(){
         v0 = Vector{}; // Vector of zeros
         v1 = Vector{}; // Vector of 1s
@@ -107,14 +108,12 @@ TEST_F(VectorTest, Length){
 }
 
 TEST_F(VectorTest, Normalise){
-    std::cout << this->v0 << " " << v0.length() << std::endl;
     this->v0.normalise();
     this->v1.normalise();
     this->v2.normalise();
     this->v3.normalise();
     this->v4.normalise();
     this->v5.normalise();
-    std::cout << v0 << std::endl;
     EXPECT_DOUBLE_EQ(0, this->v0.length());
     EXPECT_DOUBLE_EQ(1, this->v1.length());
     EXPECT_DOUBLE_EQ(1, this->v2.length());
@@ -139,18 +138,35 @@ TEST_F(VectorTest, Orthogonalise){
 }
 
 TEST_F(VectorTest, Wrap) {
-    //TODO test wrap function
-    Vector v1 = this->v1 * 2 * PI + 0.1;
-    //this->expect_near(this->v1 * 0.1, wrap(v1), 1e-15);
+    Vector vw1 = v1 * 2 * PI + 0.1;
+    // Default
+    expect_near(v1 * 0.1, wrap(vw1), accuracy);
+    expect_near(v1, wrap(v1 + 2 * PI), accuracy);
+    expect_near(v3, wrap(v3 - 2 * PI), accuracy);
+    expect_near(v1, wrap(v1 + 4 * PI), accuracy);
+    expect_near(v1, wrap(v1 + 16 * PI), accuracy);
+    // Double limit
+    expect_near(v1, wrap(v1,1), accuracy);
+    expect_near(v2-1, wrap(v2,1), accuracy);
+    // Vector limit
+    expect_near(v2-1, wrap(v2,v1), accuracy);
 
 }
 
 TEST_F(VectorTest, Sum){
     // TODO
+    EXPECT_EQ(size(), v1.sum());
+    EXPECT_EQ(size()*1.1, v2.sum());
+    EXPECT_EQ(0, v0.sum());
+    EXPECT_EQ(this->cum_sum(), v3.sum());
 }
 
 TEST_F(VectorTest, Angular){
-    // TODO
+    EXPECT_EQ(v0, v0.angular());
+    expect_near(Vector{sqrt(3), asin(sqrt(2./3)), PI/4}, v1.angular(), accuracy);
+    expect_near(Vector{2,PI/2,0}, Vector{2,0,0}.angular(), accuracy);
+    expect_near(Vector{2, PI/2, PI/2}, Vector{0,2,0}.angular(), accuracy);
+    expect_near(Vector{2, 0, 0}, Vector{0,0,2}.angular(), accuracy);
 }
 
 TEST_F(VectorTest, Distance){
@@ -201,6 +217,9 @@ TEST_F(VectorTest, BoolOperators){
 
 TEST_F(VectorTest, FstreamOperators){
     /* TODO
+     *
+     * >>
+     * <<
      */
     std::stringstream ss;
     ss << this->v0;

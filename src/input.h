@@ -8,15 +8,10 @@
 
 #include <iostream>
 #include <string>
-#include <string.h>
-#include <math.h>
-#include <assert.h>
-#include <stdio.h>
+#include <getopt.h>
 
 #include "Particle.h"
 #include "Frame.h"
-#include "constants.h"
-#include "ordering.h"
 
 
 
@@ -24,9 +19,9 @@
 #define INPUT_H
 
 // Variables
-int read_data(std::ifstream *myfile, Frame *frame);
-int update(std::ifstream *myfile, Frame *frame);
-int skip_frame(std::ifstream *myfile);
+
+Frame read_frame(std::istream &is);
+void useage();
 
 #endif /* defined(INPUT_H) */
 

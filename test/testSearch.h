@@ -83,7 +83,7 @@ typedef testing::Types<modelMol, Molecule, Particle> SearchClasses;
 TYPED_TEST_CASE(SearchTest, SearchClasses);
 
 TYPED_TEST(SearchTest, BFSSingle){
-    BFS<TypeParam> search = BFS<TypeParam>(this->list.front());
+    BFS<TypeParam> search = BFS<TypeParam>(&(this->list.front()));
     std::vector<int> actual{};
     while (!search.empty()){
         actual.push_back(search.front()->id);
@@ -93,7 +93,7 @@ TYPED_TEST(SearchTest, BFSSingle){
 }
 
 TYPED_TEST(SearchTest, BFSRecip){
-    BFS<TypeParam> search = BFS<TypeParam>(this->list_recip.front());
+    BFS<TypeParam> search = BFS<TypeParam>(&(this->list_recip.front()));
     std::vector<int> actual{};
     while (!search.empty()){
         actual.push_back(search.front()->id);
@@ -103,7 +103,7 @@ TYPED_TEST(SearchTest, BFSRecip){
 }
 
 TYPED_TEST(SearchTest, DFSSingle){
-    DFS<TypeParam> search = DFS<TypeParam>(this->list.front());
+    DFS<TypeParam> search = DFS<TypeParam>(&(this->list.front()));
     std::vector<int> actual{};
     while (!search.empty()){
         actual.push_back(search.front()->id);
@@ -113,7 +113,7 @@ TYPED_TEST(SearchTest, DFSSingle){
 }
 
 TYPED_TEST(SearchTest, DFSRecip){
-    DFS<TypeParam> search = DFS<TypeParam>(this->list_recip.front());
+    DFS<TypeParam> search = DFS<TypeParam>(&(this->list_recip.front()));
     std::vector<int> actual{};
     while (!search.empty()){
         actual.push_back(search.front()->id);
@@ -121,41 +121,41 @@ TYPED_TEST(SearchTest, DFSRecip){
     }
     this->check_DFS_Order(actual);
 }
-/*
-TYPED_TEST(SearchTest, InterfcaceSingle){
-    Search<TypeParam> search = DFS<TypeParam>(this->list.front());
+
+TYPED_TEST(SearchTest, InterfaceSingle){
+    Search<TypeParam> *search = new DFS<TypeParam>(&(this->list.front()));
     std::vector<int> actual{};
-    while (!search.empty()){
-        actual.push_back(search.front()->id);
-        search.pop();
+    while (!search->empty()){
+        actual.push_back(search->front()->id);
+        search->pop();
     }
     this->check_DFS_Order(actual);
 
-    search = BFS<TypeParam>(this->list.front());
+    search = new BFS<TypeParam>(&(this->list.front()));
     actual = std::vector<int>{};
-    while (!search.empty()){
-        actual.push_back(search.front()->id);
-        search.pop();
+    while (!search->empty()){
+        actual.push_back(search->front()->id);
+        search->pop();
     }
-    this->check_DFS_Order(actual);
+    this->check_BFS_Order(actual);
 }
 
-TYPED_TEST(SearchTest, InterfcaceRecip){
-    Search<TypeParam> search = DFS<TypeParam>(this->list_recip.front());
+TYPED_TEST(SearchTest, InterfaceRecip){
+    Search<TypeParam> *search =  new DFS<TypeParam>(&(this->list_recip.front()));
     std::vector<int> actual{};
-    while (!search.empty()){
-        actual.push_back(search.front()->id);
-        search.pop();
+    while (!search->empty()){
+        actual.push_back(search->front()->id);
+        search->pop();
     }
     this->check_DFS_Order(actual);
 
-    search = BFS<TypeParam>(this->list_recip.front());
+    search = new BFS<TypeParam>(&(this->list_recip.front()));
     actual = std::vector<int>{};
-    while (!search.empty()){
-        actual.push_back(search.front()->id);
-        search.pop();
+    while (!search->empty()){
+        actual.push_back(search->front()->id);
+        search->pop();
     }
-    this->check_DFS_Order(actual);
+    this->check_BFS_Order(actual);
 }
-*/
+
 #endif //ANALYSIS_TESTSEARCH_H

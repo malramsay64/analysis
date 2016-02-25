@@ -117,4 +117,11 @@ public:
     double compute_single(const Particle &);
 };
 
+class ComputeOrientationOrder: public ComputeMol {
+public:
+    ComputeOrientationOrder(const Frame &inFrame) : ComputeMol(inFrame) {};
+
+    double compute_single(const Molecule &);
+};
+
 #endif //ANALYSIS_COMPUTE_H

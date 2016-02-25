@@ -8,6 +8,8 @@
 #include "testFrame.h"
 #include "testVector.h"
 #include "testSearch.h"
+#include "testInput.h"
+#include "testNeighbours.h"
 
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);

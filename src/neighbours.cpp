@@ -140,7 +140,7 @@ void add_part_neighbours(Particle &p1, Particle &p2){
     p1.append(&p2);
     p2.append(&p1);
 }
-
+/*
 std::vector<int> short_neighbour_list(const Molecule &m, const Frame &frame){
     std::vector<int> dist = std::vector<int>{};
     int type;
@@ -155,6 +155,7 @@ std::vector<int> short_neighbour_list(const Molecule &m, const Frame &frame){
     }
     return dist;
 }
+
 
 int short_range_order(const Frame &frame){
     std::ofstream file;
@@ -249,3 +250,4 @@ int order_type(const Molecule &m1, const Molecule &m2, const Frame &frame){
     }
     return 0;
 }
+*/

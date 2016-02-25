@@ -111,4 +111,28 @@ TEST(Particle, Getters){
     EXPECT_EQ(std::vector<Particle *>(0, nullptr), p1.my_neighbours);
 }
 
+TEST(Particle , DeleteNeighbours){
+    // TODO
+}
+
+TEST(Particle, FStreamOperators){
+    /* TODO
+     *
+     * >>
+     * <<
+     */
+}
+
+TEST(Particle, BooleanOperators){
+    /* TODO
+     *
+     * ==
+     * !=
+     * <
+     * <=
+     * >
+     * >=
+     */
+}
+
 #endif //ANALYSIS_TESTPARTICLE_H

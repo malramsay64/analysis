@@ -18,7 +18,6 @@ using namespace LAlgebra;
 class Molecule {
     double rotation{0};
     double orientation{0};
-    int colour{0};
     Vector com{};
 public:
     int type{0};

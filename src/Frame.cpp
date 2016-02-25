@@ -19,6 +19,14 @@ Frame::Frame(const Frame &frame){
     update_links();
 }
 
+Frame::Frame(const FrameVars &f) : Frame() {
+    timestep = f.timestep;
+    a = f.a;
+    b = f.b;
+    theta = f.theta;
+    particles = std::vector<Particle>(f.num_atoms, Particle{});
+};
+
 void Frame::set_atoms(int a){
     particles.reserve(a);
 }
@@ -124,6 +132,10 @@ Vector direction(const Vector &v1, const Vector &v2, const Frame &f){
     return cartesian(direction(v1,v2), f);
 }
 
+double angle(const Vector &v, const Frame &f){
+    return atan2(cartesian(v,f));
+}
+
 Vector cartesian(const Vector &vi, const Frame &f){
     Vector v{vi};
     v /= (2*PI);
@@ -138,6 +150,5 @@ Vector fractional(const Vector &vi, const Frame &f){
     v.r[1] = vi.r[1]/(f.get_b()*sin(f.get_theta()));
     v *= 2*PI;
     return v;
-    
 }
 

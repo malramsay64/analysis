@@ -13,11 +13,12 @@ set(SOURCE_FILES
         src/Particle.cpp    src/Particle.h
         src/Molecule.cpp    src/Molecule.h
         src/Frame.cpp       src/Frame.h
-        src/ordering.cpp    src/ordering.h
         src/neighbours.cpp  src/neighbours.h
         src/Vector.cpp      src/Vector.h
         src/Compute.cpp     src/Compute.h
-        src/Search.cpp      src/Search.h)
+        src/Search.cpp      src/Search.h
+        src/Neighbour_List.cpp src/Neighbour_List.h
+        src/input.cpp       src/input.h)
 
 set(TEST_FILES
         test/testFunctions.h
@@ -26,7 +27,7 @@ set(TEST_FILES
         test/testFrame.h
         test/testVector.h
         test/testCompute.h
-        test/testSearch.h)
+        test/testSearch.h test/testInput.h test/testNeighbours.h)
 
 # Include stats
 include_directories($ENV{HOME}/.local/include)

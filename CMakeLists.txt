@@ -38,8 +38,8 @@ link_libraries(stats)
 if (NOT CMAKE_BUILD_TYPE STREQUAL "Release")
 
     # Include google test
-    add_subdirectory(test/lib/googletest)
-    include_directories(test/lib/googletest/include)
+    add_subdirectory(lib/googletest)
+    include_directories(lib/googletest/include)
     link_libraries(gtest pthread stats)
 
     add_executable(runTests test/runTests.cpp ${SOURCE_FILES} ${TEST_FILES})

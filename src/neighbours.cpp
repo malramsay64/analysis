@@ -16,7 +16,7 @@ double deltaT = 10*PI/180;
 static double neigh_cutoff = 7.0;
 static double neigh_alert = 9.0;
 
-int check_particles(molecule * mol1, molecule * mol2, Frame * frame){
+int check_particles(Molecule * mol1, Molecule * mol2, Frame * frame){
     double d_atom;
     for (auto &p2: mol2->atoms){
         for (auto &p1: mol1->atoms){
@@ -39,19 +39,19 @@ int find_neighbours(Frame *frame, vector<vector<int>> *neigh_list){
     return 0;
 }
 
-bool find_mol_neighbours(molecule * mol, Frame * frame, vector<vector<int>> *neigh_list){
+bool find_mol_neighbours(Molecule * mol, Frame * frame, vector<vector<int>> *neigh_list){
     Vector2d com;
     vector<int> * neighbours = &neigh_list->at(mol->index());
     // mol properties
-    com = mol->COM();
+    com = mol->get_COM();
     bool recompute = false;
     
     // Check no neighbours in list
     if (neighbours->size() == 0){
         // Iterate through all molecules with id > mol
-        vector<molecule>::iterator mol2;
+        vector<Molecule>::iterator mol2;
         for (mol2 = frame->molecules.begin()+mol->id; mol2 != frame->molecules.end(); mol2++){
-            double d_com = frame->dist(com, (*mol2).COM());
+            double d_com = frame->dist(com, (*mol2).get_COM());
             if (d_com < neigh_cutoff){
                 neighbours->push_back(mol2->index());
                 // Check interparticle distnces
@@ -62,9 +62,9 @@ bool find_mol_neighbours(molecule * mol, Frame * frame, vector<vector<int>> *nei
     // Iterate through neighbour list
     else {
         for (auto &m: *neighbours){
-            molecule *mol2 = &(frame->molecules.at(m));
+            Molecule *mol2 = &(frame->molecules.at(m));
             
-            double d_com = frame->dist(com, mol2->COM());
+            double d_com = frame->dist(com, mol2->get_COM());
             if (d_com < neigh_cutoff){
                 check_particles(mol, mol2, frame);
             }
@@ -79,21 +79,21 @@ bool find_mol_neighbours(molecule * mol, Frame * frame, vector<vector<int>> *nei
     return recompute;
 }
 
-int recompute_neighbours(molecule * mol, Frame * frame, vector<vector<int>> *neigh_list){
+int recompute_neighbours(Molecule * mol, Frame * frame, vector<vector<int>> *neigh_list){
     // Recompute local neighbour list
     // Reset particle neighbour list
     neigh_list->at(mol->index()) = vector<int>();
     vector<int> * neighbours;
     neighbours = &neigh_list->at(mol->index());
-    Vector2d com = mol->COM();
-    molecule *mol2;
+    Vector2d com = mol->get_COM();
+    Molecule *mol2;
     dyn_queue queue = dyn_queue(mol);
     mol2 = queue.pop();
     //mol->my_neighbours = vector<molecule *>();
     while (queue.get_depth() < 2 && mol2){
         mol2 = queue.pop();
         if (mol2 > mol){
-            double d_com = frame->dist(com, mol2->COM());
+            double d_com = frame->dist(com, mol2->get_COM());
             if (d_com < neigh_cutoff){
                 neighbours->push_back(mol2->index());
                 //check_particles(mol, mol2, frame);
@@ -102,7 +102,7 @@ int recompute_neighbours(molecule * mol, Frame * frame, vector<vector<int>> *nei
     }
     // All neighbours
     for (auto &m: *neighbours){
-        molecule *m1 = &(frame->molecules.at(m));
+        Molecule *m1 = &(frame->molecules.at(m));
         neigh_list->at(m1->id-1) = vector<int>();
         neighbours = &neigh_list->at(m1->index());
         dyn_queue queue = dyn_queue(m1);
@@ -110,7 +110,7 @@ int recompute_neighbours(molecule * mol, Frame * frame, vector<vector<int>> *nei
         while (queue.get_depth() < 2 && mol2){
             mol2 = queue.pop();
             if (mol2 > mol){
-                double d_com = frame->dist(m1->COM(), mol2->COM());
+                double d_com = frame->dist(m1->get_COM(), mol2->get_COM());
                 if (d_com < neigh_cutoff){
                     neighbours->push_back(mol2->index());
                     //check_particles(m1, mol2, frame);
@@ -123,8 +123,8 @@ int recompute_neighbours(molecule * mol, Frame * frame, vector<vector<int>> *nei
 }
 
 
-bool check_mol_neighbours(molecule *m1, molecule * m2, Frame * frame){
-    vector<particle *>::iterator p1, p2;
+bool check_mol_neighbours(Molecule *m1, Molecule * m2, Frame * frame){
+    vector<Particle *>::iterator p1, p2;
     double d;
     for (p1 = m1->atoms.begin(); p1 != m1->atoms.end(); p1++){
         for (p2 = m2->atoms.begin(); p2 != m2->atoms.end(); p2++){
@@ -137,23 +137,23 @@ bool check_mol_neighbours(molecule *m1, molecule * m2, Frame * frame){
     return false;
 }
 
-int add_mol_neighbours(molecule * m1, molecule *m2){
+int add_mol_neighbours(Molecule * m1, Molecule *m2){
     m1->add_neighbour(m2);
     m2->add_neighbour(m1);
     return 0;
 }
 
-int add_part_neighbours(particle *p1, particle *p2){
+int add_part_neighbours(Particle *p1, Particle *p2){
     p1->append(p2);
     p2->append(p1);
     return 0;
 }
 
-vector<int> short_neighbour_list(molecule * m, Frame * frame){
+vector<int> short_neighbour_list(Molecule * m, Frame * frame){
     vector<int> dist = vector<int>();
     int type;
     for (auto &neigh: m->my_neighbours){
-        type = order_type(m, neigh, frame);
+        type = order_type(m, neigh.first, frame);
         if (type != 0) {
             dist.push_back(type);
         }
@@ -172,35 +172,34 @@ int short_range_order(Frame * frame){
     vector<int> count(6,0);
     int total = 0;
     // Print m1
-    vector<molecule>::iterator m1;
+    vector<Molecule>::iterator m1;
     for (m1 = frame->molecules.begin(); m1 != frame->molecules.end(); m1++){
-        Vector2d com1 = (*m1).COM();
+        Vector2d com1 = (*m1).get_COM();
         Vector2d d;
         double theta;
         double rot = angle(&(*m1), frame);
-        for (int k = 0; k < (*m1).nump(); k++){
+        for (int k = 0; k < (*m1).num_particles(); k++){
             d = frame->direction((*m1).atom_pos(k),com1);
             theta = atan2(d) + PI - rot + PI/2;
             // In format for gnuplot: theta, dist, circle radius, colour
             file << theta << "," << d.length() << "," << (*m1).atoms[k]->radius << "," << 1 << endl;
         }
         
-        for (int j = 0; j < (*m1).num_neighbours(); j++){
+        for (auto m2: m1->my_neighbours){
             // Multiple interactions between particles
-            if ((*m1).nint[j] > 1){
-                molecule *m2 = (*m1).my_neighbours[j];
+            if (m2.second > 1){
                 // Theta
-                colour = order_type(&(*m1), m2, frame);
+                colour = order_type(&(*m1), m2.first, frame);
                 count[colour]++;
                 total++;
                 if (colour){
                     // Order parameter data
-                    Vector2d com1 = (*m1).COM();
+                    Vector2d com1 = (*m1).get_COM();
                     Vector2d d;
                     double theta;
                     double rot = angle(&(*m1), frame);
-                    for (int k = 0; k < m2->nump(); k++){
-                        d = frame->direction(m2->atom_pos(k),com1);
+                    for (int k = 0; k < m2.first->num_particles(); k++){
+                        d = frame->direction(m2.first->atom_pos(k),com1);
                         theta = atan2(d) + PI - rot + PI/2;
                         file << theta << "," << d.length() << "," << 0.04 << "," << colour << endl;
                     }
@@ -218,8 +217,8 @@ int short_range_order(Frame * frame){
     return 0;
 }
 
-int order_type(molecule * m1, molecule * m2, Frame * frame){
-    if (m1->nump() == 1){
+int order_type(Molecule * m1, Molecule * m2, Frame * frame){
+    if (m1->num_particles() == 1){
         return 0;
     }
     double Rb = m1->atoms[0]->radius;

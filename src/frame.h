@@ -32,8 +32,8 @@ class Frame {
     double theta;
     
 public:
-    std::vector<particle> particles;
-    std::vector<molecule> molecules;
+    std::vector<Particle> particles;
+    std::vector<Molecule> molecules;
     int timestep;
     int num_molecules;
     
@@ -46,14 +46,14 @@ public:
     int num_atoms();
     void set_num_mol(int);
     int num_mol();
-    void add_particle(particle *p);
+    void add_particle(Particle *p);
     void add_link(int, int, bool);
     void add_link(int, int);
-    double dist(vect,vect);
-    vect direction(vect,vect);
+    double dist(Vector2d,Vector2d);
+    Vector2d direction(Vector2d,Vector2d);
     double get_area();
     double get_density();
-    molecule at(int);
+    Molecule at(int);
     void update_links();
     
     int set_crys(double, double, double);
@@ -62,8 +62,8 @@ public:
     double get_theta();
     double get_height();
     double get_tilt();
-    vect cartesian(vect v);
-    vect fractional(vect v);
+    Vector2d cartesian(Vector2d v);
+    Vector2d fractional(Vector2d v);
 };
 
 #endif /* defined(FRAME_H) */

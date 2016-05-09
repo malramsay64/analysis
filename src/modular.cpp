@@ -132,7 +132,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
          * Find Neighbours
          */
         bool recompute = false;
-        vector<molecule *> recompute_list;
+        vector<Molecule *> recompute_list;
         for (auto &mol: frame->molecules){
             recompute = find_mol_neighbours(&mol, frame, &mod_neigh_list);
             if (recompute) {
@@ -179,11 +179,11 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
                 int index;
                 // x divide
                 if (frame->get_a() > frame->get_height()){
-                    index = pos_def_mod(int (mol.COM().x/(2*PI/regio_res)),regio_res);
+                    index = pos_def_mod(int (mol.get_COM().x/(2*PI/regio_res)),regio_res);
                 }
                 // y divide
                 else {
-                    index = pos_def_mod(int (mol.COM().y/regio_res),regio_res);
+                    index = pos_def_mod(int (mol.get_COM().y/regio_res),regio_res);
                 }
                 regio_circle.at(index).add(circle_ordering(&mol));
                 regio_orientation.at(index).add(orient_ordering(&mol));
@@ -195,7 +195,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         int k = 0;
         double displacement;
         for (auto key: key_frames) {
-            molecule * mol2 = &key->molecules.at(mol.index());
+            Molecule * mol2 = &key->molecules.at(mol.index());
             displacement = frame->cartesian(mol2->moved_COM()-mol.moved_COM()).length();
             // Displacement
             MSD.at(k).add(pow(displacement,2));
@@ -235,11 +235,11 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
                 int index;
                 // x divide
                 if (key->get_a() > key->get_height()){
-                    index = pos_def_mod(int (mol2->COM().x/(2*PI/regio_res)), regio_res);
+                    index = pos_def_mod(int (mol2->get_COM().x/(2*PI/regio_res)), regio_res);
                 }
                 // y divide
                 else {
-                    index = pos_def_mod(int (mol2->COM().y/regio_res), regio_res);
+                    index = pos_def_mod(int (mol2->get_COM().y/regio_res), regio_res);
                 }
                 regio_c1.at(index).at(k).add(legendre(1,phi));
                 regio_c2.at(index).at(k).add(legendre(2,phi));
@@ -251,18 +251,18 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         
         if (time_structure || print){
             dyn_queue r = dyn_queue(&mol);
-            molecule *mol2 = r.pop();
+            Molecule *mol2 = r.pop();
             Vector2d direction;
         
             // All molecules within cutoff
             while ( mol2 && direction.length() < radial_cutoff){
-                direction = frame->direction(mol.COM(), mol2->COM());
+                direction = frame->direction(mol.get_COM(), mol2->get_COM());
                 if (direction.length() > 0){
                     radial.add(direction.length());
                     radial2d_rel.at(pos_def_mod(int((direction.angle()-mol.get_orientation())/dtheta), theta_res)).add(direction.length());
                     radial2d_abs.at(pos_def_mod(int((direction.angle())/dtheta), theta_res)).add(direction.length());
                     for (auto p: mol2->atoms){
-                        direction = frame->direction(mol.COM(), p->pos_vect());
+                        direction = frame->direction(mol.get_COM(), p->pos_vect());
                         if (p->type == 1){
                             radial2d_large.at(pos_def_mod(int((direction.angle()-mol.get_orientation())/dtheta), theta_res)).add(direction.length());
                         }

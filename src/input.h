@@ -15,7 +15,7 @@
 
 #include "Particle.h"
 #include "frame.h"
-#include "constants.h"
+//#include "constants.h"
 #include "mol_functions.h"
 
 

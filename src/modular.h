@@ -12,7 +12,7 @@
 #include <map>
 #include <iomanip>
 #include "neighbours.h"
-#include "distribution.h"
+//#include "distribution.h"
 #include "movie.h"
 #include "output.h"
 #include "functions.h"

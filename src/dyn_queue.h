@@ -15,16 +15,16 @@
 #include "Molecule.h"
 
 class dyn_queue{
-    std::list<molecule *> q;
+    std::list<Molecule *> q;
     std::list<int> depth;
-    std::set<molecule *> traversed;
+    std::set<Molecule *> traversed;
 public:
-    int push(molecule *, int);
-    dyn_queue(molecule *);
+    int push(Molecule *, int);
+    dyn_queue(Molecule *);
     dyn_queue();
-    molecule * pop_same();
-    molecule * pop();
-    int remove(molecule *);
+    Molecule * pop_same();
+    Molecule * pop();
+    int remove(Molecule *);
     int get_depth(); 
     
 };

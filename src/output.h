@@ -13,14 +13,14 @@
 #include <map>
 #include <limits>
 #include <iomanip>
-#include "my_mean.h"
+//#include "my_mean.h"
 #include "neighbours.h"
 #include "frame.h"
 #include "distribution.h"
 
-int print_map(std::map<int, my_mean>, std::ofstream *);
-int print_short_order(std::ofstream * file, molecule * mol,  Frame * frame);
-int print_mol(std::ostream *os, molecule *mol, Frame *frame);
+//int print_map(std::map<int, my_mean>, std::ofstream *);
+int print_short_order(std::ofstream * file, Molecule * mol,  Frame * frame);
+int print_mol(std::ostream *os, Molecule *mol, Frame *frame);
 int print_frame(Frame * frame);
 int print_radial_distribution(distribution<int> *, std::string, int, double);
 int print_radial2d_distribution(std::vector<distribution<int>> *, std::string, int, double, Frame*);

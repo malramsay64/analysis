@@ -8,6 +8,7 @@ if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release")
 endif()
 
+
 set(SOURCE_FILES
         src/functions.cpp
         src/functions.h
@@ -18,6 +19,7 @@ set(SOURCE_FILES
         src/Molecule.cpp
         src/Molecule.h
         )
+    FILE(GLOB SOURCE_FILES src/*)
 
 set(TEST_FILES
         test/testVector2d.h

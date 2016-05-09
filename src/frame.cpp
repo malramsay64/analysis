@@ -6,8 +6,8 @@ using namespace std;
 Frame::Frame(){
     num_molecules = 0;
     atoms = 0;
-    molecules = vector<molecule>();
-    particles = vector<particle>();
+    molecules = vector<Molecule>();
+    particles = vector<Particle>();
     coloured = false;
     neighbours = false;
 }
@@ -52,8 +52,8 @@ int Frame::num_mol(){
     return (int) molecules.size();
 }
 
-void Frame::add_particle(particle *p){
-    particles.push_back(particle(*p));
+void Frame::add_particle(Particle *p){
+    particles.push_back(Particle(*p));
 }
 
 void Frame::add_link(int molpos, int ppos){
@@ -61,7 +61,7 @@ void Frame::add_link(int molpos, int ppos){
 }
 
 void Frame::add_link(int molpos, int ppos, bool b_sort=true){
-    molecule *m = &molecules[molpos];
+    Molecule *m = &molecules[molpos];
     m->atoms.push_back(&particles[ppos]);
     if (b_sort){
         sort(m->atoms.begin(), m->atoms.end());
@@ -71,14 +71,14 @@ void Frame::add_link(int molpos, int ppos, bool b_sort=true){
 void Frame::update_links(){
     for (auto &m: molecules){
         // Links to particles
-        for (int i = 0; i < m.nump(); i++){
+        for (int i = 0; i < m.num_particles(); i++){
             m.atoms.at(i) = &particles.at(m.atoms.at(i)->index());
         }
         // Links to neighbours
     }
 }
 
-molecule Frame::at(int i){
+Molecule Frame::at(int i){
     return molecules.at(i);
 }
 

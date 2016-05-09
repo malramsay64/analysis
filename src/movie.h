@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include "neighbours.h"
 
-double movie_colour(molecule * mol, Frame *);
+double movie_colour(Molecule * mol, Frame *);
 int print_movie(std::ofstream * file, Frame * frame);
 
 #endif /* defined(__analysis__movie__) */

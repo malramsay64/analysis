@@ -17,17 +17,17 @@ int print_map(std::map<int, my_mean> map, std::ofstream * file){
     return 0;
 }
 
-int print_mol(ostream *file, molecule *mol, Frame *frame){
+int print_mol(ostream *file, Molecule *mol, Frame *frame){
     Vector2d d, com;
     
-    com = frame->cartesian(mol->COM());
+    com = frame->cartesian(mol->get_COM());
     com = wrap_x(com, frame->get_a());
     
-    particle * p;
+    Particle * p;
     
     for (int i = 0; i < mol->atoms.size(); i++){
         p = mol->atoms.at((i+1) % mol->atoms.size());
-        d = frame->cartesian(direction(mol->COM(), p->pos_vect()));
+        d = frame->cartesian(direction(mol->get_COM(), p->pos_vect()));
         *file << com + d << " " << p->radius << " " << mol->get_colour() << " " << mol->id << endl;
     }
     *file << endl;
@@ -35,14 +35,14 @@ int print_mol(ostream *file, molecule *mol, Frame *frame){
     return 0;
 }
 
-int print_short_order(ofstream * file, molecule * mol,  Frame * frame){
+int print_short_order(ofstream * file, Molecule * mol,  Frame * frame){
     int type;
     Vector2d d;
     double theta;
     for (auto mol2: mol->my_neighbours){
-        type = order_type(mol, mol2, frame);
-        for (int k = 0; k < mol2->nump(); k++){
-            d = frame->direction(mol2->atom_pos(k),mol->COM());
+        type = order_type(mol, mol2.first, frame);
+        for (int k = 0; k < mol2.first->num_particles(); k++){
+            d = frame->direction(mol2.first->atom_pos(k),mol->get_COM());
             theta = atan2(d) + 5*PI/2 - atan2(orientation(mol, frame));
             *file << theta << "," << d.length() << "," << 0.04 << "," << type << endl;
         }
@@ -79,11 +79,11 @@ int print_radial2d_distribution(vector<distribution<int>> *d, string filename, i
     ofstream file;
     file.open(filename.c_str());
     // Plot atoms in molecule
-    molecule * m = &frame->molecules.front();
+    Molecule * m = &frame->molecules.front();
     double delta_t = m->get_orientation();
     Vector2d direct;
     for (auto p: m->atoms){
-        direct = frame->direction(p->pos_vect(), m->COM());
+        direct = frame->direction(p->pos_vect(), m->get_COM());
         file << Vector2d(direct.length() * sin(direct.angle() - delta_t), direct.length() * cos(direct.angle() - delta_t)) << " " << p->radius << endl;
     }
     file << endl;
@@ -111,11 +111,11 @@ int print_radial2d_distributions(string filename, Frame *frame, vector<distribut
     int nmol = frame->num_atoms();
     double frame_area = frame->get_area();
     // Plot atoms in molecule
-    molecule * m = &frame->molecules.front();
+    Molecule * m = &frame->molecules.front();
     double delta_t = m->get_orientation();
     Vector2d direct;
     for (auto p: m->atoms){
-        direct = frame->direction(p->pos_vect(), m->COM());
+        direct = frame->direction(p->pos_vect(), m->get_COM());
         file << Vector2d(direct.length() * sin(direct.angle() - delta_t), direct.length() * cos(direct.angle() - delta_t)) << " " << p->radius << endl;
     }
     file << endl;
@@ -208,11 +208,11 @@ int print_rot_diff(vector<Frame *> key_frames, Frame * frame){
         i = m.index();
         for (auto key: key_frames){
             rot = key->at(i).get_rotation();
-            diff = frame->dist(key->at(i).COM(),key_frames.front()->at(i).COM());
+            diff = frame->dist(key->at(i).get_COM(),key_frames.front()->at(i).get_COM());
             rot_diff << m.id << "," << fabs(rot) << "," << diff << endl;
         }
         rot = m.get_rotation();
-        diff = frame->dist(m.COM(), key_frames.front()->at(i).COM());
+        diff = frame->dist(m.get_COM(), key_frames.front()->at(i).get_COM());
         rot_diff << m.id << "," << fabs(rot) << "," << diff << endl;
     }
     return 0;
@@ -251,16 +251,16 @@ int print_frame(Frame * frame){
     
     for (auto &m: frame->molecules){
         Vector2d d, com;
-        com = frame->cartesian(m.COM());
+        com = frame->cartesian(m.get_COM());
         
-        particle * p;
+        Particle * p;
         complot << com + d << " " \
         << angle(&m,frame)  << " " << orient_ordering(&m) << " " << circle_ordering(&m) << " "\
         << m.max_pairing() << " " << m.num_neighbours() << " " << short_ordering(&m, frame) << " "\
         << m.id << endl;
         for (int i = 0; i < m.atoms.size(); i++){
             p = m.atoms.at((i+2) % m.atoms.size());
-            d = frame->cartesian(direction(m.COM(), p->pos_vect()));
+            d = frame->cartesian(direction(m.get_COM(), p->pos_vect()));
             gnuplot << com + d << " " << p->radius << " " \
             << angle(&m,frame)  << " " << orient_ordering(&m) << " " << circle_ordering(&m) << " "\
             << tri_ordering(&m) << " " << m.num_neighbours() << " " << short_ordering(&m, frame) << " "\
@@ -280,8 +280,8 @@ int print_motion(vector<Frame *> key_frames){
     for (auto key: key_frames){
         if (last){
             for (auto m1: key->molecules){
-                com1 = m1.COM();
-                com2 = last->molecules.at(m1.index()).COM();
+                com1 = m1.get_COM();
+                com2 = last->molecules.at(m1.index()).get_COM();
                 orient1 = m1.get_orient_vect();
                 orient2 = last->molecules.at(m1.index()).get_orient_vect();
             }

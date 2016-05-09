@@ -68,8 +68,8 @@ int read_data(std::ifstream *myfile, Frame *frame){
     
     //ITEM: ATOMS
     getline(*myfile, line);
-    particle *p;
-    p = new particle();
+    Particle *p;
+    p = new Particle();
     double pos[2] = {0,0};
     for (int i=0; i < frame->num_atoms(); i++){
         getline(*myfile, line);
@@ -92,13 +92,11 @@ int read_data(std::ifstream *myfile, Frame *frame){
     delete p;
     frame->set_num_mol(mols);
     sort(frame->particles.begin(), frame->particles.end());
-    vector<molecule>::iterator j;
-    for (j = frame->molecules.begin(); j != frame->molecules.end(); ++j){
+    for (auto j = frame->molecules.begin(); j != frame->molecules.end(); ++j){
         (*j).id = (int) (j-frame->molecules.begin()) + 1;
     }
     
-    vector<particle>::iterator i;
-    for (i = frame->particles.begin(); i != frame->particles.end(); ++i){
+    for (auto i = frame->particles.begin(); i != frame->particles.end(); ++i){
         frame->add_link(i->mol_index(), i->index());
     }
     
@@ -166,8 +164,8 @@ int update(std::ifstream *myfile, Frame *frame){
     
     //ITEM: ATOMS
     getline(*myfile, line);
-    particle *p;
-    p = new particle();
+    Particle *p;
+    p = new Particle();
     Vector2d old_p, new_p, delta_p;
     double pos[2] = {0,0};
     for (int i=0; i < frame->num_atoms(); i++){

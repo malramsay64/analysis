@@ -18,20 +18,20 @@
 
 static double STRUCT_DIST = 0.3;
 
-Vector2d orientation(molecule *, Frame *);
-double angle(molecule *, Frame *);
+Vector2d orientation(Molecule *, Frame *);
+double angle(Molecule *, Frame *);
 Vector2d wrap_x(Vector2d v, double a);
-double com_colour(molecule *, Frame *);
-double mol_colour(molecule * m, Frame * frame);
-double struct_relax(molecule * m, Frame * frame);
-double hexatic(int n, molecule* m1, Frame *frame);
-double circle_ordering(molecule *m);
-int circle_colour(molecule * m);
-int neighbour_colour(molecule * m, Frame *frame);
-double orient_ordering(molecule *m);
-int short_ordering(molecule *m, Frame * frame);
+double com_colour(Molecule *, Frame *);
+double mol_colour(Molecule * m, Frame * frame);
+double struct_relax(Molecule * m, Frame * frame);
+double hexatic(int n, Molecule* m1, Frame *frame);
+double circle_ordering(Molecule *m);
+int circle_colour(Molecule * m);
+int neighbour_colour(Molecule * m, Frame *frame);
+double orient_ordering(Molecule *m);
+int short_ordering(Molecule *m, Frame * frame);
 
-int tri_ordering(molecule *mol);
-molecule reorient(molecule *m, Frame *frame);
+int tri_ordering(Molecule *mol);
+Molecule reorient(Molecule *m, Frame *frame);
 
 #endif /* defined(MY_MOL_FUNCTIONS) */

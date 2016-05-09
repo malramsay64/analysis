@@ -12,8 +12,11 @@
 
 
 void useage(){
-    std::cout << \
-                  "useage: analysis "
+    std::cout <<\
+                  "useage: analysis -i <filename> [-qfmdrto] [-s <steps>] [-k <steps]"\
+                  ""\
+                  "-i <filename>"\
+                  "      filename to read"\
     << std::endl;
     /* Read arguments
 * Valid arguments are:
@@ -34,7 +37,6 @@ static struct option long_options[] = {
     {}
 };
 
-static std::string options{"i:s:k:rtoqfmd"};
 
 struct options {
     std::string inFname;
@@ -91,6 +93,5 @@ Frame read_frame(std::istream &is) {
     // Update angle of molecule
     for (auto &m: frame.molecules){
         m.same_period();
-    //m.set_orientation(angle(m,frame));
     }
 }

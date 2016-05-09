@@ -23,5 +23,6 @@
 Frame read_frame(std::istream &is);
 void useage();
 
+static std::string options{"i:s:k:rtoqfmd"};
 #endif /* defined(INPUT_H) */
 

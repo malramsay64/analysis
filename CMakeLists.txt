@@ -46,6 +46,6 @@ if (NOT CMAKE_BUILD_TYPE STREQUAL "Release")
 
 endif()
 
-add_executable(analysis ${SOURCE_FILES})
+add_executable(analysis src/main.cpp ${SOURCE_FILES})
 
 install(TARGETS analysis CONFIGURATIONS Release DESTINATION bin)

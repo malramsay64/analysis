@@ -9,7 +9,7 @@ TEST(Neighbours, Initialisation){
     // TODO
 }
 
-TEST(Neighbbours, ComputeNeighs){
+TEST(Neighbours, ComputeNeighs){
     // TODO
 }
 

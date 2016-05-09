@@ -16,6 +16,8 @@ public:
 
     Neighbour_List(const Frame &);
     void update(const Frame &);
+
+    std::vector<int> at(int i) { return neighs.at(i); };
 };
 
 

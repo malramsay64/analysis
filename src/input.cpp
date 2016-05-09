@@ -59,13 +59,13 @@ Frame read_frame(std::istream &is) {
     is >> y;
     is >> z;
     is >> tilt;
-    fv.a = x[1]-fabs(x[2]) - x[0];
-    fv.b = y[1]-fabs(y[2]) - y[0];
-    fv.theta = atan(fv.b/fabs(x[2]));
+    fv.a = x[1]-std::fabs(x[2]) - x[0];
+    fv.b = y[1]-std::fabs(y[2]) - y[0];
+    fv.theta = std::atan(fv.b/std::fabs(x[2]));
     if (x[2] < 0){
         fv.theta = PI-fv.theta;
     }
-    fv.b = fv.b/sin(fv.theta);
+    fv.b = fv.b/std::sin(fv.theta);
 
     Frame frame{fv};
     int mols;

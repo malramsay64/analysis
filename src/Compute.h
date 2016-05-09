@@ -6,7 +6,10 @@
 #define ANALYSIS_COMPUTE_H
 
 #include "Frame.h"
+#include "Neighbour_List.h"
 #include <complex>
+#include <queue>
+#include <set>
 
 /*
  * Compute
@@ -122,6 +125,76 @@ public:
     ComputeOrientationOrder(const Frame &inFrame) : ComputeMol(inFrame) {};
 
     double compute_single(const Molecule &);
+};
+
+
+class ComputeAtomDynamic: public ComputeAtom {
+protected:
+    Frame &movedFrame;
+public:
+    ComputeAtomDynamic(const Frame& initFrame, Frame& movedFrame) : ComputeAtom(initFrame), movedFrame(movedFrame) {};
+    //ComputeAtomDynamic(const Frame& initFrame) : ComputeAtom(initFrame) { };
+
+    virtual void setMoved(const Frame& frame) { movedFrame = frame; };
+};
+
+/* Computes the displacement between all particles between the inital frame
+ * and the moved frame.
+ */
+class ComputeDisplacement: public ComputeAtomDynamic {
+public:
+    ComputeDisplacement(const Frame &initFrame, Frame& movedFrame) : ComputeAtomDynamic(initFrame, movedFrame) {};
+    //ComputeDisplacement(const Frame &initFrame) : ComputeAtomDynamic(initFrame) {};
+
+    double compute_single(const Particle&);
+};
+
+class ComputeOverlap: public ComputeAtomDynamic {
+private:
+    ComputeDisplacement c_disp;
+    const double factor = 0.25;
+    const double limit = 0.2;
+    double overlap_func(double d){
+        return std::exp(-(d*d)/factor);
+    }
+public:
+    ComputeOverlap(const Frame &initFrame, Frame& movedFrame) : ComputeAtomDynamic(initFrame, movedFrame), c_disp(initFrame,movedFrame) {
+        c_disp.compute_array();
+    };
+
+    void set_moved(const Frame& frame) {
+        c_disp.setMoved(frame);
+        c_disp.compute_array();
+    }
+
+    double compute_single(const Particle&);
+};
+
+class ComputeClustering : public ComputeAtomDynamic {
+private:
+    ComputeOverlap c_overlap;
+    Neighbour_List neighs;
+    int cluster = 0;
+    std::set<int> traversed;
+
+public:
+    ComputeClustering(const Frame &initFrame, Frame& movedFrame, Neighbour_List &neighs) :
+            ComputeAtomDynamic(initFrame, movedFrame), c_overlap(initFrame,movedFrame), neighs(neighs) {
+        c_overlap.compute_array();
+    };
+    ComputeClustering(const Frame &initFrame, Frame& movedFrame) :
+            ComputeAtomDynamic(initFrame, movedFrame), c_overlap(initFrame, movedFrame) {
+        c_overlap.compute_array();
+        neighs = Neighbour_List{initFrame};
+    }
+
+    void set_moved(const Frame& frame) {
+        c_overlap.setMoved(frame);
+        c_overlap.compute_array();
+        cluster = 0;
+    }
+
+    double compute_single(const Particle&);
 };
 
 #endif //ANALYSIS_COMPUTE_H

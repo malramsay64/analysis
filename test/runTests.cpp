@@ -10,6 +10,7 @@
 #include "testSearch.h"
 #include "testInput.h"
 #include "testNeighbours.h"
+#include "testCompute.h"
 
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);

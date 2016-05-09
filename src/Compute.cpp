@@ -2,6 +2,7 @@
 // Created by malcolm on 28/01/16.
 //
 
+#include <cmath>
 #include "Compute.h"
 
 void ComputeMol::compute_array() {
@@ -67,7 +68,37 @@ double ComputeCircleOrder::compute_single(const Particle &p) {
 double ComputeOrientationOrder::compute_single(const Molecule &m) {
     Stats::Stats mean;
     for (auto m2: m.my_neighbours){
-        mean.push(pow(dot_product(m.get_orient_vect(), m2.first->get_orient_vect()),2));
+        mean.push(std::pow(dot_product(m.get_orient_vect(), m2.first->get_orient_vect()),2));
     }
     return mean.getMean();
+}
+
+double ComputeDisplacement::compute_single(const Particle &p){
+    return movedFrame.num_atoms() ? dist(p.pos, movedFrame.particles.at(p.index()).pos) : 0;
+};
+
+double ComputeOverlap::compute_single(const Particle &p) {
+    return overlap_func(c_disp.array[p.index()]) > limit;
+}
+
+double ComputeClustering::compute_single(const Particle &p) {
+    if (traversed.count(p.index())){
+        return array[p.index()];
+    }
+    std::queue<int> queue{};
+    queue.push(p.index());
+    traversed.insert(p.index());
+    cluster++;
+    while (!queue.empty()){
+        int current = queue.front();
+        queue.pop();
+        for (auto i: neighs.at(current)){
+            if (c_overlap.array.at(i) > 0.5){
+                queue.push(i);
+                traversed.insert(i);
+            }
+        }
+        array[current] = cluster;
+    }
+    return array[p.index()];
 }

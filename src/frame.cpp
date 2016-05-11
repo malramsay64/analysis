@@ -90,7 +90,7 @@ int Frame::get_timestep(){
     return timestep;
 }
 
-int Frame::get_time(){
+double Frame::get_time(){
     return get_timestep()*STEP_SIZE;
 }
 
@@ -142,6 +142,5 @@ Vector2d Frame::fractional(Vector2d v){
     v.y = v.y/(b*sin(theta));
     v = v*2*PI;
     return v;
-    
 }
 

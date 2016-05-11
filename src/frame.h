@@ -30,18 +30,18 @@ class Frame {
     double a;
     double b;
     double theta;
-    
+
 public:
     std::vector<Particle> particles;
     std::vector<Molecule> molecules;
     int timestep;
     int num_molecules;
-    
+
     Frame();
     Frame(Frame const &);
     void set_timestep(int);
     int get_timestep();
-    int get_time();
+    double get_time();
     void set_atoms(int);
     int num_atoms();
     void set_num_mol(int);
@@ -55,7 +55,7 @@ public:
     double get_density();
     Molecule at(int);
     void update_links();
-    
+
     int set_crys(double, double, double);
     double get_a();
     double get_b();

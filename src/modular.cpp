@@ -17,7 +17,7 @@ vector<map<int,my_mean>> collate_regio_c1, collate_regio_c2, collate_regio_MSD;
 
 vector<my_mean> regio_orientation, regio_circle, velocity;
 
-ofstream MSD_file, rotations_file, movie_file, short_order_file, struct_file, regio_file, order_file, radial_part_time;
+ofstream MSD_file, rotations_file, movie_file, short_order_file, struct_file, regio_file, order_file, radial_part_time, transrot;
 
 
 
@@ -34,49 +34,51 @@ double rot_cut = 0.5;
 double dif_cut = 0.3;
 
 int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int dist){
-    
+
     // Initialise Variables
     int num_key_frames = (int) key_frames.size();
-    
+
     vector<my_mean> MSD(num_key_frames), MFD(num_key_frames), c1(num_key_frames),\
     c2(num_key_frames), struct_func(num_key_frames);
-    
+
     vector<vector<my_mean>> regio_c1, regio_c2, regio_MSD;
     //vector<my_mean> regio_orientation, regio_circle;
     distribution<int> num_neigh, num_contact, pairing, radial, radial_part, radial_frac, angular, num_neigh_mob[4], num_contact_mob[4];
     distribution<my_mean> pair_contact, pair_neigh;
     distribution<double> short_order;
     vector<distribution<int>> radial2d_rel, radial2d_abs, radial2d_large, radial2d_small, radial2d_part;
-    
+
     //distribution<int> neigh_frac;
     //my_mean hexatic_order;
     my_mean circle_order;
     my_mean orientational_order;
-    
+
     ofstream gnuplot;
     ofstream short_range;
-    
+
     if (key_frames.size() == 0){
         mod_neigh_list = vector<vector<int>>(frame->num_mol(), vector<int>());
-        
+
         // Dynamics
         MSD_file.open("msd.csv");
         rotations_file.open("rotation.csv");
         struct_file.open("struct.csv");
-        
+        transrot.open("transrot.csv");
+        transrot << "timestep,translation,rotation\n";
+
         if (time_structure){
             // Short Order
             short_order_file.open("short_order_hist.csv");
             short_order_file << "Time,No Colour,None,Parallel,Anti Parallel 1,Anti Parallel 2,Chiral,Perpendicular" << endl;
-        
+
             // Hexatic Ordering
             order_file.open("order.csv");
             order_file << "Time,Circle,Orientation" << endl;
-            
+
             // Radial part
             radial_part_time.open("radial_time.csv");
         }
-        
+
         if (regio){
             // Regio relaxations
             collate_regio_c1 = vector<map<int,my_mean>>(regio_res);
@@ -85,17 +87,17 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
             regio_orientation = vector<my_mean>(regio_res);
             regio_circle = vector<my_mean>(regio_res);
         }
-        
+
         if (movie){
             movie_file.open("trj/movie.lammpstrj");
             print_movie(&movie_file, frame);
         }
-        
+
         if (m_orient){
             velocity = vector<my_mean>(radial_res);
         }
     }
-    
+
     if (time_structure || print){
         num_neigh = distribution<int>(MAX_MOL_CONTACTS);
         num_contact = distribution<int>(MAX_MOL_CONTACTS);
@@ -113,21 +115,21 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         radial2d_large = vector<distribution<int>>(theta_res, distribution<int>(theta_res, radial_plot));
         radial2d_small = vector<distribution<int>>(theta_res, distribution<int>(theta_res, radial_plot));
         radial2d_part = vector<distribution<int>>(theta_res, distribution<int>(theta_res, radial_plot));
-    
+
         pair_contact = distribution<my_mean>(MAX_MOL_CONTACTS);
         pair_neigh = distribution<my_mean>(MAX_MOL_CONTACTS);
-        
+
     }
-    
+
     if (regio){
         regio_c1 = vector<vector<my_mean>>(regio_res, vector<my_mean>(num_key_frames));
         regio_c2 = vector<vector<my_mean>>(regio_res, vector<my_mean>(num_key_frames));
         regio_MSD = vector<vector<my_mean>>(regio_res, vector<my_mean>(num_key_frames));
     }
-    
+
     if (time_structure || print){
         short_order = distribution<double>(short_order_types);
-        
+
         /*
          * Find Neighbours
          */
@@ -151,7 +153,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         }
     }
 
-    
+
     /*
      * Analysis
      */
@@ -160,20 +162,20 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
             num_neigh.add(mol.num_neighbours());
             num_contact.add(mol.num_contacts());
             pairing.add(mol.pairing());
-            
-            
+
+
             pair_contact.add(mol.max_pairing(), mol.num_contacts());
             pair_neigh.add(mol.max_pairing(), mol.num_neighbours());
-        
+
             // Short range order
             short_order.add(short_neighbour_list(&mol, frame));
-        
+
             // Order
             //hexatic_order.add(fabs(hexatic(6, &mol, frame)));
             circle_order.add(circle_ordering(&mol));
             orientational_order.add(orient_ordering(&mol));
             angular.add(orientation(&mol, frame).angle());
-            
+
             // Regio
             if (regio){
                 int index;
@@ -189,7 +191,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
                 regio_orientation.at(index).add(orient_ordering(&mol));
             }
         }
-            
+
         // MSD / Rotations
         double phi;
         int k = 0;
@@ -206,8 +208,10 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
             c2.at(k).add(legendre(2,phi));
             // Structural Relaxation
             struct_func.at(k).add(struct_relax(&mol, key));
-            
-            
+
+            // print translational and rotational data
+            transrot << frame->get_time() - key->get_time() << "," << displacement << "," << phi << "\n";
+
             if (time_structure || print){
                 // Contact distributions
                 if (displacement > dif_cut){
@@ -217,9 +221,9 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
                 else {
                     num_neigh_mob[0].add(mol.num_neighbours());
                     num_contact_mob[0].add(mol.num_contacts());
-                    
+
                 }
-                
+
                 if (fabs(angle(mol2, frame) - angle(&mol, frame)) > rot_cut){
                     num_neigh_mob[2].add(mol.num_neighbours());
                     num_contact_mob[2].add(mol.num_contacts());
@@ -229,7 +233,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
                     num_contact_mob[3].add(mol.num_contacts());
                 }
             }
-            
+
             // Regio
             if (regio){
                 int index;
@@ -247,13 +251,13 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
             }
             k++;
         }
-        
-        
+
+
         if (time_structure || print){
             dyn_queue r = dyn_queue(&mol);
             Molecule *mol2 = r.pop();
             Vector2d direction;
-        
+
             // All molecules within cutoff
             while ( mol2 && direction.length() < radial_cutoff){
                 direction = frame->direction(mol.get_COM(), mol2->get_COM());
@@ -284,13 +288,13 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         if (print){
             print_short_order(&short_range, &mol, frame);
         }
-        
+
     }
-    
+
     if (movie){
         print_movie(&movie_file, frame);
     }
-    
+
     for (int k = 0; k < key_frames.size(); k++){
         int steps = frame->get_timestep() - key_frames.at(k)->get_timestep();
         collate_MSD[steps].add(MSD.at(k).get_mean());
@@ -306,7 +310,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
             }
         }
     }
-    
+
     if (time_structure){
         print_time_distribution(&short_order, frame->get_time(), &short_order_file);
         print_radial_time_distribution(&radial_part, &radial_part_time, frame->get_time(), frame->num_atoms(), frame->get_area());
@@ -317,29 +321,29 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
                 << "," << max_structure_factor(get_radial_distribution(&radial_part, frame->num_atoms(), frame->get_area()), frame->get_density(), 0.015)\
                 << endl;
     }
-    
+
     double max_alpha = 0;
     int max_alpha_time = 0;
     if (print && key_frames.size() > 0){
         // num neighbours
         print_distribution<int>(&num_neigh, "stats/neighbours.dat");
-        
+
         // Print num contacts
         print_distribution<int>(&num_contact, "stats/contacts.dat");
-        
+
         // Print num contacts
         print_distribution<int>(&pairing, "stats/pairing.dat");
-        
+
         // Angular distribution
         print_frac_distribution<int>(&angular, "angular.dat");
-        
+
         // Print radial distribution
         print_radial_distribution(&radial, "radial_dist.dat", frame->num_mol(), frame->get_area());
         print_radial_distribution(&radial_part, "radial_part.dat", frame->num_atoms(), frame->get_area());
         print_radial_distribution(&radial_frac, "radial_frac.dat", frame->num_atoms(), frame->get_area());
         print_radial2d_distributions("radial2d.dat", frame, &radial2d_abs, {&radial2d_rel, &radial2d_small, &radial2d_large, &radial2d_part});
-        
-        
+
+
         if (m_orient){
             ofstream orient;
             orient.open("velocity.dat");
@@ -350,9 +354,9 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
             }
             orient.close();
         }
-        
+
         // Order Parameters
-        
+
         ofstream ordering;
         ordering.open("order.log");
         //ordering << "Hexatic: " << hexatic_order.get_mean() << endl;
@@ -367,7 +371,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
 
         // Print short range order
         //print_distribution<double>(&short_order, "short_order_dist.dat");
-        
+
         // Displacement
         double alpha;
         double prev_msd = 0;
@@ -404,8 +408,8 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
                 MSD_file << d.first*STEP_SIZE << "," << d.second.get_mean() << "," << collate_MFD.at(d.first).get_mean() << "," << alpha << "," << dMSD << endl;
             }
         }
-        
-        
+
+
         // Rotations
         double t1 = 0, t2 = 0;
         rotations_file << "Time,C_1,C_2" << endl;
@@ -423,8 +427,8 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         }
         print_relax_time("t1: ", t1);
         print_relax_time("t2: ", t2);
-        
-        
+
+
         // Structure
         double ts = 0;
         struct_file << "Time,F,chi"  << endl;
@@ -449,7 +453,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
             }
         }
         cout << "Diffusion-constant: " << print_relax_time(diff_const.get_mean()) << endl;
-        
+
         if (min_dMSD_timestep != 0){
             cout << "DW-Factor: " << print_relax_time(collate_MSD.at(min_dMSD_timestep).get_mean()) << endl;
         }
@@ -461,11 +465,11 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
             // Regio relaxations
             regio_file.open("regio.csv");
             regio_file << "Time,Position,MSD,R1,R2,circle,orientation" << endl;
-            
+
             ofstream regio_relax;
             regio_relax.open("regio-relax.csv");
             regio_relax << "Pos,t1,t2,circle,orientation" << endl;
-            
+
             double regio_t1, regio_t2;
             double delta;
             int first = 0;
@@ -488,7 +492,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
                         << "," << collate_regio_c2.at(i).at(c.first).get_mean() \
                         << "," << regio_circle.at(i).get_mean() \
                         << "," << regio_orientation.at(i).get_mean() << endl;
-                    
+
                         if (collate_regio_c1.at(i).at(c.first).get_mean() < 1/CONST_E && regio_t1 == 0){
                             regio_t1 = c.first*STEP_SIZE;
                         }
@@ -511,7 +515,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         print_distribution(&pair_neigh, "stats/pair_neigh.dat");
         print_distributions("stats/diff_contact.dat", MAX_MOL_CONTACTS, {&num_contact_mob[0],&num_contact_mob[1],&num_contact_mob[2],&num_contact_mob[3]});
         print_distributions("stats/diff_neigh.dat", MAX_MOL_CONTACTS, {&num_neigh_mob[0],&num_neigh_mob[1],&num_neigh_mob[2],&num_neigh_mob[3]});
-        
+
         int key = -1;
         for (auto f: key_frames){
             key++;
@@ -523,7 +527,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
     }
     if  (print || time_structure){
         print_frame(frame);
-        
+
     }
 
     return 0;

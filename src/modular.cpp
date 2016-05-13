@@ -17,7 +17,8 @@ vector<map<int,my_mean>> collate_regio_c1, collate_regio_c2, collate_regio_MSD;
 
 vector<my_mean> regio_orientation, regio_circle, velocity;
 
-ofstream MSD_file, rotations_file, movie_file, short_order_file, struct_file, regio_file, order_file, radial_part_time, transrot;
+ofstream MSD_file, rotations_file, movie_file, short_order_file, struct_file, regio_file, order_file, radial_part_time;
+my_distribution<std::tuple<double,double,double>> trans_rot_dist(STEP_SIZE);
 
 
 
@@ -63,8 +64,6 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         MSD_file.open("msd.csv");
         rotations_file.open("rotation.csv");
         struct_file.open("struct.csv");
-        transrot.open("transrot.csv");
-        transrot << "timestep,translation,rotation\n";
 
         if (time_structure){
             // Short Order
@@ -210,7 +209,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
             struct_func.at(k).add(struct_relax(&mol, key));
 
             // print translational and rotational data
-            transrot << frame->get_time() - key->get_time() << "," << displacement << "," << phi << "\n";
+            trans_rot_dist.add(std::make_tuple(frame->get_time() - key->get_time(), displacement, mol.get_rotation() - mol2->get_rotation()));
 
             if (time_structure || print){
                 // Contact distributions
@@ -496,8 +495,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
                         if (collate_regio_c1.at(i).at(c.first).get_mean() < 1/CONST_E && regio_t1 == 0){
                             regio_t1 = c.first*STEP_SIZE;
                         }
-                        else if (collate_regio_c2.at(i).at(c.first).get_mean() < 1/CONST_E && regio_t2 == 0){
-                            regio_t2 = c.first*STEP_SIZE;
+                        else if (collate_regio_c2.at(i).at(c.first).get_mean() < 1/CONST_E && regio_t2 == 0){ regio_t2 = c.first*STEP_SIZE;
                         }
                     }
                 }
@@ -515,6 +513,7 @@ int mod_analyse(Frame * frame, std::vector<Frame *> key_frames, int print, int d
         print_distribution(&pair_neigh, "stats/pair_neigh.dat");
         print_distributions("stats/diff_contact.dat", MAX_MOL_CONTACTS, {&num_contact_mob[0],&num_contact_mob[1],&num_contact_mob[2],&num_contact_mob[3]});
         print_distributions("stats/diff_neigh.dat", MAX_MOL_CONTACTS, {&num_neigh_mob[0],&num_neigh_mob[1],&num_neigh_mob[2],&num_neigh_mob[3]});
+        print_distribution(trans_rot_dist, "transrot.dat");
 
         int key = -1;
         for (auto f: key_frames){

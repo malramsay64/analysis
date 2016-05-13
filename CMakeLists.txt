@@ -30,11 +30,11 @@ set(TEST_FILES
 if (NOT CMAKE_BUILD_TYPE STREQUAL "Release")
 
     # Include google test
-    add_subdirectory(test/lib/googletest)
-    include_directories(test/lib/googletest/include)
-    link_libraries(gtest pthread)
+    #add_subdirectory(test/lib/googletest)
+    #include_directories(test/lib/googletest/include)
+    #link_libraries(gtest pthread)
 
-    add_executable(runTests test/runTests.cpp ${SOURCE_FILES} ${TEST_FILES})
+    #add_executable(runTests test/runTests.cpp ${SOURCE_FILES} ${TEST_FILES})
 
 endif()
 

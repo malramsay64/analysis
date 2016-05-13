@@ -14,6 +14,80 @@
 #ifndef MY_DISTRIBUTION
 #define MY_DISTRIBUTION
 
+/*
+ * A class designed for the collection of a large amount of positional data allowing for the collection
+ * of a large volume of data with a relatively small storage footprint.
+ *
+ * This class is deisgned to deal with int, double, and std::pair<double, double> data types.
+ */
+template <typename T>
+class my_distribution {
+    std::map<T, int> dist;
+    int num_elements;
+    const double range{1.0};
+public:
+    my_distribution() : my_distribution(1.0) {};
+    my_distribution(double range) : range(range) {};
+
+    void add(T);
+
+    template<typename U>
+    friend void print_distribution(my_distribution<U> &, std::string);
+};
+
+template <typename T>
+void my_distribution<T>::add(T value){
+    dist[value]++;
+    num_elements++;
+}
+
+template<> inline
+void my_distribution<double>::add(double value){
+    dist[int(value/range)*range]++;
+    num_elements++;
+}
+
+template <> inline
+void my_distribution<std::pair<double,double>>::add(std::pair<double, double> value){
+    dist[std::make_pair(int(value.first/range)*range, int(value.second/range)*range)]++;
+    num_elements++;
+}
+
+template <> inline
+void my_distribution<std::tuple<double,double,double>>::add(std::tuple<double,double,double> value){
+    dist[std::make_tuple(int(std::get<0>(value)/range)*range, int(std::get<1>(value)/range)*range, int(std::get<2>(value)/range)*range)]++;
+    num_elements++;
+}
+
+template <typename T>
+void print_distribution(my_distribution<T> &data, std::string filename){
+    std::ofstream file;
+    file.open(filename.c_str());
+    file << "Data Frequency\n";
+    for (auto i: data.dist){
+        file << i.first << " " << i.second << "\n";
+    }
+}
+
+template <typename T> inline
+void print_distribution(my_distribution<std::pair<T, T>> &data, std::string filename){
+    std::ofstream file{filename.c_str()};
+    file << "X Y Frequency\n";
+    for (auto i: data.dist){
+        file << i.first.first << " " << i.first.second << " " << i.second << "\n";
+    }
+}
+
+template <> inline
+void print_distribution(my_distribution<std::tuple<double,double,double>> &data, std::string filename){
+    std::ofstream file{filename.c_str()};
+    file << "Timestep X Y Frequency\n";
+    for (auto i: data.dist){
+        if (i.second > 1){
+            file << std::get<0>(i.first) << " " << std::get<1>(i.first) << " " << std::get<2>(i.first) << " " << i.second << "\n";
+        }
+    }
+}
 
 template <class type>
 class distribution{
@@ -22,11 +96,11 @@ class distribution{
     int elements;
     double delta_r;
   public:
-    
+
     distribution();
     distribution(int);
     distribution(int, double);
-    
+
     void add(int);
     void add(double);
     void add(int, int);
@@ -42,7 +116,7 @@ class distribution{
     type at(int);
     double fraction_at(int);
     std::vector<type> get_dist(double scale);
-    
+
 };
 
 template <class type>
@@ -189,7 +263,7 @@ int print_distribution(distribution<type> *d, std::string filename){
     for (int i = 0; i < d->get_size(); i++){
         file << i << " " << d->at(i) << std::endl;
     }
-    
+
     return 0;
 }
 
@@ -200,7 +274,7 @@ int print_frac_distribution(distribution<type> *d, std::string filename){
     for (int i = 0; i < d->get_size(); i++){
         file << i << " " << d->fraction_at(i) << std::endl;
     }
-    
+
     return 0;
 }
 
@@ -212,7 +286,7 @@ int print_distribution(distribution<my_mean> *d, std::string filename){
     for (int i = 0; i < d->get_size(); i++){
         file << i << " " << d->at(i).get_mean() << std::endl;
     }
-    
+
     return 0;
 }
 

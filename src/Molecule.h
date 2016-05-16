@@ -24,7 +24,7 @@ public:
     std::vector<Particle *> atoms{};
     std::map<Molecule *, int> my_neighbours{};
     int contacts{0};
-    
+
     Molecule();
     void add_neighbour(Molecule *);
     void delete_neighbours();

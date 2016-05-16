@@ -24,7 +24,7 @@ int main(int argc, char *argv[]){
     bool quench=false, fast=false;
     int step_size = 1, print, key_rate = 20;
     //int reference = BOX;
-    
+
     /* Read arguments
      * Valid arguments are:
      * -i <file>  input filename
@@ -91,7 +91,7 @@ int main(int argc, char *argv[]){
         cout << "Arguments Incorrect!" << endl << arguments << endl;
         return 1;
     }
-    
+
     long filesize;
     long num_frames = 0;
     long frames_read = 0;
@@ -100,28 +100,28 @@ int main(int argc, char *argv[]){
     vector<Frame *> key_frames;
     Frame  *current_frame = new Frame;
     //Frame *previous_frame;
-    
+
     // Input file
-    
+
     ifstream myfile;
     myfile.open(in_fname.c_str());
-    
-    
+
+
     // File Size
     ifstream inFile(in_fname.c_str());
     filesize = count(istreambuf_iterator<char>(inFile),
                      istreambuf_iterator<char>(), '\n');
-    
+
     while (data && frame_count < num_frames){
         if (num_frames == 0){
             // Read first frame
             read_data(&myfile, current_frame);
             frames_read++;
-            
+
             // Analyse
             print = 1;
             mod_analyse(current_frame, key_frames, print);
-            
+
             // Add key frame
             key_frames.push_back(new Frame(*current_frame));
             //current_frame = new Frame;
@@ -139,22 +139,22 @@ int main(int argc, char *argv[]){
             // Read last frame
             update(&myfile, current_frame);
             frames_read++;
-            
+
             // Analyse
             print = 1;
             mod_analyse(current_frame, key_frames, print);
-            
+
             // Delete unneeded frame
         }
         else if (frame_count % key_rate == 0){
             // Read frame
             update(&myfile, current_frame);
             frames_read++;
-            
+
             // Analyse
             print = 0;
             mod_analyse(current_frame, key_frames, print);
-            
+
             // Add key frame
             key_frames.push_back(new Frame(*current_frame));
             //current_frame = new Frame;
@@ -163,7 +163,7 @@ int main(int argc, char *argv[]){
             // Read frame
             update(&myfile, current_frame);
             frames_read++;
-            
+
             print = 0;
             mod_analyse(current_frame, key_frames, print);
         }
@@ -174,10 +174,10 @@ int main(int argc, char *argv[]){
         frame_count++;
     }
     cerr << "Frames Read: " << frames_read << " of " << frame_count << ", " << key_frames.size() << " key frames" << endl;
-    
+
     for (auto &frame: key_frames){
         delete frame;
     }
-    
+
     return 0;
 }

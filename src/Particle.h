@@ -36,7 +36,7 @@ public:
     double radius;
     double mass;
     std::vector<Particle *> my_neighbours;
-    
+
     Particle();
     Particle(const Particle&);
     Particle(const particle_vars&);
@@ -49,13 +49,13 @@ public:
     int mol_index() const;
     int order();
     void delete_neighbours();
-    
+
     bool operator> (const Particle &b) const;
     bool operator>= (const Particle &b) const;
-    
+
     bool operator< (const Particle &b) const;
     bool operator<= (const Particle &b) const;
-    
+
     bool operator== (const Particle &b) const;
     bool operator!= (const Particle &b) const;
 };

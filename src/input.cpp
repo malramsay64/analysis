@@ -29,35 +29,35 @@ int read_data(std::ifstream *myfile, Frame *frame){
     frame->set_timestep(timestep);
     // NUMBER OF ATOMS
     getline(*myfile, line);
-    
+
     getline(*myfile, line);
     stringstream sa(line);
     sa >> num_atoms;
     frame->set_atoms(num_atoms);
-    
+
     // BOX BOUNDS
     getline(*myfile, line);
-    
+
     // X
     getline(*myfile, line);
     stringstream sx(line);
     x[2] = 0;
     sx >> x[0] >> x[1] >> x[2];
     a = x[1]-fabs(x[2]) - x[0];
-    
+
     // Y
     getline(*myfile, line);
     stringstream sy(line);
     y[2] = 0;
     sy >> y[0] >> y[1] >> y[2];
     b = y[1]-fabs(y[2]) - y[0];
-    
+
     // Z
     getline(*myfile, line);
     stringstream sz(line);
     z[2] = 0;
     sz >> z[0] >> z[1] >> z[2];
-    
+
     // Crystal parameters
     theta = atan(b/fabs(x[2]));
     if (x[2] < 0){
@@ -65,7 +65,7 @@ int read_data(std::ifstream *myfile, Frame *frame){
     }
     b = b/sin(theta);
     frame->set_crys(a, b, theta);
-    
+
     //ITEM: ATOMS
     getline(*myfile, line);
     Particle *p;
@@ -77,10 +77,10 @@ int read_data(std::ifstream *myfile, Frame *frame){
         sp >> p->id >> p->molid >> p->type >> p->radius >> pos[0] >> pos[1] >> zp;
         // Shift axes of box to 0
         p->set_pos(Vector2d(pos[0], pos[1]) - Vector2d(x[0], y[0]));
-        
+
         // Convert to fractional coordinates
         p->set_pos(frame->fractional(p->pos_vect()));
-        
+
         // Radius read in as diameter
         p->radius = p->radius/2;
         frame->add_particle(p);
@@ -95,11 +95,11 @@ int read_data(std::ifstream *myfile, Frame *frame){
     for (auto j = frame->molecules.begin(); j != frame->molecules.end(); ++j){
         (*j).id = (int) (j-frame->molecules.begin()) + 1;
     }
-    
+
     for (auto i = frame->particles.begin(); i != frame->particles.end(); ++i){
         frame->add_link(i->mol_index(), i->index());
     }
-    
+
     // Put all particles from molecule on same frame based on COM
     // Update angle of molecule
     for (auto &m: frame->molecules){
@@ -140,20 +140,20 @@ int update(std::ifstream *myfile, Frame *frame){
     x[2] = 0;
     sx >> x[0] >> x[1] >> x[2];
     a = x[1]-fabs(x[2]) - x[0];
-    
+
     // Y
     getline(*myfile, line);
     stringstream sy(line);
     y[2] = 0;
     sy >> y[0] >> y[1] >> y[2];
     b = y[1]-fabs(y[2]) - y[0];
-    
+
     // Z
     getline(*myfile, line);
     stringstream sz(line);
     z[2] = 0;
     sz >> z[0] >> z[1] >> z[2];
-    
+
     // Crystal parameters
     theta = atan(b/fabs(x[2]));
     if (x[2] < 0){
@@ -161,7 +161,7 @@ int update(std::ifstream *myfile, Frame *frame){
     }
     b = b/sin(theta);
     frame->set_crys(a, b, theta);
-    
+
     //ITEM: ATOMS
     getline(*myfile, line);
     Particle *p;
@@ -173,7 +173,7 @@ int update(std::ifstream *myfile, Frame *frame){
         stringstream sp(line);
         sp >> p->id >> p->molid >> p->type >> p->radius >> pos[0] >> pos[1] >> zp;
         // Update coordinates
-        
+
         old_p = frame->particles.at(p->index()).pos_vect();
         new_p = frame->fractional(Vector2d(pos[0], pos[1]) - Vector2d(x[0], y[0]));
         delta_p = direction(old_p, new_p);

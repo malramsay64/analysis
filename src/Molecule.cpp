@@ -28,7 +28,7 @@ void Molecule::delete_neighbours(){
 
 void Molecule::delete_mol_neighbours(){
     my_neighbours = map<Molecule *, int>{};
-    contacts = 0;   
+    contacts = 0;
 }
 
 double Molecule::get_mass() const {

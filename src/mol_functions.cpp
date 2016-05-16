@@ -139,7 +139,7 @@ int tri_ordering(Molecule *mol){
 
 Molecule reorient(Molecule *m, Frame* frame){
     Vector2d d;
-    
+
     double delta_t = m->get_orientation();
     Molecule n = Molecule(*m);
     for (auto p: n.atoms){

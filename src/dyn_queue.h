@@ -25,8 +25,8 @@ public:
     Molecule * pop_same();
     Molecule * pop();
     int remove(Molecule *);
-    int get_depth(); 
-    
+    int get_depth();
+
 };
 
 #endif /* defined(DYN_QUEUE_H) */

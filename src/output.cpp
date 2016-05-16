@@ -19,19 +19,19 @@ int print_map(std::map<int, my_mean> map, std::ofstream * file){
 
 int print_mol(ostream *file, Molecule *mol, Frame *frame){
     Vector2d d, com;
-    
+
     com = frame->cartesian(mol->get_COM());
     com = wrap_x(com, frame->get_a());
-    
+
     Particle * p;
-    
+
     for (int i = 0; i < mol->atoms.size(); i++){
         p = mol->atoms.at((i+1) % mol->atoms.size());
         d = frame->cartesian(direction(mol->get_COM(), p->pos_vect()));
         *file << com + d << " " << p->radius << " " << mol->get_colour() << " " << mol->id << endl;
     }
     *file << endl;
-    
+
     return 0;
 }
 
@@ -98,7 +98,7 @@ int print_radial2d_distribution(vector<distribution<int>> *d, string filename, i
             theta = dtheta*t-PI;
             r = i*dist.get_delta_r();
             file << r << " " << theta << " " << r*sin(theta) << " " << r*cos(theta) << " " << dist.at(i)/(area*nmol*density) << endl;
-            
+
         }
         file << endl;
     }
@@ -134,7 +134,7 @@ int print_radial2d_distributions(string filename, Frame *frame, vector<distribut
                 file << " " << l->at(t%first->size()).at(i)/(area*nmol*density);
             }
             file << endl;
-            
+
         }
         file << endl;
     }
@@ -223,14 +223,14 @@ int print_moved(Frame * init, Frame * final){
     ofstream file;
     file.open("moved.dat");
     file << init->get_a() << " " << init->get_height() << endl << endl;
-    
+
     Vector2d com1, com2;
     double rotation;
     for (auto &m: init->molecules){
         com1 = m.moved_COM();
         com2 = final->molecules.at(m.index()).moved_COM();
         rotation = final->molecules.at(m.index()).get_rotation();
-        
+
         file << init->cartesian(com1) << " " << init->direction(com1, com2) << " " << rotation << " " << m.num_contacts() << endl;
     }
     file.close();
@@ -248,11 +248,11 @@ int print_frame(Frame * frame){
     complot << frame->get_a() << " " << frame->get_height() << endl << endl;
     complot << "# x y orientation orient_order circle_order tri_order num_neigh short_order id" << endl;
     gnuplot << "# x y radius orientation orient_order circle_order tri_order num_neigh short_order id" << endl;
-    
+
     for (auto &m: frame->molecules){
         Vector2d d, com;
         com = frame->cartesian(m.get_COM());
-        
+
         Particle * p;
         complot << com + d << " " \
         << angle(&m,frame)  << " " << orient_ordering(&m) << " " << circle_ordering(&m) << " "\

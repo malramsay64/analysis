@@ -45,7 +45,7 @@ bool find_mol_neighbours(Molecule * mol, Frame * frame, vector<vector<int>> *nei
     // mol properties
     com = mol->get_COM();
     bool recompute = false;
-    
+
     // Check no neighbours in list
     if (neighbours->size() == 0){
         // Iterate through all molecules with id > mol
@@ -63,7 +63,7 @@ bool find_mol_neighbours(Molecule * mol, Frame * frame, vector<vector<int>> *nei
     else {
         for (auto &m: *neighbours){
             Molecule *mol2 = &(frame->molecules.at(m));
-            
+
             double d_com = frame->dist(com, mol2->get_COM());
             if (d_com < neigh_cutoff){
                 check_particles(mol, mol2, frame);
@@ -184,7 +184,7 @@ int short_range_order(Frame * frame){
             // In format for gnuplot: theta, dist, circle radius, colour
             file << theta << "," << d.length() << "," << (*m1).atoms[k]->radius << "," << 1 << endl;
         }
-        
+
         for (auto m2: m1->my_neighbours){
             // Multiple interactions between particles
             if (m2.second > 1){

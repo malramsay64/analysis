@@ -60,7 +60,7 @@ double max_structure_factor(std::vector<double> g, double rho, double dr){
             max = 2*PI/(i*dr);
         }
     }
-    
+
     return max_val;
 }
 

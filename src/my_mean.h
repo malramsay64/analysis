@@ -26,7 +26,7 @@ public:
     double get_variance();
     double combine(my_mean);
     int get_count();
-    
+
 };
 
 #endif /* defined(MY_MEAN) */

@@ -21,7 +21,7 @@ class Vector2d {
 public:
     double x;
     double y;
-    
+
     Vector2d();
     Vector2d(double, double);
     Vector2d(double *v);
@@ -30,7 +30,7 @@ public:
     double orientation();
     void orthogonalise();
     double angle() const;
-    
+
     Vector2d operator+= (double);
     Vector2d operator+= (const Vector2d &);
     Vector2d operator+= (int);
@@ -54,7 +54,7 @@ public:
         os << v.x << " " << v.y;
         return os;
     }
-    
+
 };
 
 Vector2d operator* (double i, const Vector2d &v);
